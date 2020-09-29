@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Projeto Redes</string>
+    <string name="serv_desc">Serviço de monitoramento de mensagens para analise de sentimentos do usuário.</string>
+    <string name="str_erro_load_text">
+        Não foi possivel carregar as mensagens enviadas. Caso esteja utilizando o app pela primeira vez,
+        lembre-se de permitir o app na seção de Acessibilidade do seu dispositivo. (Configurações->Acessibilidade->Projeto Redes -
+        Mantenha essa opção ativa para correto funcionamento.)
+    </string>
+    <string name="btnLexico">Salvar Configuração</string>
+    <string name="str_msg_load">Menssagens carregadas com sucesso!</string>
+    <string name="bt_service_start">Inicar o serviço de captura de menssagens.</string>
+    <string name="bt_service_start_description">Inicia o serviço de acessibilidade que e responsável por gravar as menssagens do WhatsApp. Para isso, habilite o app
+    nas configurações de acessibilidae do sistema. (O botão abaixo e um atalho ;)</string>
+    <string name="bt_service_end">Parar serviço de capitura de menssagens.</string>
+
+    <string name="tx_desc_tempo">Defina o tempo que deseja que ocorra a execução do algoritmo: </string>
+    <string name="intervalo_minutos">%d Minutos</string>
+    <string name="str_alarm_set">Analizador lexico setado para executar em %d minutos.</string>
+
+    <!-- String de permisão das autorizações do android -->
+    <string name="permission_checkForPermission">Autorização para obter dados do dispositivo</string>
+    <string name="permission_checkForPermission_desc">Essa autorização permite que o app rastreie os demais apps que você utiliza, bem como a sua operadora, configurações de idioma e outros detalhes.
+        Ela e necessaria para que seja possivel medir a quantidade de dados (em megabytes) que você utiliza enquanto usa o aparelho.</string>
+
+    <string name="permission_readfohnestate">Autorização para obter dados da rede de telefonia movel.</string>
+    <string name="permission_readphonestate_desc">Permite acesso somente leitura ao estado do telefone, incluindo as informações da rede celular atual, o status de todas as chamadas em andamento e uma lista de quaisquer contas de telefone registradas no dispositivo.
+    Isso e necessario para que seja possivel obter a quantidade de dados que foi utilizado utilizando a rede movel do dispositivo.</string>
+
+    <string name="permission_authorize">Autorizar</string>
+
+    <!-- Descrição do MyAccessibilityService -->
+    <string name="myAccessibilityService_title">Serviço de acessibilidade</string>
+    <string name="myAccessibilityService_desc">Este serviço e responsavel por "ouvir" a interação com o whatsapp para que seja possivel realizar a capitura das menssagens enviadas
+    e seja então possivel realizar a analise léxica para poder ser feita a classificação de sentimentos.</string>
+
+    <!-- Nomes botoes activity prinipal -->
+    <string name="btn_net_usage">Ver uso de dados disponivel.</string>
+    <string name="btn_cancelar_lexico">Ajustar execução automática lexico.</string>
+    <string name="bt_continuar">Continuar</string>
+    <string name="bt_cancel">Cancelar</string>
+    <!-- Nomes activity netusage -->
+    <string name="bt_reload">Recarregar</string>
+    <string name="dt_inicio">Inicio: %s.</string>
+    <string name="dt_fim">Fim: %s.</string>
+    <string name="time">Tempo: %d minutos.</string>
+    <string name="tx_wifi">Wifi: %s.</string>
+    <string name="tx_mobile">Mobile: %s.</string>
+    <string name="tx_total">Total: %s.</string>
+    <!-- Nomes activity lista menssagens usuario -->
+    <string name="bt_usr_msg">Menssagens do usuario</string>
+    <string name="tx_msgs">Menssagens capturadas durante a execução do MyAcessibilityService.</string>
+    <string name="tx_usr_data">Data: %s</string>
+    <string name="tx_usr_msg">MSG: %s</string>
+
+    <!-- Nomes activity lexico_result -->
+    <string name="tx_lexico_desc">Lista das frases que ja foram processadas pelo lexico.</string>
+    <string name="bt_lexico_result">Resultado Lexico</string>
+    <string name="tx_result_ls">Sentimento: %s</string>
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.projetos.redes">
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions"/>
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.NetUsageActivity"
+            android:parentActivityName=".activities.NetUsageActivity"/>
+
+        <activity android:name=".activities.ListUsrMsgs"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.LexicoResultActivity"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <service
+            android:name=".services.MyAccessibilitiService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:description="@string/serv_desc">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:enabled="true"
+            android:name=".services.PopulateDatabaseService" />
+
+        <service
+            android:enabled="true"
+            android:name=".services.NetworkUsageService"/>
+
+        <service
+            android:enabled="true"
+            android:name=".services.LexicoService" />
+
+        <receiver
+            android:name=".services.LexicoBroadcast" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
+
+    <dimen name="barSize">100dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_margin">8dp</dimen>
+
+    <dimen name="tx_netusage_margin">8dp</dimen>
+    <dimen name="tx_size">18sp</dimen>
+
+    <dimen name="bt_tx_size">18sp</dimen>
+</resources>
