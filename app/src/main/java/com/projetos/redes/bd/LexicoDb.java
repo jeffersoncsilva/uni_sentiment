@@ -4,6 +4,7 @@ package com.projetos.redes.bd;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.IntentSender;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -14,8 +15,10 @@ import com.projetos.redes.models.Data;
 import com.projetos.redes.models.LexicoResult;
 import com.projetos.redes.models.LexicoUnificado;
 import com.projetos.redes.models.NetworkUsage;
+import com.projetos.redes.models.ResultadoFinal;
 import com.projetos.redes.models.Sentenca;
 import com.projetos.redes.models.UsrMsg;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +31,17 @@ public class LexicoDb {
     @SuppressLint("StaticFieldLeak")
     private static LexicoDb instance = null;
 
-    private static void createInstance(Context c){
+    private static void createInstance(Context c) {
         instance = new LexicoDb(c);
     }
 
-    public static LexicoDb getInstance(Context c){
-        if(instance==null)
+    public static LexicoDb getInstance(Context c) {
+        if (instance == null)
             createInstance(c);
         return instance;
     }
 
-    public LexicoDb(Context c){
+    public LexicoDb(Context c) {
         this.mContext = c;
         DbHelper db = new DbHelper(c);
         select = db.getReadableDatabase();
@@ -46,56 +49,58 @@ public class LexicoDb {
 
     }
 
-    public static boolean insertDb(Data dados, Context c){
+    public static boolean insertDb(Data dados, Context c) {
 
-        if(instance == null)
+        if (instance == null)
             createInstance(c);
 
-        if(dados instanceof LexicoUnificado)
-            return instance.insertLexicoTable((LexicoUnificado)dados);
-        else if(dados instanceof Sentenca)
-            return instance.inserSentenca((Sentenca)dados);
-        else if(dados instanceof LexicoResult)
-            return instance.insertResult((LexicoResult)dados);
-        else if(dados instanceof NetworkUsage)
+        if (dados instanceof LexicoUnificado)
+            return instance.insertLexicoTable((LexicoUnificado) dados);
+        else if (dados instanceof Sentenca)
+            return instance.inserSentenca((Sentenca) dados);
+        else if (dados instanceof LexicoResult)
+            return instance.insertResult((LexicoResult) dados);
+        else if (dados instanceof NetworkUsage)
             return instance.insertNetorkData((NetworkUsage) dados);
-        else if(dados instanceof UsrMsg)
+        else if (dados instanceof UsrMsg)
             return instance.insertUsrMsg((UsrMsg) dados);
+        else if (dados instanceof ResultadoFinal)
+            return instance.insertLexicoResultFinal((ResultadoFinal) dados);
         return false;
     }
 
-    public Cursor getUserMessages(){
-        if(instance == null)
+    public Cursor getUserMessages() {
+        if (instance == null)
             createInstance(this.mContext);
-        return instance.select.rawQuery("SELECT "+ UsrMsg.CL_MSG +" FROM " + UsrMsg.TB_USR_MSG + ";", null);
-   }
+        return instance.select.rawQuery("SELECT " + UsrMsg.CL_MSG + " FROM " + UsrMsg.TB_USR_MSG + ";", null);
+    }
 
-   public List<NetworkUsage> getNetworkUsage(){
+    public List<NetworkUsage> getNetworkUsage() {
         List<NetworkUsage> lst = new ArrayList<>();
-        Cursor c = instance.select.rawQuery(NetworkUsage.SQL_SELECT , null);
-        if(c==null)
+        Cursor c = instance.select.rawQuery(NetworkUsage.SQL_SELECT, null);
+        if (c == null)
             return lst;
-        if(c.moveToFirst()){
-            while(c.moveToNext()){
-                NetworkUsage nu  = new NetworkUsage();
+        if (c.moveToFirst()) {
+            while (c.moveToNext()) {
+                NetworkUsage nu = new NetworkUsage();
                 nu.setDt_inicio(c.getString(0));
                 nu.setDt_fim(c.getString(1));
                 nu.setBytes_wifi(c.getInt(2));
                 nu.setBytes_mobile(c.getInt(3));
-                nu.setTotal(nu.getBytes_mobile()+nu.getBytes_wifi());
                 lst.add(nu);
             }
         }
         return lst;
-   }
+    }
 
-   public List<LexicoResult> getLexicoResult(){
+    public List<LexicoResult> getLexicoResult() {
         List<LexicoResult> lst = new ArrayList<>();
-        String sql = String.format("SELECT %s, %s, %s FROM %s;", LexicoResult._DATA, LexicoResult._FRASE, LexicoResult._SENTIMENTO, LexicoResult.TB_LEXICO_RESULT);;
+        String sql = String.format("SELECT %s, %s, %s FROM %s;", LexicoResult._DATA, LexicoResult._FRASE, LexicoResult._SENTIMENTO, LexicoResult.TB_LEXICO_RESULT);
+        ;
         Cursor c = instance.select.rawQuery(sql, null);
-        if(c !=null && c.moveToFirst()){
-            while (c.moveToNext()){
-                LexicoResult lr  = new LexicoResult();
+        if (c != null && c.moveToFirst()) {
+            while (c.moveToNext()) {
+                LexicoResult lr = new LexicoResult();
                 lr.setData(c.getString(0));
                 lr.setFrase(c.getString(1));
                 lr.setSentimento(c.getString(2) == Sentimento.POSITIVO.toString() ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
@@ -104,146 +109,216 @@ public class LexicoDb {
             c.close();
         }
         return lst;
-   }
+    }
 
-   public List<UsrMsg> getUserMsgs(){
-       List<UsrMsg> msgs = new ArrayList<>();
-       Cursor c = instance.select.rawQuery(UsrMsg.SQL_SELECT_MGS, null);
-       if(c.moveToFirst()){
-           while(c.moveToNext()){
-               UsrMsg u = new UsrMsg();
-               u.setMsg(c.getString(0));
-               u.setDate(c.getString(1));
-               msgs.add(u);
-           }
-       }else{
-           Log.d(tag, "Não foi possivel carregar as menssagens do usuario.");
-       }
-       return msgs;
-   }
+    public List<UsrMsg> getUserMsgs() {
+        List<UsrMsg> msgs = new ArrayList<>();
+        Cursor c = instance.select.rawQuery(UsrMsg.SQL_SELECT_MGS, null);
+        if (c.moveToFirst()) {
+            while (c.moveToNext()) {
+                UsrMsg u = new UsrMsg();
+                u.setMsg(c.getString(0));
+                u.setDate(c.getString(1));
+                msgs.add(u);
+            }
+        } else {
+            Log.d(tag, "Não foi possivel carregar as menssagens do usuario.");
+        }
+        return msgs;
+    }
 
-   public Cursor getTableSaldoSentenca(String msg){
-        if(instance == null)
+    public List<ResultadoFinal> getResultadoFinal() {
+        List<ResultadoFinal> ls = new ArrayList<>();
+        Cursor c = instance.select.rawQuery("SELECT dt_fim, dt_inicio, sentimento, bytes FROM tb_result_final;", null);
+        if (c != null && c.moveToFirst()) {
+            while (c.moveToNext()) {
+                ResultadoFinal rf = new ResultadoFinal();
+                rf.setDt_fim(c.getString(0));
+                rf.setDt_inicio(c.getString(1));
+                String sent = c.getString(2);
+                rf.setSentimento(sent.equals(Sentimento.POSITIVO.toString()) ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
+                rf.setBytes(c.getLong(3));
+                ls.add(rf);
+            }
+        }
+
+        return ls;
+    }
+
+    public Cursor getTableSaldoSentenca(String msg) {
+        if (instance == null)
             createInstance(this.mContext);
         return instance.select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.frase", Sentenca.TB_SENTENCA, msg), null);
-   }
+    }
 
-   public Cursor getSaldoPalavra(String p){
-        if(instance == null)
+    public Cursor getSaldoPalavra(String p) {
+        if (instance == null)
             createInstance(this.mContext);
 
-       return instance.select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.sentenca", LexicoUnificado.TB_LEXICO_UNIFICADO, p), null);
-   }
+        return instance.select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.sentenca", LexicoUnificado.TB_LEXICO_UNIFICADO, p), null);
+    }
 
-   public void apagarTbUsrMsg(){
+    public String getLastTimeNetUsage() {
+        if (instance == null)
+            createInstance(mContext);
+        String sql = "SELECT id, dt_fim FROM tb_net_usage WHERE id = (SELECT max(id) FROM tb_net_usage);";
+        Cursor c = instance.select.rawQuery(sql, null);
+        if (c != null && c.moveToFirst()) {
+            return c.getString(1);
+        }
+        return "";
+    }
+
+    public int getTotalSentimentos(String sentimento){
+        int qtd = 0;
+        try{
+            String sql = "SELECT count(sentimento) from tb_result_final WHERE sentimento = '" + sentimento+"';";
+            Cursor c = instance.select.rawQuery(sql, null);
+            if(c != null && c.moveToNext()){
+                qtd = c.getInt(0);
+            }
+        }catch (Exception e){
+            Log.d(tag, "Erro ao contar os sentimentos. ERRO: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return qtd;
+    }
+
+    public void apagarTbUsrMsg() {
+        if (instance == null)
+            createInstance(mContext);
         instance.insert.execSQL("DELETE FROM " + UsrMsg.TB_USR_MSG);
-   }
+    }
 
-   public boolean hasSentencaDatabase(){
+    public boolean hasSentencaDatabase() {
         return getSizeTableSentenca() > 0;
-   }
+    }
 
-   public int getSizeTableSentenca(){
-       Cursor c = select.rawQuery("SELECT COUNT(*) FROM "+Sentenca.TB_SENTENCA + ";", null);
-       if(c.moveToFirst()) {
-           int s = c.getInt(0);
-           c.close();
-           return s;
-       }
-       else {
-           c.close();
-           return -1;
-       }
-   }
+    public int getSizeTableSentenca() {
+        Cursor c = select.rawQuery("SELECT COUNT(*) FROM " + Sentenca.TB_SENTENCA + ";", null);
+        if (c.moveToFirst()) {
+            int s = c.getInt(0);
+            c.close();
+            return s;
+        } else {
+            c.close();
+            return -1;
+        }
+    }
 
-   public boolean hasLexicoUnificado(){
+    public boolean hasLexicoUnificado() {
         return getSizeTableLexicoUnificado() > 0;
     }
 
-   public int getSizeTableLexicoUnificado(){
-       Cursor c = select.rawQuery("SELECT COUNT(*) FROM "+LexicoUnificado.TB_LEXICO_UNIFICADO +";",null);
-       if(c.moveToFirst()) {
-           int b =  c.getInt(0);
-           c.close();
-           return b;
-       }
-       c.close();
-       return -1;
-   }
+    // Método criado para teste, remover ao final.
+    public boolean execSql(String sql) {
+        try {
+            if (instance == null)
+                createInstance(mContext);
 
-    private boolean insertLexicoTable(LexicoUnificado lx){
+            instance.insert.execSQL(sql);
+            return true;
+        } catch (Exception e) {
+            Log.d(tag, "Erro ao inserir dados de teste. ERRO: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int getSizeTableLexicoUnificado() {
+        Cursor c = select.rawQuery("SELECT COUNT(*) FROM " + LexicoUnificado.TB_LEXICO_UNIFICADO + ";", null);
+        if (c.moveToFirst()) {
+            int b = c.getInt(0);
+            c.close();
+            return b;
+        }
+        c.close();
+        return -1;
+    }
+
+    private boolean insertLexicoTable(LexicoUnificado lx) {
         ContentValues cv = new ContentValues();
         cv.put("sentenca", lx.getSentenca());
         cv.put("peso", lx.getPeso());
-        try{
+        try {
             insert.insert(LexicoUnificado.TB_LEXICO_UNIFICADO, null, cv);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados na base de dados. ERRO: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    private boolean inserSentenca(Sentenca s){
+    private boolean inserSentenca(Sentenca s) {
         ContentValues cv = new ContentValues();
         cv.put("frase", s.getFrase());
         cv.put("peso", s.getPeso());
-        try{
+        try {
             insert.insert(Sentenca.TB_SENTENCA, null, cv);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados na base de dados. ERRO: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    private boolean insertResult(LexicoResult r){
-        try{
-            String sql  = r.getSqlInsert();
-            Log.d(tag, "SQL_INSERT_LEXICO_RESULT: " + sql);
+    private boolean insertResult(LexicoResult r) {
+        try {
+            String sql = r.getSqlInsert();
             insert.execSQL(sql);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados na base de dados. ERRO: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    private boolean insertNetorkData(NetworkUsage ns){
+    private boolean insertNetorkData(NetworkUsage ns) {
         ContentValues cv = new ContentValues();
         cv.put(NetworkUsage.COLUMN_DT_INICIO, ns.getDt_inicio());
         cv.put(NetworkUsage.COLUMN_DT_FIM, ns.getDt_fim());
         cv.put(NetworkUsage.COLUMN_BYTES_WIFI, ns.getBytes_wifi());
         cv.put(NetworkUsage.COLUMN_BYTES_MOBILE, ns.getBytes_mobile());
-        try{
+        try {
             insert.insert(NetworkUsage.TB_NET_USAGE, null, cv);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados na base de dados. ERRO: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    private boolean insertUsrMsg(UsrMsg msg){
+    private boolean insertUsrMsg(UsrMsg msg) {
         ContentValues cv = new ContentValues();
-        if(msg.getMsg().equals("Digite uma mensagem") || msg.getMsg().length() < 2)
+        if (msg.getMsg().equals("Digite uma mensagem") || msg.getMsg().length() < 2)
             return true;
         cv.put("date", msg.getDate());
         cv.put(UsrMsg.CL_MSG, msg.getMsg());
-        try{
+        try {
             String sql = String.format("INSERT INTO %s (%s, %s) VALUES ('%s', '%s');", UsrMsg.TB_USR_MSG, UsrMsg.CL_DATE, UsrMsg.CL_MSG, msg.getDate(), msg.getMsg());
             insert.execSQL(sql);
             Log.d(tag, "inserindo msg usuario. SQL: " + sql);
             return true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados na base de dados. ERRO: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
+    private boolean insertLexicoResultFinal(ResultadoFinal rf) {
+        try {
+            String sql = String.format("INSERT INTO tb_result_final (dt_fim, dt_inicio, sentimento, bytes) VALUES (\"%s\", \"%s\", \"%s\", %d);", rf.getDt_fim(), rf.getDt_inicio(), rf.getSentimento().toString(), rf.getBytes());
+            insert.execSQL(sql);
+            return true;
+        } catch (Exception e) {
+            Log.d(tag, "Erro ao inserir dados finais na tabela resultado final: ERRO:  " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -15,32 +15,6 @@ public class MyAccessibilitiService extends AccessibilityService {
     private static String line = "";
     static final String TAG = "RecorderService";
 
-    /*
-     * @author Jefferson C. Silva
-     * @param event evento que e recebido para poder verificar o tipo de evento que foi acionado.
-     * @return retorna o nome do evento acionado.
-     *
-    private String getEventType(AccessibilityEvent event) {
-        switch (event.getEventType()) {
-            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
-                return "TYPE_NOTIFICATION_STATE_CHANGED";
-            case AccessibilityEvent.TYPE_VIEW_CLICKED:
-                return "TYPE_VIEW_CLICKED";
-            case AccessibilityEvent.TYPE_VIEW_FOCUSED:
-                return "TYPE_VIEW_FOCUSED";
-            case AccessibilityEvent.TYPE_VIEW_LONG_CLICKED:
-                return "TYPE_VIEW_LONG_CLICKED";
-            case AccessibilityEvent.TYPE_VIEW_SELECTED:
-                return "TYPE_VIEW_SELECTED";
-            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                return "TYPE_WINDOW_STATE_CHANGED";
-            case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:
-                return "TYPE_VIEW_TEXT_CHANGED";
-        }
-        return "default";
-    }
-    */
-
     /**
      * @author Jefferson C. Silva
      * @param event evento recebido para retirar o texto dele.

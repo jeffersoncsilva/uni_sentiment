@@ -19,13 +19,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.projetos.redes.activities.MainActivity;
 import com.projetos.redes.R;
-import com.projetos.redes.Utils;
-import com.projetos.redes.services.LexicoBroadcast;
+import com.projetos.redes.worker.LexicoWorker;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class ConfiguraTempoLexicoDialog extends DialogFragment {
     private String tag = "LexicoDialog";
@@ -40,11 +43,11 @@ public class ConfiguraTempoLexicoDialog extends DialogFragment {
         View v = inflater.inflate(R.layout.dialog_service_execution, null);
         sBar = v.findViewById(R.id.sBarMinutes);
         txMinutes = v.findViewById(R.id.tx_minutes);
-        txMinutes.setText(String.format( getString(R.string.intervalo_minutos), ((sBar.getProgress()+1) * 10)));
+        txMinutes.setText(String.format( getString(R.string.intervalo_minutos), ((sBar.getProgress()+1) * 15)));
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                txMinutes.setText(String.format( getString(R.string.intervalo_minutos), ((i+1) * 10)));
+                txMinutes.setText(String.format( getString(R.string.intervalo_minutos), ((i+1) * 15)));
             }
 
             @Override
@@ -60,31 +63,22 @@ public class ConfiguraTempoLexicoDialog extends DialogFragment {
         builder.setView(v).setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                int min = (sBar.getProgress()+1)*10;
+                int min = (sBar.getProgress()+1)*15;
                 SharedPreferences.Editor edit = getActivity().getSharedPreferences(MainActivity.LEXICO_CONFIG, Context.MODE_PRIVATE).edit();
                 edit.putInt(MainActivity.LEXICO_TIME, min);
                 edit.commit();
+                WorkManager wManager = WorkManager.getInstance(getContext());
+                PeriodicWorkRequest.Builder b = new PeriodicWorkRequest.Builder(LexicoWorker.class, min, TimeUnit.MINUTES);
+                PeriodicWorkRequest req = b.build();
+                wManager.enqueueUniquePeriodicWork(LexicoWorker.WORK_NAME, ExistingPeriodicWorkPolicy.REPLACE, req);
                 Log.d(tag, "Salvo para executar a cada " + min + " minutos.");
-                Utils.setAlarmLexico(getContext(), min);
             }
         }).setNegativeButton("Cancelar execução", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                cancelarExecucao();
+
             }
         });
         return builder.create();
     }
-
-    private void cancelarExecucao(){
-        Context con = getContext();
-        AlarmManager alarm = (AlarmManager) Objects.requireNonNull(con).getSystemService(Context.ALARM_SERVICE);
-        Intent in = new Intent(con, LexicoBroadcast.class);
-        PendingIntent pin = PendingIntent.getBroadcast(con, LexicoBroadcast.REQUEST_CODE, in, 0);
-        if(pin != null)
-            alarm.cancel(pin);
-        else
-            Toast.makeText(con, "Alarme cancelado!", Toast.LENGTH_SHORT).show();
-    }
-
 }

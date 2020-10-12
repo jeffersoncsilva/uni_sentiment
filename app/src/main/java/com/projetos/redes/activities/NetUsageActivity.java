@@ -71,8 +71,8 @@ public class NetUsageActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-                adapter.setLst(c);
-                adapter.notifyDataSetChanged();
+            adapter.setLst(c);
+            adapter.notifyDataSetChanged();
             bt_reloadData.setEnabled(true);
         }
     }

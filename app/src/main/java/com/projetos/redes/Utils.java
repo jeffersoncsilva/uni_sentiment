@@ -6,17 +6,14 @@ import android.app.AppOpsManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.projetos.redes.activities.MainActivity;
-import com.projetos.redes.services.LexicoBroadcast;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import static android.app.AppOpsManager.MODE_ALLOWED;
@@ -47,40 +44,8 @@ public class Utils {
         return ContextCompat.checkSelfPermission(c, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static boolean lexicoJaConfigurado(Context c, String ln){
-        //SharedPreferences sp = c.getSharedPreferences(MainActivity.LEXICO_CONFIG, Context.MODE_PRIVATE);
-        //return sp.contains(MainActivity.LEXICO_TIME);
-        Intent in = new Intent(c, LexicoBroadcast.class);
-        PendingIntent pin = PendingIntent.getBroadcast(c, LexicoBroadcast.REQUEST_CODE, in, 0);
-        if(pin != null){
-            Log.d(tag, "alarme esta setado.");
-            //Toast.makeText(c, "Alarme ja setado.", Toast.LENGTH_SHORT).show();
-            return true;
-        }else{
-            Log.d(tag, "alarme nao esta setado.");
-            //Toast.makeText(c, "Alarme não foi setado.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }
-
-    public static void setAlarmLexico(Context con, int min){
-        try {
-            AlarmManager alarm = (AlarmManager) Objects.requireNonNull(con).getSystemService(Context.ALARM_SERVICE);
-            Intent in = new Intent(con, LexicoBroadcast.class);
-            PendingIntent pen = PendingIntent.getBroadcast(con, LexicoBroadcast.REQUEST_CODE, in, 0);
-            alarm.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), min*60000, pen);
-            Toast.makeText(con, String.format(con.getString(R.string.str_alarm_set), min), Toast.LENGTH_LONG).show();
-        }catch (NullPointerException ne){
-            Log.e(tag, "Erro ao criar alarme. ERRO: " + ne.getMessage());
-            ne.printStackTrace();
-        }
-    }
-
-    public static void stopAlarmLexico(Context con){
-        AlarmManager alarm = (AlarmManager) Objects.requireNonNull(con).getSystemService(Context.ALARM_SERVICE);
-        Intent in = new Intent(con, LexicoBroadcast.class);
-        PendingIntent pin = PendingIntent.getBroadcast(con, LexicoBroadcast.REQUEST_CODE, in, 0);
-        alarm.cancel(pin);
+    public static DateFormat getDateFormatter(){
+        return new SimpleDateFormat("dd:MM:yy:HH:mm:ss");
     }
 
 }

@@ -16,17 +16,13 @@ public class NetworkUsage extends Data implements Serializable {
     private long time_stamp;
     private long bytes_wifi;
     private long bytes_mobile;
-    private long total;
+
     private int id;
 
     private String dt_inicio, dt_fim, tempo;
 
     public long getTotal() {
-        return total;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
+        return bytes_mobile + bytes_wifi;
     }
 
     public String getDt_inicio() {

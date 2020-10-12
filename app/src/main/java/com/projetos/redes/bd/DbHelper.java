@@ -16,12 +16,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public static int VERSION = 1;
     public static String DATA_BASE_NAME = "DbLexico";
 
-    /*public static final String LEXICO_UNIFICADO = "lexico_unificado";
-    public static final String SENTECA = "sentenca";
-    public static final String LEXICO_RESULT = "lexico_result";
-    public static final String NET_USAGE = "network_usage";
-    public static final String USR_MSG = "usr_msg";*/
-
     public DbHelper(Context con){
         super(con, DATA_BASE_NAME, null, VERSION);
     }
@@ -40,6 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(LexicoResult.SQL_CREATE_TABLE_LR);
             db.execSQL(NetworkUsage.SQL_TB_CREATE);
             db.execSQL(UsrMsg.SQL_CREATE_TB_USR);
+            db.execSQL("CREATE TABLE tb_result_final (dt_inicio TEXT, dt_fim TEXT, bytes INTEGER, sentimento TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT)");
             Log.d(tag, "Sql executadas com sucesso! Base de dados criadas. ");
         }catch (Exception e ){
             Log.d(tag, "Erro ao executar onCreate. ERRO: " + e.getMessage());

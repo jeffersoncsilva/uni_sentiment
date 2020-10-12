@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UsrMsg extends Data {
-    public static final String TB_USR_MSG = "usr_msg";
+    public static final String TB_USR_MSG = "tb_usr_msg";
     public static final String CL_DATE = "date";
     public static final String CL_MSG = "msg";
     public static final String CL_ID = "id";

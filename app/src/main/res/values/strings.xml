@@ -30,7 +30,7 @@
 
     <!-- Descrição do MyAccessibilityService -->
     <string name="myAccessibilityService_title">Serviço de acessibilidade</string>
-    <string name="myAccessibilityService_desc">Este serviço e responsavel por "ouvir" a interação com o whatsapp para que seja possivel realizar a capitura das menssagens enviadas
+    <string name="myAccessibilityService_desc">Este serviço é responsável por "ouvir" a interação com o whatsapp para que seja possivel realizar a capitura das menssagens enviadas
     e seja então possivel realizar a analise léxica para poder ser feita a classificação de sentimentos.</string>
 
     <!-- Nomes botoes activity prinipal -->
@@ -56,4 +56,8 @@
     <string name="tx_lexico_desc">Lista das frases que ja foram processadas pelo lexico.</string>
     <string name="bt_lexico_result">Resultado Lexico</string>
     <string name="tx_result_ls">Sentimento: %s</string>
+
+    <!-- Strings activity_resultado_final -->
+    <string name="tx_sentimento">Sentimento: %s</string>
+
 </resources>
