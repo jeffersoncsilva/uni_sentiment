@@ -3,7 +3,7 @@ package com.projetos.redes.tasks;
 import android.content.Context;
 import android.util.Log;
 import com.projetos.redes.bd.LexicoDb;
-import com.projetos.redes.models.LexicoUnificado;
+import com.projetos.redes.models.Palavras;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,8 +31,8 @@ public class InsertLeixcoUnificado {
                 sb = new StringBuilder();
                 for(int i = 0; i < v.length-1; i++)
                     sb.append(v[i]);
-                LexicoUnificado lu = new LexicoUnificado();
-                lu.setSentenca(sb.toString());
+                Palavras lu = new Palavras();
+                lu.setPalavra(sb.toString());
                 lu.setPeso(Integer.parseInt(v[v.length - 1]));
                 db.insertDb(lu, context);
             }

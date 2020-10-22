@@ -2,8 +2,8 @@ package com.projetos.redes.models;
 
 import java.io.Serializable;
 
-public class Sentenca extends Data implements Serializable {
-    public static final String TB_SENTENCA = "tb_sentenca";
+public class Frases extends Data implements Serializable {
+    public static final String TB_FRASES = "tb_frases";
     private String frase;
     private int peso;
 

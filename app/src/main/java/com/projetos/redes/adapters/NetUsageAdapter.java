@@ -39,11 +39,16 @@ public class NetUsageAdapter extends RecyclerView.Adapter<NetUsageAdapter.Holder
         NetworkUsage nu = data.get(position);
         h.dt_inicio.setText(String.format(c.getString(R.string.dt_inicio), nu.getDt_inicio()));
         h.dt_fim.setText(String.format(c.getString(R.string.dt_fim), nu.getDt_fim()));
-
-        h.tx_wifi.setText(String.format(c.getString(R.string.tx_wifi), convertMb(nu.getBytes_wifi())) );
-        long sum=nu.getBytes_mobile()+nu.getBytes_wifi();
-        h.tx_mobile.setText(String.format(c.getString(R.string.tx_mobile), convertMb(nu.getBytes_mobile())));
-        h.tx_total.setText(String.format(c.getString(R.string.tx_total), convertMb(sum)));
+        long wifi = nu.getBytes_wifi();
+        long mobile = nu.getBytes_mobile();
+        if(position >= 1){
+            NetworkUsage n = data.get(position-1);
+            wifi -= n.getBytes_wifi();
+            mobile -= n.getBytes_mobile();
+        }
+        h.tx_wifi.setText(String.format(c.getString(R.string.tx_wifi), convertMb(wifi)));
+        h.tx_mobile.setText(String.format(c.getString(R.string.tx_mobile), convertMb(mobile)));
+        h.tx_total.setText(c.getString(R.string.tx_total)+convertMb(wifi+mobile));
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.projetos.redes.activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,12 +40,37 @@ public class LexicoResultadoFinal extends AppCompatActivity {
                 new GetDatabase(getBaseContext()).execute();
             }
         });
+
+        findViewById(R.id.btSendEmail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityEmail();
+            }
+        });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         new GetDatabase(this).execute();
+    }
+
+    private void startActivityEmail(){
+        StringBuilder sb = new StringBuilder();
+        for(ResultadoFinal rf : adapter.getItems()){
+            sb.append(rf.final_res);
+            sb.append("\n");
+        }
+        Intent in = new Intent(Intent.ACTION_SENDTO);
+        in.setData(Uri.parse("mailto:"));
+        in.putExtra(Intent.EXTRA_EMAIL, "alterar.email.para@real.com");
+        in.putExtra(Intent.EXTRA_SUBJECT, "Dados de sentimentos de usuario");
+        in.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        if(in.resolveActivity(getPackageManager()) != null)
+            startActivity(in);
+        else
+            Toast.makeText(getApplicationContext(), "Por favor, instale um aplicativo de email para poder enviar os dados.", Toast.LENGTH_LONG).show();
     }
 
     protected class GetDatabase extends AsyncTask<Void, Void, Void>{

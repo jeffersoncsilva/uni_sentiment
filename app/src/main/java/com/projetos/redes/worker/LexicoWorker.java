@@ -2,50 +2,56 @@ package com.projetos.redes.worker;
 
 import android.content.Context;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
+import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-
 import com.projetos.redes.Lexico;
 import com.projetos.redes.Utils;
-import com.projetos.redes.bd.LexicoDb;
-
 import java.text.DateFormat;
 import java.util.Date;
 
 public class LexicoWorker extends Worker {
     public static final String WORK_NAME = "lexico_work_execution";
+    public static final String TAG_WORKER = "WRK_APP_R";
     private final String tag = "LexicoWorker";
     private Context mContext;
-    private LexicoDb db;
     private Lexico lexico;
 
     public LexicoWorker(@NonNull Context context, @NonNull WorkerParameters params){
         super(context, params);
         this.mContext = context;
-
-        db = new LexicoDb(this.mContext);
-        lexico= new Lexico(this.mContext);
-        Log.d(tag, "LexicoWorker foi criado. ");
+        lexico = new Lexico(this.mContext);
     }
 
+    /**
+     * Quando o worker e criado, ele realiza as operações referentes ao lexico. Sendo:
+     * Pega os dados da rede
+     * Executa o lexico, classificando os sentimentos quanto cada frase digitada.
+     * Classifica o sentimento e relaciona os dados que foram usados no intervalo de tempo.
+     * @return
+     */
     @NonNull
     @Override
     public Result doWork() {
-        DateFormat df = Utils.getDateFormatter();
-        Date d = new Date();
-        Log.d(tag, "Executando o worker as: " + df.format(d));
-        //long dRede = lexico.pegarDadosRede();
-        //if(dRede < 0){
-        //    Log.d(tag, "Dados de rede não existe. Não e possivel utilizar analizador lexico no momento.");
-        //    return Result.failure();
-       // }
-        //Log.d(tag, "Executanto algoritmo lexico pelo worker manager.");
+        /*E retornado um vetor de 3 posições, onde:
+          dado[0]: hora de inicio do intervalo.
+          dado[1]: Hora de fim do intervalo.
+          dado[2]: dados wifi.
+          dado[3]: dado mobile.
+         */
+        long[] dados = lexico.pegarDadosRede();
         lexico.executarLexico();
-        Log.d(tag, "Classificando sentimentos do usuario pelo worker manager.");
-        //lexico.classificaSentimentos(dRede);
-
+        lexico.classificaSentimentos(dados);
+        Log.d(tag, "Coleta de dados, algoritmo lexico e classficador executado.");
         return Result.success();
+    }
+
+    public static boolean WorkActive(Context con){
+        return true;
+    }
+
+    public static void stopWorker(Context con){
+        WorkManager.getInstance(con).cancelAllWorkByTag(TAG_WORKER);
     }
 }

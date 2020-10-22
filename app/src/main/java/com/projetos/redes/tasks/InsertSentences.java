@@ -1,12 +1,10 @@
 package com.projetos.redes.tasks;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.projetos.redes.bd.LexicoDb;
-import com.projetos.redes.models.LexicoUnificado;
-import com.projetos.redes.models.Sentenca;
+import com.projetos.redes.models.Frases;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class InsertSentences {
             String line;
             while((line = reader.readLine()) != null){
                 String[] values = line.split(";");
-                Sentenca s = new Sentenca();
+                Frases s = new Frases();
                 s.setFrase(values[0]);
                 s.setPeso(Integer.parseInt(values[1].replaceAll(" ","")));
                 db.insertDb(s, context);

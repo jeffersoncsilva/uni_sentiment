@@ -20,18 +20,21 @@
             android:text="@string/tx_sentimento"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tx_total_consumo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tx_total"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tx_data_inicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dt_inicio"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tx_data_fim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

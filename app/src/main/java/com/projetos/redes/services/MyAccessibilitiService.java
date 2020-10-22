@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -88,4 +89,8 @@ public class MyAccessibilitiService extends AccessibilityService {
         return false;
     }
 
+    public static void stopService(Context con){
+        Intent in = new Intent(con, MyAccessibilitiService.class);
+        con.stopService(in);
+    }
 }

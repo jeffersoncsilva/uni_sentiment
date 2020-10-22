@@ -14,30 +14,20 @@
         android:text="@string/btn_net_usage"
         android:textSize="@dimen/bt_tx_size"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_lst_usr_msg"
+        android:id="@+id/btResultadoProcessamentoLexico"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="@dimen/bt_tx_size"
-        android:text="@string/bt_usr_msg"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_VerDadosRedes" />
-
-    <Button
-        android:id="@+id/bt_lexico_result"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/bt_lexico_result"
         android:textSize="@dimen/bt_tx_size"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_lst_usr_msg" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_VerDadosRedes" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -54,53 +44,28 @@
         app:layout_constraintGuide_percent="0.85" />
 
     <Button
-        android:id="@+id/btn_stop_service_msg"
+        android:id="@+id/btIniciaAplicacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/bt_service_end"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bt_lexico_result" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <Button
-        android:id="@+id/bt_stop_lexico"
+        android:id="@+id/btResultadoFinalClassificado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/btn_cancelar_lexico"
+        android:text="@string/btResultadoClassificador"
+        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_stop_service_msg" />
+        app:layout_constraintTop_toBottomOf="@+id/btResultadoProcessamentoLexico" />
 
-    <Button
-        android:id="@+id/bt_result_final"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Resultado Final"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bt_stop_lexico" />
-
-    <Button
-        android:id="@+id/bt_acesso_dados"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Autorizar acesso aos dados"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bt_result_final" />
-
-    <Button
-        android:id="@+id/bt_acesso_mobile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Autoriza acesso ao dados mobile."
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bt_acesso_dados" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

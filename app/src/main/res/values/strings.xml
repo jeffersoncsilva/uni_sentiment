@@ -11,7 +11,7 @@
     <string name="bt_service_start">Inicar o serviço de captura de menssagens.</string>
     <string name="bt_service_start_description">Inicia o serviço de acessibilidade que e responsável por gravar as menssagens do WhatsApp. Para isso, habilite o app
     nas configurações de acessibilidae do sistema. (O botão abaixo e um atalho ;)</string>
-    <string name="bt_service_end">Parar serviço de capitura de menssagens.</string>
+    <string name="bt_service_end">Parar aplicação.</string>
 
     <string name="tx_desc_tempo">Defina o tempo que deseja que ocorra a execução do algoritmo: </string>
     <string name="intervalo_minutos">%d Minutos</string>
@@ -34,10 +34,13 @@
     e seja então possivel realizar a analise léxica para poder ser feita a classificação de sentimentos.</string>
 
     <!-- Nomes botoes activity prinipal -->
-    <string name="btn_net_usage">Ver uso de dados disponivel.</string>
-    <string name="btn_cancelar_lexico">Ajustar execução automática lexico.</string>
+    <string name="btn_net_usage">Uso de internet.</string>
+    <string name="btn_cancelar_lexico">Configurar execução automática.</string>
     <string name="bt_continuar">Continuar</string>
     <string name="bt_cancel">Cancelar</string>
+    <string name="btIniciarAplicacao">Iniciar aplicação.</string>
+    <string name="btPararAplicacao">Parar aplicação.</string>
+    <string name="btResultadoClassificador">Resultado classificação</string>
     <!-- Nomes activity netusage -->
     <string name="bt_reload">Recarregar</string>
     <string name="dt_inicio">Inicio: %s.</string>
@@ -45,7 +48,7 @@
     <string name="time">Tempo: %d minutos.</string>
     <string name="tx_wifi">Wifi: %s.</string>
     <string name="tx_mobile">Mobile: %s.</string>
-    <string name="tx_total">Total: %s.</string>
+    <string name="tx_total">Total: </string>
     <!-- Nomes activity lista menssagens usuario -->
     <string name="bt_usr_msg">Menssagens do usuario</string>
     <string name="tx_msgs">Menssagens capturadas durante a execução do MyAcessibilityService.</string>
@@ -54,10 +57,11 @@
 
     <!-- Nomes activity lexico_result -->
     <string name="tx_lexico_desc">Lista das frases que ja foram processadas pelo lexico.</string>
-    <string name="bt_lexico_result">Resultado Lexico</string>
+    <string name="bt_lexico_result">Léxico processado.</string>
     <string name="tx_result_ls">Sentimento: %s</string>
 
     <!-- Strings activity_resultado_final -->
     <string name="tx_sentimento">Sentimento: %s</string>
+
 
 </resources>

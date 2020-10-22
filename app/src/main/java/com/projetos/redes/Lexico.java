@@ -3,6 +3,7 @@ package com.projetos.redes;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.Telephony;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -127,6 +128,11 @@ public class Lexico {
         return 0;
     }
 
+    /**
+     * Retorna um saldo positivo ou negativo para uma palavra seguindo a base de dados.
+     * @param p - palavra que deve ser buscada.
+     * @return 1 se palavra for positiva; -1 se a palavra for negativa; 0 se a palavra não for encotrada.
+     */
     private int getSaldoPalavra(String p) {
         Cursor c = db.getSaldoPalavra(p);
         if (c != null && c.moveToFirst()) {
@@ -140,31 +146,36 @@ public class Lexico {
         return 0;
     }
 
-
-    public long pegarDadosRede() {
+    /**
+     * Chama o método dque retorna um vetor com os dados de consumo de rede.
+     * @return vetor com tres posicoes onde: [0] retorna o tempo inicial; [1] retorna o tempo final; [2] retorna o somatorio dos dados (wifi + mobile)
+     */
+    public long[] pegarDadosRede() {
         return this.nus.getTotalNetUsage(context);
     }
 
-    public void classificaSentimentos(long dados){
+    /**
+     * Efetua a classificação do sentimento seguindo a seguinte regra: se tiver mais sentimentos posivos no intervalo dito, classifica como
+     * positivo o intervalo de tempo. Se tiver mais negativos, classifica como negativo. Em seguida, salva esse resultado no banco de dados
+     * (pois ja está implementado para ler do banco para mostrar na tela do app) e salva em arquivo txt em uma pasta a ser definida.
+     * @param dados vetor que consiste em: dados[0] o tempo inicial do intervalo; dados[1] o tempo final do intervalo e dados[2] a quantidade
+     *              total em bytes de dados consumidos pela rede.
+     */
+    public void classificaSentimentos(long[] dados){
         int positivos = db.getTotalSentimentos("Positivo");
         int negativos = db.getTotalSentimentos("Negativo");
         Log.d(tag, "Positivo: " + positivos + " -- Negativos: " + negativos);
-        Sentimento s;
-        if(positivos > negativos){
-            s = Sentimento.POSITIVO;
-        }else{
-            s = Sentimento.NEGATIVO;
-        }
-        long[] interval = nus.getInterval();
-        ResultadoFinal rf = new ResultadoFinal();
-        rf.setBytes(dados);
-        rf.setDt_inicio(formatData(interval[0]));
-        rf.setDt_fim(formatData(interval[1]));
-        rf.setSentimento(s);
+        Sentimento s = (positivos >= negativos ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
+        ResultadoFinal rf = new ResultadoFinal(dados[0], dados[1], dados[2],dados[3], s);
         this.db.insertDb(rf, this.context);
         Log.d(tag, "Sentimento classificado. RF: " + rf.toString());
     }
 
+    /**
+     * Formata a data dada em long para string seguindo o padrão.
+     * @param d data em long seguindo o padrão Unix para data.
+     * @return string convertida em formato legivel de data.
+     */
     private String formatData(long d){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss", Locale.getDefault());
         return sdf.format(d);

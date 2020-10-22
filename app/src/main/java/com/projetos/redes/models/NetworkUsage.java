@@ -1,5 +1,7 @@
 package com.projetos.redes.models;
 
+import com.projetos.redes.Utils;
+
 import java.io.Serializable;
 
 public class NetworkUsage extends Data implements Serializable {
@@ -17,9 +19,25 @@ public class NetworkUsage extends Data implements Serializable {
     private long bytes_wifi;
     private long bytes_mobile;
 
-    private int id;
+    private long id;
 
     private String dt_inicio, dt_fim, tempo;
+
+    public NetworkUsage(){
+        this.time_stamp = 0;
+        this.bytes_wifi = 0;
+        this.bytes_mobile = 0;
+        this.dt_fim = Utils.getDateFormatter().format(System.currentTimeMillis());
+        this.dt_inicio = Utils.getDateFormatter().format(System.currentTimeMillis());
+    }
+    public NetworkUsage(String dtInicio, String dtFim, long wifi, long mobile){
+        this.dt_inicio = dtInicio;
+        this.dt_fim = dtFim;
+        this.bytes_wifi = wifi;
+        this.bytes_mobile = mobile;
+        this.time_stamp = 0;
+    }
+
 
     public long getTotal() {
         return bytes_mobile + bytes_wifi;
@@ -73,11 +91,11 @@ public class NetworkUsage extends Data implements Serializable {
         this.bytes_wifi = bytes_wifi;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

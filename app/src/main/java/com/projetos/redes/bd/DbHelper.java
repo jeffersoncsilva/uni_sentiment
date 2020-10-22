@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.projetos.redes.models.LexicoResult;
-import com.projetos.redes.models.LexicoUnificado;
+import com.projetos.redes.models.Palavras;
 import com.projetos.redes.models.NetworkUsage;
-import com.projetos.redes.models.Sentenca;
+import com.projetos.redes.models.Frases;
 import com.projetos.redes.models.UsrMsg;
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -23,9 +23,9 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Cria a tabela que armazena o arquivo lexico_unificado.txt
-        String sqlUnif = "CREATE TABLE IF NOT EXISTS "+ LexicoUnificado.TB_LEXICO_UNIFICADO +"(sentenca TEXT PRIMARY KEY, peso INTEGER);";
+        String sqlUnif = "CREATE TABLE IF NOT EXISTS "+ Palavras.TB_PALAVRAS +"(sentenca TEXT PRIMARY KEY, peso INTEGER);";
         // Cria a tabela que armazena o arquivo sentenca.txt
-        String sqlSenteca = "CREATE TABLE IF NOT EXISTS "+ Sentenca.TB_SENTENCA+"(frase TEXT PRIMARY KEY, peso INTEGER);";
+        String sqlSenteca = "CREATE TABLE IF NOT EXISTS "+ Frases.TB_FRASES +"(frase TEXT PRIMARY KEY, peso INTEGER);";
         // Cria a tabela LexicoResult
 
         try {
@@ -34,7 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(LexicoResult.SQL_CREATE_TABLE_LR);
             db.execSQL(NetworkUsage.SQL_TB_CREATE);
             db.execSQL(UsrMsg.SQL_CREATE_TB_USR);
-            db.execSQL("CREATE TABLE tb_result_final (dt_inicio TEXT, dt_fim TEXT, bytes INTEGER, sentimento TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT)");
+            db.execSQL("CREATE TABLE tb_result_final (dt_inicio TEXT, dt_fim TEXT, wifi INTEGER, mobile INTEGER, sentimento TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT)");
             Log.d(tag, "Sql executadas com sucesso! Base de dados criadas. ");
         }catch (Exception e ){
             Log.d(tag, "Erro ao executar onCreate. ERRO: " + e.getMessage());
@@ -44,8 +44,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String unificad = "DROP TABLE IF EXISTS " + LexicoUnificado.TB_LEXICO_UNIFICADO + ";";
-        String sentenca = "DROP TABLE IF EXISTS "+ Sentenca.TB_SENTENCA +";";
+        String unificad = "DROP TABLE IF EXISTS " + Palavras.TB_PALAVRAS + ";";
+        String sentenca = "DROP TABLE IF EXISTS "+ Frases.TB_FRASES +";";
         String lexicoResult = "DROP TABLE IF EXISTS " + LexicoResult.TB_LEXICO_RESULT + ";";
         String netUsage = "DROP TABLE IF EXISTS " + NetworkUsage.TB_NET_USAGE +";";
         String sqlUsr =  "DROP TABLE IF EXISTS " + UsrMsg.TB_USR_MSG +";";

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.projetos.redes.R;
+import com.projetos.redes.Utils;
 import com.projetos.redes.models.ResultadoFinal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public class ResultadoFinalAdapter extends RecyclerView.Adapter<ResultadoFinalAd
         this.data = lst;
     }
 
+    public List<ResultadoFinal> getItems(){ return this.data;}
+
     @NonNull
     @Override
     public FimAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,10 +39,11 @@ public class ResultadoFinalAdapter extends RecyclerView.Adapter<ResultadoFinalAd
     @Override
     public void onBindViewHolder(@NonNull FimAdapter h, int position) {
         ResultadoFinal rf = data.get(position);
-        h.tx_inicio.setText(String.format(context.getString(R.string.dt_inicio),rf.getDt_inicio()));
-        h.tx_fim.setText(String.format(context.getString(R.string.dt_fim),rf.getDt_fim()));
+        h.tx_sentimento.setText(rf.final_res);
+        /*h.tx_inicio.setText(String.format(context.getString(R.string.dt_inicio),rf.getDtInicio()));
+        h.tx_fim.setText(String.format(context.getString(R.string.dt_fim),rf.getDtFim()));
         h.tx_sentimento.setText(String.format(context.getString(R.string.tx_sentimento), rf.getSentimento().toString()));
-        h.tx_dados.setText(String.format(context.getString(R.string.tx_total)+rf.getBytes()));
+        h.tx_dados.setText((context.getString(R.string.tx_total) + Utils.convertMb(rf.getTotalBytes())));*/
     }
 
     @Override

@@ -1,37 +1,63 @@
 package com.projetos.redes.models;
 
+import com.projetos.redes.Utils;
 import com.projetos.redes.enums.Sentimento;
 
 import java.util.Date;
 
 public class ResultadoFinal extends Data{
     public static String TB_RESULT_FINAL = "CREATE TABLE  IF NOT EXISTS tb_result_final (dt_inicio TEXT, dt_fim TEXT, bytes INTEGER, sentimento TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);";
-    private String dt_inicio, dt_fim;
-    private long bytes;
+    private String dtInicio, dtFim;
+    public String final_res;
+    private long wifi, mobile;
     private Sentimento sentimento;
 
-    public String getDt_inicio() {
-        return dt_inicio;
+    public void setWifi(long wifi) {
+        this.wifi = wifi;
     }
 
-    public void setDt_inicio(String dt_inicio) {
-        this.dt_inicio = dt_inicio;
+    public void setMobile(long mobile) {
+        this.mobile = mobile;
     }
 
-    public String getDt_fim() {
-        return dt_fim;
+    public long getWifi() {
+        return wifi;
     }
 
-    public void setDt_fim(String dt_fim) {
-        this.dt_fim = dt_fim;
+    public long getMobile() {
+        return mobile;
     }
 
-    public long getBytes() {
-        return bytes;
+    public ResultadoFinal(){
+        this.dtFim = "00:00:0000:00:00:00";
+        this.dtInicio = "00:00:0000:00:00:00";
+        this.wifi = 0;
+        this.mobile = 0;
+        this.sentimento = Sentimento.POSITIVO;
     }
 
-    public void setBytes(long bytes) {
-        this.bytes = bytes;
+    public ResultadoFinal(long dtInicio, long dt_fim, long wifi, long mobile, Sentimento s){
+        this.dtInicio = Utils.getDateFormatter().format(new Date(dtInicio));
+        this.dtFim = Utils.getDateFormatter().format(new Date(dt_fim));
+        this.wifi = wifi;
+        this.mobile = mobile;
+        this.sentimento = s;
+    }
+
+    public String getDtInicio() {
+        return dtInicio;
+    }
+
+    public void setDtInicio(String dtInicio) {
+        this.dtInicio = dtInicio;
+    }
+
+    public String getDtFim() {
+        return dtFim;
+    }
+
+    public void setDtFim(String dtFim) {
+        this.dtFim = dtFim;
     }
 
     public Sentimento getSentimento() {
@@ -42,7 +68,11 @@ public class ResultadoFinal extends Data{
         this.sentimento = sentimento;
     }
 
+    public long getTotalBytes(){
+        return wifi + mobile;
+    }
+
     public String toString(){
-        return "DT_INICIO: " + dt_inicio + " | DT_FIM: " + dt_fim + " | Sentimento: " + sentimento.toString() + " | BYTES: "  + bytes;
+        return "DT_INICIO: " + dtInicio + " | DT_FIM: " + dtFim + " | Sentimento: " + sentimento.toString();
     }
 }
