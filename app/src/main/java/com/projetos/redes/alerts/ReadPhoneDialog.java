@@ -20,8 +20,8 @@ public class ReadPhoneDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle(getString(R.string.permission_readfohnestate));
-        alert.setMessage(getString(R.string.permission_readphonestate_desc));
+        alert.setTitle(getString(R.string.permisao_acesso_telefone));
+        alert.setMessage(getString(R.string.permisao_acesso_telefone_descricao));
         alert.setPositiveButton(getString(R.string.permission_authorize), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

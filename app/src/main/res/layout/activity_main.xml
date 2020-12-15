@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,6 +23,7 @@
         android:id="@+id/btResultadoProcessamentoLexico"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/bt_lexico_result"
         android:textSize="@dimen/bt_tx_size"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -34,14 +36,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <Button
         android:id="@+id/btIniciaAplicacao"
@@ -66,6 +68,50 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/btResultadoProcessamentoLexico" />
+
+    <ImageButton
+        android:id="@+id/btHelpUsoInternet"
+        android:layout_width="@dimen/bt_help_size"
+        android:layout_height="@dimen/bt_help_size"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/btHelpUsoInternetDescription"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_VerDadosRedes"
+        app:layout_constraintStart_toEndOf="@+id/btn_VerDadosRedes"
+        app:layout_constraintTop_toTopOf="@+id/btn_VerDadosRedes"
+        app:srcCompat="@android:drawable/ic_menu_help" />
+
+    <ImageButton
+        android:id="@+id/btHelpResultadoLexico"
+        android:layout_width="@dimen/bt_help_size"
+        android:layout_height="@dimen/bt_help_size"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/btHelpResultadoLexicoDescription"
+        app:layout_constraintBottom_toBottomOf="@+id/btResultadoProcessamentoLexico"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/btResultadoProcessamentoLexico"
+        app:srcCompat="@android:drawable/ic_menu_help" />
+
+    <ImageButton
+        android:id="@+id/btHelpResultadoFinal"
+        android:layout_width="@dimen/bt_help_size"
+        android:layout_height="@dimen/bt_help_size"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/btHelpResultadoFinalDescription"
+        app:layout_constraintBottom_toBottomOf="@+id/btResultadoFinalClassificado"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/btResultadoFinalClassificado"
+        app:srcCompat="@android:drawable/ic_menu_help" />
+
+    <ImageButton
+        android:id="@+id/btHelpInicioParadaAplicacao"
+        android:layout_width="@dimen/bt_help_size"
+        android:layout_height="@dimen/bt_help_size"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/btHelpIniciaPararAplicacaoDescription"
+        app:layout_constraintBottom_toBottomOf="@+id/btIniciaAplicacao"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/btIniciaAplicacao"
+        app:srcCompat="@android:drawable/ic_menu_help" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

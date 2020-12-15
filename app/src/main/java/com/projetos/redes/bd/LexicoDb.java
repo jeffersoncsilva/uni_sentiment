@@ -18,6 +18,7 @@ import com.projetos.redes.models.Frases;
 import com.projetos.redes.models.UsrMsg;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -151,29 +152,19 @@ public class LexicoDb {
     }
 
     private String getResultFim(ResultadoFinal rf){
-        StringBuilder sb = new StringBuilder();
         DateFormat df = Utils.getDateFormatter();
+        String str = "";
         try {
             Date d = df.parse(rf.getDtInicio());
             Date d2 = df.parse(rf.getDtFim());
-        long min = (d2.getTime() - d.getTime())/1000; // obtém minutos
-        sb.append(d.getDay());
-        sb.append("\\");
-        sb.append(d.getMonth());
-        sb.append("\\");
-        sb.append(d.getYear());
-        sb.append(";");
-        sb.append(d.getHours());
-        sb.append(";");
-        sb.append(rf.getTotalBytes());
-        sb.append(";");
-        sb.append(rf.getSentimento());
-        sb.append(";");
-        sb.append(min);
+            long min = ((d2.getTime() - d.getTime())/1000)/60; // obtém minutos
+            df = new SimpleDateFormat("dd/MM/yyyy");
+            //Data;hora;consumo_wifi(kb);consumo_mobile(kb);sentimento;intervalo_minutos
+            str = String.format("%s;%d:00;%d;%s;%d", df.format(d), d.getHours(), rf.getTotalBytes(), rf.getSentimento(), min);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return sb.toString();
+        return str;
     }
 
     public Cursor getTableSaldoSentenca(String msg) {

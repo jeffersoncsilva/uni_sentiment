@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.util.Log;
 import androidx.annotation.Nullable;
 import com.projetos.redes.bd.LexicoDb;
-import com.projetos.redes.tasks.InsertLeixcoUnificado;
-import com.projetos.redes.tasks.InsertSentences;
+import com.projetos.redes.tasks.InserePalavras;
+import com.projetos.redes.tasks.InsereFrases;
 
 public class PopulateDatabaseService extends IntentService {
 
@@ -22,11 +22,11 @@ public class PopulateDatabaseService extends IntentService {
         Context context = getApplicationContext();
         LexicoDb db = LexicoDb.getInstance(context);
         if(!db.hasSentencaDatabase())
-            new InsertSentences(db, context);
+            new InsereFrases(db, context);
         else
             Log.v(TAG, "Tabela sentenca ja criada.");
         if(!db.hasLexicoUnificado())
-            new InsertLeixcoUnificado(db, context);
+            new InserePalavras(db, context);
         else
             Log.v(TAG, "Tabela lexico unificado criado");
     }

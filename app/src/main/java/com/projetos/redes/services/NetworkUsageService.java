@@ -51,10 +51,10 @@ public class NetworkUsageService {
         Log.d(tag, "mobile: " + Utils.convertMb(dados[3]));
 
         DateFormat sdf = Utils.getDateFormatter();
-        NetworkUsage net = new NetworkUsage(nu_last.getDt_inicio(), sdf.format(dados[1]), wifi, mobyle);
+        NetworkUsage net = new NetworkUsage(nu_last.getDt_fim(), sdf.format(dados[1]), wifi, mobyle);
         // Converte o tempo inicial para millisegundos.
         try {
-            dados[0] = sdf.parse(nu_last.getDt_inicio()).getTime();
+            dados[0] = sdf.parse(nu_last.getDt_fim()).getTime();
         }catch (ParseException e){
             Log.d(tag, "erro ao converter para milissegundos: ERRO: "+e.getMessage());
             e.printStackTrace();

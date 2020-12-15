@@ -24,7 +24,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Cria a tabela que armazena o arquivo lexico_unificado.txt
         String sqlUnif = "CREATE TABLE IF NOT EXISTS "+ Palavras.TB_PALAVRAS +"(sentenca TEXT PRIMARY KEY, peso INTEGER);";
-        // Cria a tabela que armazena o arquivo sentenca.txt
+        // Cria a tabela que armazena o arquivo frases.txt
         String sqlSenteca = "CREATE TABLE IF NOT EXISTS "+ Frases.TB_FRASES +"(frase TEXT PRIMARY KEY, peso INTEGER);";
         // Cria a tabela LexicoResult
 

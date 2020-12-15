@@ -10,13 +10,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class InsertSentences {
-    private final String TAG = "InsertSenteces";
-    private final String nameFile = "sentenca.txt";
+public class InsereFrases {
+    private final String TAG = "DB.InsereFrases";
+    private final String nameFile = "frases.txt";
     private LexicoDb db;
     private Context context;
 
-    public InsertSentences(LexicoDb db, Context con){
+    public InsereFrases(LexicoDb db, Context con){
         this.db = db;
         this.context = con;
         doIt();

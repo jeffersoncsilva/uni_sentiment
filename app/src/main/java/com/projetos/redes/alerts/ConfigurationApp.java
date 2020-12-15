@@ -81,7 +81,7 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btFoneEstate){
+        /*if(v.getId() == R.id.btFoneEstate){
             readPhoneDialog();
         }
         else if(v.getId() == R.id.btAcessoDado){
@@ -90,13 +90,36 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
             servicoCapturaMensagens();
         }else if(v.getId() == R.id.btWorker){
             configuraLexico();
+        }*/
+        switch (v.getId()){
+            case R.id.btFoneEstate:
+                readPhoneDialog();
+                break;
+            case R.id.btAcessoDado:
+                acessoDados();
+                break;
+            case  R.id.btAccessibitliyService:
+                servicoCapturaMensagens();
+                break;
+            case R.id.btWorker:
+                configuraLexico();
+                break;
+            case R.id.btnAjudaAcessoTelefone:
+                //mostrarDialogoAjuda(getContext().getString(R.string.btAc))
+                break;
+            case R.id.btAjudaAcessoDadosTelefone:
+                break;
+            case R.id.btAjudaCapturaMensagens:
+                break;
+            case R.id.btAjudaTempoExecucaoLexico:
+                break;
         }
     }
 
     private void readPhoneDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle(getString(R.string.permission_readfohnestate));
-        alert.setMessage(getString(R.string.permission_readphonestate_desc));
+        alert.setTitle(getString(R.string.permisao_acesso_telefone));
+        alert.setMessage(getString(R.string.permisao_acesso_telefone_descricao));
         alert.setPositiveButton(getString(R.string.permission_authorize), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -110,8 +133,8 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
 
     private void acessoDados(){
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle(getString(R.string.permission_checkForPermission));
-        alert.setMessage(getString(R.string.permission_checkForPermission_desc));
+        alert.setTitle(getString(R.string.autorizacao_acesso_dados_de_uso));
+        alert.setMessage(getString(R.string.autorizacao_acesso_dados_de_uso_descricao));
         alert.setPositiveButton(getString(R.string.permission_authorize), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -184,4 +207,12 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
         wManager.enqueueUniquePeriodicWork(LexicoWorker.WORK_NAME, ExistingPeriodicWorkPolicy.REPLACE, req);
     }
 
+    private void mostrarDialogoAjuda(String mensagem){
+        AlertDialog.Builder builder  = new AlertDialog.Builder(getActivity());
+        View v = getLayoutInflater().inflate(R.layout.dialogo_de_ajuda, null);
+        TextView descricaoAjuda = v.findViewById(R.id.descricao_ajuda);
+        descricaoAjuda.setText(mensagem);
+        builder.setView(v);
+        builder.show();
+    }
 }

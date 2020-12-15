@@ -1,46 +1,81 @@
 <resources>
     <string name="app_name">Projeto Redes</string>
-    <string name="serv_desc">Serviço de monitoramento de mensagens para analise de sentimentos do usuário.</string>
+    <string name="serv_desc">
+        Serviço de monitoramento de mensagens para análise de sentimentos do usuário.
+    </string>
     <string name="str_erro_load_text">
-        Não foi possivel carregar as mensagens enviadas. Caso esteja utilizando o app pela primeira vez,
-        lembre-se de permitir o app na seção de Acessibilidade do seu dispositivo. (Configurações->Acessibilidade->Projeto Redes -
+        Não foi possível carregar as mensagens enviadas. Caso esteja utilizando o app pela primeira vez,
+        Lembre-se de permitir o app na seção de Acessibilidade do seu dispositivo. (Configurações -> Acessibilidade ->Projeto Redes -
         Mantenha essa opção ativa para correto funcionamento.)
     </string>
-    <string name="btnLexico">Salvar Configuração</string>
-    <string name="str_msg_load">Menssagens carregadas com sucesso!</string>
-    <string name="bt_service_start">Inicar o serviço de captura de menssagens.</string>
-    <string name="bt_service_start_description">Inicia o serviço de acessibilidade que e responsável por gravar as menssagens do WhatsApp. Para isso, habilite o app
-    nas configurações de acessibilidae do sistema. (O botão abaixo e um atalho ;)</string>
+
+    <string name="btnLexico">Salvar Configuração.</string>
+    <string name="str_msg_load">Mensagens carregadas com sucesso!</string>
+    <string name="bt_service_start">Inciar o serviço de captura de mensagens.</string>
+    <string name="bt_service_start_description">
+        Inicia o serviço de acessibilidade que e responsável por gravar as mensagens do WhatsApp. Para isso, habilite o aplicativo
+        nas configurações de acessibilidade do sistema. O botão abaixo e um atalho ;)
+    </string>
     <string name="bt_service_end">Parar aplicação.</string>
 
     <string name="tx_desc_tempo">Defina o tempo que deseja que ocorra a execução do algoritmo: </string>
     <string name="intervalo_minutos">%d Minutos</string>
-    <string name="str_alarm_set">Analizador lexico setado para executar em %d minutos.</string>
+    <string name="str_alarm_set">Analisador léxico setado para executar em %d minutos.</string>
 
     <!-- String de permisão das autorizações do android -->
-    <string name="permission_checkForPermission">Autorização para obter dados do dispositivo</string>
-    <string name="permission_checkForPermission_desc">Essa autorização permite que o app rastreie os demais apps que você utiliza, bem como a sua operadora, configurações de idioma e outros detalhes.
-        Ela e necessaria para que seja possivel medir a quantidade de dados (em megabytes) que você utiliza enquanto usa o aparelho.</string>
+    <string name="autorizacao_acesso_dados_de_uso">Autorização para obter dados do dispositivo.</string>
+    <string name="autorizacao_acesso_dados_de_uso_descricao">
+        Essa autorização e necessária, e utilizada somente para obter o histórico de consumo de ‘internet’ do dispositivo
+        no tempo em que esteve conectado a uma rede WI-FI.
+    </string>
 
-    <string name="permission_readfohnestate">Autorização para obter dados da rede de telefonia movel.</string>
-    <string name="permission_readphonestate_desc">Permite acesso somente leitura ao estado do telefone, incluindo as informações da rede celular atual, o status de todas as chamadas em andamento e uma lista de quaisquer contas de telefone registradas no dispositivo.
-    Isso e necessario para que seja possivel obter a quantidade de dados que foi utilizado utilizando a rede movel do dispositivo.</string>
+    <string name="permisao_acesso_telefone">Autorização para obter dados da rede de telefonia móvel.</string>
+    <string name="permisao_acesso_telefone_descricao">
+        Essa permissão e necessária, e utilizada somente para obter os dados de utilização de redes móveis. Caso não seja concedida, os dados referentes a utilização
+        de rede móvel não será coletado.
+    </string>
 
     <string name="permission_authorize">Autorizar</string>
 
     <!-- Descrição do MyAccessibilityService -->
-    <string name="myAccessibilityService_title">Serviço de acessibilidade</string>
-    <string name="myAccessibilityService_desc">Este serviço é responsável por "ouvir" a interação com o whatsapp para que seja possivel realizar a capitura das menssagens enviadas
-    e seja então possivel realizar a analise léxica para poder ser feita a classificação de sentimentos.</string>
+    <string name="myAccessibilityService_title">Serviço de acessibilidade.</string>
+    <string name="myAccessibilityService_desc">
+        Este é a forma de salvar as mensagens enviadas pelo WhatsApp. Com ele ativado, ao enviar qualquer mensagem para qualquer contato
+        utilizando o WhatsApp, essa mensagem será salva para posterior análise de sentimento.
+    </string>
 
     <!-- Nomes botoes activity prinipal -->
-    <string name="btn_net_usage">Uso de internet.</string>
+    <string name="btn_net_usage">Ver uso de internet.</string>
     <string name="btn_cancelar_lexico">Configurar execução automática.</string>
     <string name="bt_continuar">Continuar</string>
     <string name="bt_cancel">Cancelar</string>
     <string name="btIniciarAplicacao">Iniciar aplicação.</string>
     <string name="btPararAplicacao">Parar aplicação.</string>
-    <string name="btResultadoClassificador">Resultado classificação</string>
+    <string name="btResultadoClassificador">Resultado final.</string>
+    <string name="btHelpUsoInternetDescription">Uso de internet do celular.</string>
+    <string name="btHelpResultadoLexicoDescription">Resultado léxico.</string>
+    <string name="btHelpResultadoFinalDescription">Resultado final do processamento.</string>
+    <string name="btHelpIniciaPararAplicacaoDescription">Iniciar / Parar aplicação.</string>
+    <string name="btAjudaUsoDeInternet">
+        Aqui está o resultado da captura de dados pela internet. Caso não tenha nenhum dado informado, verifique se o serviço de captura está
+        ativo e foi dada as autorizações de acesso a serviço de telefone, que e responsável por fornecer acesso os dados móveis usados,
+        e autorização de acesso aos dados do telefone, que é responsável por fornece acesso aos dados de uso de WI-FI.
+    </string>
+    <string name="btAjudaResultadoLexico">
+        Aqui está o resultado da análise léxica de cada sentença analisada.
+    </string>
+    <string name="btAjudaResultadoFinal">
+        Aqui está o compilado da análise, isto é, quando e definido o intervalo de tempo da análise, e feita a análise das mensagens
+        e então e definido o sentimento do usuário no intervalo indicado, o consumo de dados de internet nesse tempo, no
+        modelo já definido para análise destes dados.
+    </string>
+    <string name="btAjudaIniciaParaAplicacao">
+        Aqui e onde é iniciado e configurado o tempo de captura dos dados de consumo de internet.
+        Assim como e dada as devidas autorizações para a coleta de dados de consumo de internet funcionar corretamente.
+        Caso o serviço esteja em execução, lê será interrompido e automaticamente será revogado as autorizações de funcionamento.
+    </string>
+
+
     <!-- Nomes activity netusage -->
     <string name="bt_reload">Recarregar</string>
     <string name="dt_inicio">Inicio: %s.</string>
@@ -50,18 +85,26 @@
     <string name="tx_mobile">Mobile: %s.</string>
     <string name="tx_total">Total: </string>
     <!-- Nomes activity lista menssagens usuario -->
-    <string name="bt_usr_msg">Menssagens do usuario</string>
-    <string name="tx_msgs">Menssagens capturadas durante a execução do MyAcessibilityService.</string>
+    <string name="bt_usr_msg">Mensagens do usuário</string>
+    <string name="tx_msgs">Mensagens salvas pelo aplicativo.</string>
     <string name="tx_usr_data">Data: %s</string>
     <string name="tx_usr_msg">MSG: %s</string>
 
     <!-- Nomes activity lexico_result -->
-    <string name="tx_lexico_desc">Lista das frases que ja foram processadas pelo lexico.</string>
-    <string name="bt_lexico_result">Léxico processado.</string>
+    <string name="tx_lexico_desc">Frases processadas pelo léxico.</string>
+    <string name="bt_lexico_result">Ver resultado do léxico.</string>
     <string name="tx_result_ls">Sentimento: %s</string>
 
     <!-- Strings activity_resultado_final -->
     <string name="tx_sentimento">Sentimento: %s</string>
+    <string name="title_activity_recebe_conversa_exportada_whatsapp">
+        ActivityRecebeConversaExportadaWhatsapp
+    </string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 
 </resources>
