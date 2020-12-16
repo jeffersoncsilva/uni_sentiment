@@ -17,11 +17,19 @@ import android.widget.Toast;
 
 import com.projetos.redes.R;
 import com.projetos.redes.alerts.ConfigurationApp;
+import com.projetos.redes.bd.DbHelper;
 import com.projetos.redes.services.MyAccessibilitiService;
 import com.projetos.redes.services.PopulateDatabaseService;
 import com.projetos.redes.worker.LexicoWorker;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String tag = "LexicoApp";
@@ -46,20 +54,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btHelpResultadoFinal).setOnClickListener(this);
         findViewById(R.id.btHelpInicioParadaAplicacao).setOnClickListener(this);
 
-        /*final boolean acessibilitService = MyAccessibilitiService.serviceIsRunning(Objects.requireNonNull(MainActivity.this));
+        final boolean acessibilitService = MyAccessibilitiService.serviceIsRunning(Objects.requireNonNull(MainActivity.this));
         final boolean workerActive = LexicoWorker.WorkActive(this);
         if(!acessibilitService && !workerActive)
             btInicaAplicacao.setText(getText(R.string.btIniciarAplicacao));
         else
             btInicaAplicacao.setText(getText(R.string.btPararAplicacao));
-         */
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Intent in = new Intent(MainActivity.this, PopulateDatabaseService.class);
-        startService(in);
+        inicializarBancoDeDados();
+    }
+
+    private void inicializarBancoDeDados() {
+        File database = getApplicationContext().getDatabasePath(DbHelper.DATA_BASE_NAME);
+        if (!database.exists()){
+            if (copiaBanco()){
+                alert("Banco copiado com sucesso");
+            }else{
+                alert("Erro ao copiar o banco de dados");
+            }
+        }else
+            alert("Banco de dados ja existe.");
+    }
+
+    private void alert(String s) {
+        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
+    }
+
+    private boolean copiaBanco() {
+        try {
+            InputStream inputStream = getAssets().open(DbHelper.DATA_BASE_NAME);
+            String outFile = "/data/data/com.projetos.redes/databases/DbLexico";
+            OutputStream outputStream = new FileOutputStream(outFile);
+            byte[] buff = new byte[1024];
+            int legth = 0;
+            while ((legth = inputStream.read(buff))>0){
+                outputStream.write(buff,0,legth);
+            }
+            outputStream.flush();
+            outputStream.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
@@ -106,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void configuraAplicacao(){
-        /*if(btInicaAplicacao.getText().equals(getString(R.string.btIniciarAplicacao))) {
+        if(btInicaAplicacao.getText().equals(getString(R.string.btIniciarAplicacao))) {
             ConfigurationApp c = new ConfigurationApp(btInicaAplicacao);
             c.show(getSupportFragmentManager(), "ConfigurationApp");
         }else {
@@ -114,14 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LexicoWorker.stopWorker(this);
             MyAccessibilitiService.stopService(this);
             btInicaAplicacao.setText(getString(R.string.btIniciarAplicacao));
-        }*/
-        Intent in = new Intent(Intent.ACTION_SENDTO);
-        in.setData(Uri.parse("mailto:"));
-        in.putExtra(Intent.EXTRA_EMAIL, "alterar.email.para@real.com");
-        in.putExtra(Intent.EXTRA_SUBJECT, "Dados de sentimentos de usuario");
-        in.putExtra(Intent.EXTRA_TEXT, "sb.toString()");
-
-            startActivity(in);
+        }
     }
 
     private void mostrarDialogoAjuda(String mensagem){

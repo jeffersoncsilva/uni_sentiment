@@ -32,7 +32,6 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
     private static int autorizacoes = 0;
     private int workerInterval = 0;
     private Button btWorker, btAcessibilityService, btPhoneState, btAcessoDados, btPararAplicacao;
-
     public ConfigurationApp(){
         btPararAplicacao = null;
         autorizacoes = 0;
@@ -52,6 +51,12 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
         btAcessibilityService = v.findViewById(R.id.btAccessibitliyService);
         btAcessibilityService.setOnClickListener(this);
         btPhoneState = v.findViewById(R.id.btFoneEstate);
+
+        v.findViewById(R.id.btnAjudaAcessoTelefone).setOnClickListener(this);
+        v.findViewById(R.id.btAjudaAcessoDadosTelefone).setOnClickListener(this);
+        v.findViewById(R.id.btAjudaCapturaMensagens).setOnClickListener(this);
+        v.findViewById(R.id.btAjudaTempoExecucaoLexico).setOnClickListener(this);
+
         if(Utils.readPhoneStatePermission(getContext())) {
             btPhoneState.setEnabled(false);
             autorizacoes++;
@@ -81,16 +86,6 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        /*if(v.getId() == R.id.btFoneEstate){
-            readPhoneDialog();
-        }
-        else if(v.getId() == R.id.btAcessoDado){
-            acessoDados();
-        }else if(v.getId() == R.id.btAccessibitliyService){
-            servicoCapturaMensagens();
-        }else if(v.getId() == R.id.btWorker){
-            configuraLexico();
-        }*/
         switch (v.getId()){
             case R.id.btFoneEstate:
                 readPhoneDialog();
@@ -105,13 +100,16 @@ public class ConfigurationApp extends DialogFragment implements View.OnClickList
                 configuraLexico();
                 break;
             case R.id.btnAjudaAcessoTelefone:
-                //mostrarDialogoAjuda(getContext().getString(R.string.btAc))
+                mostrarDialogoAjuda(getContext().getString(R.string.btAjudaAcessoTelefone));
                 break;
             case R.id.btAjudaAcessoDadosTelefone:
+                mostrarDialogoAjuda(getContext().getString(R.string.btAjudaAcessoDadosTelefoneTexto));
                 break;
             case R.id.btAjudaCapturaMensagens:
+                mostrarDialogoAjuda(getContext().getString(R.string.btAjudaCapturaMensagensText));
                 break;
             case R.id.btAjudaTempoExecucaoLexico:
+                mostrarDialogoAjuda(getContext().getString(R.string.btAjudaTempoExecucaoLexicoTexto));
                 break;
         }
     }

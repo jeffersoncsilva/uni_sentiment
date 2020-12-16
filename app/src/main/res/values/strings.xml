@@ -107,4 +107,8 @@
     <string name="hello_world">Hello Square World!</string>
 
 
+    <string name="btAjudaAcessoTelefone">Essa autorização e necessaria pra que seja possivel capturar os dados de uso de redes móveis.</string>
+    <string name="btAjudaAcessoDadosTelefoneTexto">Essa autorização e para que seja possivel a captura de dados de uso conectado a WI-FI.</string>
+    <string name="btAjudaCapturaMensagensText">Para que seja possivel capturar as mensagens que é enviada pelo WhatsApp.</string>
+    <string name="btAjudaTempoExecucaoLexicoTexto">Configura o intervalo que será realizado a análise das mensagens e a captura dos dados de uso de internet.</string>
 </resources>
