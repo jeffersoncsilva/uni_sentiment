@@ -111,4 +111,11 @@
     <string name="btAjudaAcessoDadosTelefoneTexto">Essa autorização e para que seja possivel a captura de dados de uso conectado a WI-FI.</string>
     <string name="btAjudaCapturaMensagensText">Para que seja possivel capturar as mensagens que é enviada pelo WhatsApp.</string>
     <string name="btAjudaTempoExecucaoLexicoTexto">Configura o intervalo que será realizado a análise das mensagens e a captura dos dados de uso de internet.</string>
+    <string name="bt_ajuda_aplicativo">Sobre Aplicativo</string>
+    <string name="bt_inicia_analise_mensagens">Iniciar Análise</string>
+    <string name="instrucao_autor">Escolha um autor das mensagens para realizar a análise do sentimento.</string>
+    <string name="btAjudaAplicativo">Esse aplicativo foi desenvolivido para poder realizar análise léxica das mensagens
+    enviadas pelo WhatsApp, capturar dados sobre a quantidade de internet utilizada no dispositivo no horário estipulado
+    pela captura de mensagens e então poder traçar um perfil que relaciona o sentimento do usuário em Positivo e Negativo
+    e o seu consumo de internet.</string>
 </resources>

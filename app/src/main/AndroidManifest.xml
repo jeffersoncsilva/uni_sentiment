@@ -19,50 +19,34 @@
         android:roundIcon="@drawable/icone_low"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".activities.AjudaActivity"></activity>
         <activity
-            android:name=".activities.ActivityRecebeConversaExportadaWhatsapp"
+            android:name=".activities.RecebeConversaExportadaActivity"
             android:label="@string/title_activity_recebe_conversa_exportada_whatsapp">
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".activities.NetUsageActivity"
-            android:parentActivityName=".activities.NetUsageActivity" />
-
+            android:name=".activities.UsoDeInternetActivity"
+            android:parentActivityName=".activities.UsoDeInternetActivity" />
         <activity
-            android:name=".activities.LexicoResultActivity"
+            android:name=".activities.LexicoProcessadoActivity"
             android:parentActivityName=".activities.MainActivity" />
-
         <activity
-            android:name=".activities.LexicoResultadoFinal"
+            android:name=".activities.ResultadoFinalActivity"
             android:parentActivityName=".activities.MainActivity" />
-
-        <service
-            android:name=".services.MyAccessibilitiService"
-            android:description="@string/serv_desc"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".services.PopulateDatabaseService"
-            android:enabled="true" />
-
     </application>
 
 </manifest>

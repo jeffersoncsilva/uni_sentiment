@@ -17,6 +17,7 @@
     <dimen name="bt_tx_size">18sp</dimen>
 
     <dimen name="bt_help_size">48dp</dimen>
+    <dimen name="bt_help_size_grande">128dp</dimen>
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.
@@ -29,4 +30,5 @@
     inner_frame_layout_padding (below variable) on round screens.
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
+    <dimen name="pbar_carregar_mensagens">128dp</dimen>
 </resources>

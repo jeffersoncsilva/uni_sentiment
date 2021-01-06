@@ -5,11 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.projetos.redes.models.LexicoResult;
-import com.projetos.redes.models.Palavras;
-import com.projetos.redes.models.NetworkUsage;
-import com.projetos.redes.models.Frases;
-import com.projetos.redes.models.UsrMsg;
+import com.projetos.redes.modelos.ResultadoLexicoProcessado;
+import com.projetos.redes.modelos.UsoDeInternet;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String tag = "DbHelper";
@@ -22,33 +19,33 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        /*
         // Cria a tabela que armazena o arquivo lexico_unificado.txt
-        String sqlUnif = "CREATE TABLE IF NOT EXISTS "+ Palavras.TB_PALAVRAS +"(sentenca TEXT PRIMARY KEY, peso INTEGER);";
+        String sqlUnif = "CREATE TABLE IF NOT EXISTS tb_palavras (sentenca TEXT PRIMARY KEY, peso INTEGER);";
         // Cria a tabela que armazena o arquivo frases.txt
-        String sqlSenteca = "CREATE TABLE IF NOT EXISTS "+ Frases.TB_FRASES +"(frase TEXT PRIMARY KEY, peso INTEGER);";
+        String sqlSenteca = "CREATE TABLE IF NOT EXISTS tb_frases (frase TEXT PRIMARY KEY, peso INTEGER);";
         // Cria a tabela LexicoResult
 
         try {
             db.execSQL(sqlUnif);
             db.execSQL(sqlSenteca);
-            db.execSQL(LexicoResult.SQL_CREATE_TABLE_LR);
-            db.execSQL(NetworkUsage.SQL_TB_CREATE);
-            db.execSQL(UsrMsg.SQL_CREATE_TB_USR);
+            db.execSQL(ResultadoLexicoProcessado.SQL_CREATE_TABLE_LR);
+            db.execSQL(UsoDeInternet.SQL_TB_CREATE);
             db.execSQL("CREATE TABLE tb_result_final (dt_inicio TEXT, dt_fim TEXT, wifi INTEGER, mobile INTEGER, sentimento TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT)");
             Log.d(tag, "Sql executadas com sucesso! Base de dados criadas. ");
         }catch (Exception e ){
             Log.d(tag, "Erro ao executar onCreate. ERRO: " + e.getMessage());
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        String unificad = "DROP TABLE IF EXISTS " + Palavras.TB_PALAVRAS + ";";
-        String sentenca = "DROP TABLE IF EXISTS "+ Frases.TB_FRASES +";";
-        String lexicoResult = "DROP TABLE IF EXISTS " + LexicoResult.TB_LEXICO_RESULT + ";";
-        String netUsage = "DROP TABLE IF EXISTS " + NetworkUsage.TB_NET_USAGE +";";
-        String sqlUsr =  "DROP TABLE IF EXISTS " + UsrMsg.TB_USR_MSG +";";
+        /*String unificad = "DROP TABLE IF EXISTS " + PalavrasLexico.TB_PALAVRAS + ";";
+        String sentenca = "DROP TABLE IF EXISTS "+ FrasesLexico.TB_FRASES +";";
+        String lexicoResult = "DROP TABLE IF EXISTS " + ResultadoLexicoProcessado.TB_LEXICO_RESULT + ";";
+        String netUsage = "DROP TABLE IF EXISTS " + UsoDeInternet.TB_NET_USAGE +";";
+        String sqlUsr =  "DROP TABLE IF EXISTS " + MensagensDoUsuario.TB_USR_MSG +";";
         try {
             db.execSQL(unificad);
             db.execSQL(sentenca);
@@ -60,5 +57,6 @@ public class DbHelper extends SQLiteOpenHelper {
             Log.d(tag, "Erro ao executar onUpgrade. ERRO: " + e.getMessage());
             e.printStackTrace();
         }
+         */
     }
 }
