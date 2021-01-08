@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.projetos.redes.R;
 
 public class AjudaActivity extends AppCompatActivity {
+    public static final String AJUDA_KEY = "ajuda_nome";
     private TextView txAjuda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class AjudaActivity extends AppCompatActivity {
         txAjuda = findViewById(R.id.txAjuda);
         Intent in = getIntent();
         Bundle b = in.getExtras();
-        String ajuda = b.getString("ajuda_nome");
+        String ajuda = b.getString(AJUDA_KEY);
         txAjuda.setText(ajuda);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

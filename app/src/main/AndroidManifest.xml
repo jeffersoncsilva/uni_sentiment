@@ -19,7 +19,8 @@
         android:roundIcon="@drawable/icone_low"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AjudaActivity"></activity>
+        <activity android:name=".activities.ContatoActivity"/>
+        <activity android:name=".activities.AjudaActivity" />
         <activity
             android:name=".activities.RecebeConversaExportadaActivity"
             android:label="@string/title_activity_recebe_conversa_exportada_whatsapp">

@@ -16,11 +16,11 @@ import java.util.List;
 
 public class Lexico {
     private static final String tag = "AnalisadorLexico";
-    private Context context;
+    private final Context context;
     public BancoDeDados banco;
-    private BuscadorConsumoInternet nus;
-    private List<MensagemUsuario> mensagens;
-    private int mIntervalo;
+    private final BuscadorConsumoInternet nus;
+    private final List<MensagemUsuario> mensagens;
+    private final int mIntervalo;
 
     public Lexico(Context c, List<MensagemUsuario> msgs, int intervalo) {
         this.context = c;
@@ -36,7 +36,7 @@ public class Lexico {
         for(MensagemUsuario mu : mensagens) {
             saldoSomaPalavras = pegarSaldoDaSomaDasPalavrasDaFrase(mu.getMensagem().toLowerCase());
             saldoFraseTotal = pegarSaldoFrase(mu.getMensagem().toLowerCase());
-            Sentimento s = null;
+            Sentimento s;
             if (saldoFraseTotal == 1) {
                 s = Sentimento.POSITIVO;
             } else if (saldoFraseTotal == -1) {

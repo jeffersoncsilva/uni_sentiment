@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Data {
-
-    private Date date;
+    public static final String DATA_SEM_HORAS = "dd/MM/yy";
+    private final Date date;
 
     public Data(Date d){
         this.date = d;
@@ -23,16 +23,23 @@ public class Data {
     }
 
     public String toString(){
-        String str =new SimpleDateFormat("dd/MM/yy hh:mm a").format(date);
-        return str;
+        return new SimpleDateFormat("dd/MM/yy hh:mm a").format(date);
     }
+
+    public String pegarDataSemHoras(){
+        return new SimpleDateFormat(DATA_SEM_HORAS).format(date);
+    }
+
+    public String pegarHorasDaData(){ return date.getHours() + "";}
 
     private Date formataDataParaDate(String data){
         SimpleDateFormat sdf = new SimpleDateFormat(Utils.PADRAO_DATA);
         Date dt = null;
         try {
             dt = sdf.parse(data);
-        } catch (ParseException pe) { }
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
         if(dt != null) return dt;
 
         String[] dates = data.split(" ");

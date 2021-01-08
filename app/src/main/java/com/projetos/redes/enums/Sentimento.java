@@ -4,10 +4,10 @@ public enum Sentimento {
     POSITIVO(1, "Positivo"),
     NEGATIVO(2, "Negativo");
 
-    private int id;
-    private String desc;
+    private final int id;
+    private final String desc;
 
-    private Sentimento(int id, String s){
+    Sentimento(int id, String s){
         this.id = id;
         this.desc= s;
     }
@@ -24,4 +24,5 @@ public enum Sentimento {
     public String toString(){
         return this.desc;
     }
+
 }

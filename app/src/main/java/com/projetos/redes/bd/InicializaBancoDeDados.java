@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class InicializaBancoDeDados {
-    private Context mContext;
+    private final Context mContext;
 
     public InicializaBancoDeDados(Context context){
         mContext = context;
@@ -31,13 +31,13 @@ public class InicializaBancoDeDados {
         try {
             File file = new File("/data/data/com.projetos.redes/databases");
             if(!file.exists()){
-                file.mkdir();
-                Log.d("InicializaBancoDeDados","diretorio criado com sucesso!!");
+                if(file.mkdir())
+                    Log.d("InicializaBancoDeDados","diretorio criado com sucesso!!");
             }
             InputStream inputStream = mContext.getAssets().open(DbHelper.DATA_BASE_NAME);
             OutputStream outputStream = new FileOutputStream("/data/data/com.projetos.redes/databases/DbLexico");
             byte[] buff = new byte[1024];
-            int legth = 0;
+            int legth;
             while ((legth = inputStream.read(buff))>0){
                 outputStream.write(buff,0,legth);
             }

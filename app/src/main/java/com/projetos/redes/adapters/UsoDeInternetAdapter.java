@@ -16,7 +16,7 @@ import java.util.List;
 
 public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdapter.HolderNet> {
     private List<UsoDeInternet> data;
-    private Context c;
+    private final Context c;
 
     public UsoDeInternetAdapter(List<UsoDeInternet> data, Context con){
         this.data = data;
@@ -48,7 +48,7 @@ public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdap
         }
         h.tx_wifi.setText(String.format(c.getString(R.string.tx_wifi), convertMb(wifi)));
         h.tx_mobile.setText(String.format(c.getString(R.string.tx_mobile), convertMb(mobile)));
-        h.tx_total.setText(c.getString(R.string.tx_total)+convertMb(wifi+mobile));
+        h.tx_total.setText(String.format("%s%s",c.getString(R.string.tx_total),convertMb(wifi+mobile)));
     }
 
     @Override

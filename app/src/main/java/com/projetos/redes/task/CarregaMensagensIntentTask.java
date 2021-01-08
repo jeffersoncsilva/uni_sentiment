@@ -24,15 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
-    private final String TAG = "MsgTask";
+    private String TAG = "MsgTask";
     private Intent intent;
     private List<MensagemUsuario> mensagens;
     private ProgressBar pBarCarregando;
-    private Button autor1, autor2;
+    private Button autor1;
+    private Button autor2;
     private RecyclerView rcMensagens;
     private MostraMensagensAdapter adapter;
     private Context mContext;
-    private String autores[];
+    private String[] autores;
 
     public CarregaMensagensIntentTask(Intent in, Context context, ProgressBar pBarCarregando, Button autor1, Button autor2, RecyclerView rc, MostraMensagensAdapter adp){
         this.intent = in;
@@ -42,7 +43,7 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
         this.autor2 = autor2;
         this.rcMensagens = rc;
         this.adapter = adp;
-        this.mensagens = new ArrayList<MensagemUsuario>();
+        this.mensagens = new ArrayList<>();
         autores = new String[2];
     }
 

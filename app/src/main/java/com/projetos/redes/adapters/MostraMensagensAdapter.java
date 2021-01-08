@@ -26,7 +26,7 @@ public class MostraMensagensAdapter extends RecyclerView.Adapter<MostraMensagens
         this.mensagens = mensagens;
     }
 
-    private Context mContext;
+    private final Context mContext;
 
     public MostraMensagensAdapter(Context con) {
         this.mensagens = new ArrayList<>();
@@ -34,7 +34,7 @@ public class MostraMensagensAdapter extends RecyclerView.Adapter<MostraMensagens
     }
 
     @Override
-    public MensagensUsuarioHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+    public MensagensUsuarioHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.rc_mensagem_usuario, parent, false);
         return new MostraMensagensAdapter.MensagensUsuarioHolder(v);
     }

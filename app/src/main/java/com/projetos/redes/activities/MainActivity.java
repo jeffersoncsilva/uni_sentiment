@@ -1,10 +1,13 @@
 package com.projetos.redes.activities;
 
 import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.projetos.redes.R;
 import com.projetos.redes.bd.InicializaBancoDeDados;
@@ -84,4 +87,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(in);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.help, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.ic_help){
+            Intent in = new Intent(getApplicationContext(), AjudaActivity.class);
+            Bundle extra = new Bundle();
+            extra.putString(AjudaActivity.AJUDA_KEY, getString(R.string.btAjudaAplicativo));
+            in.putExtras(extra);
+            startActivity(in);
+        }else if(item.getItemId() == R.id.ic_contato){
+            Intent contato = new Intent(getApplicationContext(), ContatoActivity.class);
+            startActivity(contato);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

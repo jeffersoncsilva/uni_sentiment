@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ic_help"
+        android:title="@string/ic_help_menu"
+        android:icon="@android:drawable/ic_menu_help"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/ic_contato"
+        android:title="@string/ic_contato_menu"
+        android:icon="@android:drawable/ic_menu_help"
+        app:showAsAction="collapseActionView" />
+</menu>

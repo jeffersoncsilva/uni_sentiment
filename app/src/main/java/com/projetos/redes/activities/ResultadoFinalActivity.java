@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +54,27 @@ public class ResultadoFinalActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.help, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.ic_help){
+            Intent in = new Intent(getApplicationContext(), AjudaActivity.class);
+            Bundle extra = new Bundle();
+            extra.putString("ajuda_nome", getString(R.string.btAjudaResultadoFinal));
+            in.putExtras(extra);
+            startActivity(in);
+        }else if(item.getItemId() == R.id.ic_contato){
+            Intent contato = new Intent(getApplicationContext(), ContatoActivity.class);
+            startActivity(contato);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         new PegarDadosBanco(this).execute();
@@ -75,7 +99,7 @@ public class ResultadoFinalActivity extends AppCompatActivity {
 
     protected class PegarDadosBanco extends AsyncTask<Void, Void, Void>{
         private List<ResultadoFinalLexico> lst;
-        private Context context;
+        private final Context context;
 
         public PegarDadosBanco(Context con){
             context = con;

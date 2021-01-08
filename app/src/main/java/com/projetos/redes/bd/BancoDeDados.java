@@ -20,9 +20,9 @@ public class BancoDeDados {
     private final String TABELA_FRASES = "tb_frases";
 
     private static final String tag = "LexicoDb";
-    private SQLiteDatabase select;
-    private SQLiteDatabase insert;
-    private Context mContext;
+    private final SQLiteDatabase select;
+    private final SQLiteDatabase insert;
+    private final Context mContext;
 
     public BancoDeDados(Context c) {
         this.mContext = c;
@@ -50,13 +50,14 @@ public class BancoDeDados {
                 lst.add(new UsoDeInternet(co, inicio, fim));
             }while (c.moveToNext());
         }
+        c.close();
         return lst;
     }
 
     /**
      * Lista o resultado da analise das mensagens após processado pelo algoritmo léxico junto com o
      * sentimento definido.
-     * @return
+     * @return lista com o resultado do lexico.
      */
     public List<ResultadoLexicoProcessado> pegarResultadoLexico() {
         List<ResultadoLexicoProcessado> lst = new ArrayList<>();
@@ -89,7 +90,7 @@ public class BancoDeDados {
                 ls.add(rf);
             }
         }
-
+        c.close();
         return ls;
     }
 

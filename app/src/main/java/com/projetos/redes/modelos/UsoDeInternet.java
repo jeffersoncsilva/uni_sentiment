@@ -20,8 +20,9 @@ public class UsoDeInternet implements Serializable {
 
 
     private long id;
-    private Consumo consumo;
-    private Data inicio, fim;
+    private final Consumo consumo;
+    private final Data inicio;
+    private final Data fim;
 
     public UsoDeInternet(Consumo consumo, Data inicio, Data fim){
         this.consumo = consumo;
@@ -39,9 +40,13 @@ public class UsoDeInternet implements Serializable {
 
     public Data getFim(){ return this.fim; }
 
+    public String toString(){
+        return consumo.toString();
+    }
 
     public static class Consumo{
-        private long wifi, mobile;
+        private final long wifi;
+        private final long mobile;
 
         public Consumo(long b, long m){
             wifi = b;
@@ -51,5 +56,10 @@ public class UsoDeInternet implements Serializable {
         public long getWifi(){ return wifi; }
 
         public long getMobile() { return mobile; }
+
+        public String toString(){
+            return "" + (wifi + mobile);
+        }
+
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LexicoProcessadoAdapter extends RecyclerView.Adapter<LexicoProcessadoAdapter.HolderLexico> {
 
-    private Context con;
+    private final Context con;
     private List<ResultadoLexicoProcessado> data;
 
     public LexicoProcessadoAdapter(Context con){

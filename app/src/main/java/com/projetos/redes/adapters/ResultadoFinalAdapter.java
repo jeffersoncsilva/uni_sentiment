@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ResultadoFinalAdapter extends RecyclerView.Adapter<ResultadoFinalAdapter.FimAdapter>{
     private List<ResultadoFinalLexico> data;
-    private Context context;
+    private final Context context;
 
     public ResultadoFinalAdapter(Context con){
         this.context = con;
@@ -38,11 +38,7 @@ public class ResultadoFinalAdapter extends RecyclerView.Adapter<ResultadoFinalAd
     @Override
     public void onBindViewHolder(@NonNull FimAdapter h, int position) {
         ResultadoFinalLexico rf = data.get(position);
-        h.tx_sentimento.setText(rf.toString());
-        /*h.tx_inicio.setText(String.format(context.getString(R.string.dt_inicio),rf.getDtInicio()));
-        h.tx_fim.setText(String.format(context.getString(R.string.dt_fim),rf.getDtFim()));
-        h.tx_sentimento.setText(String.format(context.getString(R.string.tx_sentimento), rf.getSentimento().toString()));
-        h.tx_dados.setText((context.getString(R.string.tx_total) + Utils.convertMb(rf.getTotalBytes())));*/
+        h.tx_sentimento.setText(rf.resultadoParaEnviar());
     }
 
     @Override
@@ -51,13 +47,10 @@ public class ResultadoFinalAdapter extends RecyclerView.Adapter<ResultadoFinalAd
     }
 
     protected class FimAdapter extends RecyclerView.ViewHolder{
-        protected TextView tx_inicio, tx_fim, tx_sentimento, tx_dados;
+        protected TextView tx_sentimento;
         public FimAdapter(View v){
             super(v);
-            tx_inicio = v.findViewById(R.id.tx_data_inicio);
-            tx_fim = v.findViewById(R.id.tx_data_fim);
             tx_sentimento = v.findViewById(R.id.tx_sentimento);
-            tx_dados = v.findViewById(R.id.tx_total_consumo);
         }
     }
 }

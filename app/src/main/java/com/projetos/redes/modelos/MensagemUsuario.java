@@ -3,8 +3,9 @@ package com.projetos.redes.modelos;
 import com.projetos.redes.utilidades.Data;
 
 public class MensagemUsuario {
-    private String autor, mensagem;
-    private Data data;
+    private final String autor;
+    private final String mensagem;
+    private final Data data;
 
 
     public MensagemUsuario(Data data, String autor, String msg){

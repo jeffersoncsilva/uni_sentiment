@@ -1,60 +1,23 @@
 <resources>
-    <string name="app_name">Projeto Redes</string>
-    <string name="serv_desc">
-        Serviço de monitoramento de mensagens para análise de sentimentos do usuário.
-    </string>
-    <string name="str_erro_load_text">
-        Não foi possível carregar as mensagens enviadas. Caso esteja utilizando o app pela primeira vez,
-        Lembre-se de permitir o app na seção de Acessibilidade do seu dispositivo. (Configurações -> Acessibilidade ->Projeto Redes -
-        Mantenha essa opção ativa para correto funcionamento.)
-    </string>
-
-    <string name="btnLexico">Salvar Configuração.</string>
-    <string name="str_msg_load">Mensagens carregadas com sucesso!</string>
-    <string name="bt_service_start">Inciar o serviço de captura de mensagens.</string>
-    <string name="bt_service_start_description">
-        Inicia o serviço de acessibilidade que e responsável por gravar as mensagens do WhatsApp. Para isso, habilite o aplicativo
-        nas configurações de acessibilidade do sistema. O botão abaixo e um atalho ;)
-    </string>
-    <string name="bt_service_end">Parar aplicação.</string>
-
-    <string name="tx_desc_tempo">Defina o tempo que deseja que ocorra a execução do algoritmo: </string>
-    <string name="intervalo_minutos">%d Minutos</string>
-    <string name="str_alarm_set">Analisador léxico setado para executar em %d minutos.</string>
-
+    <string name="app_name">Uni-Sentiment</string>
     <!-- String de permisão das autorizações do android -->
     <string name="autorizacao_acesso_dados_de_uso">Autorização para obter dados do dispositivo.</string>
     <string name="autorizacao_acesso_dados_de_uso_descricao">
         Essa autorização e necessária, e utilizada somente para obter o histórico de consumo de ‘internet’ do dispositivo
         no tempo em que esteve conectado a uma rede WI-FI.
     </string>
-
     <string name="permisao_acesso_telefone">Autorização para obter dados da rede de telefonia móvel.</string>
     <string name="permisao_acesso_telefone_descricao">
         Essa permissão e necessária, e utilizada somente para obter os dados de utilização de redes móveis. Caso não seja concedida, os dados referentes a utilização
         de rede móvel não será coletado.
     </string>
-
     <string name="permission_authorize">Autorizar</string>
-
-    <!-- Descrição do MyAccessibilityService -->
-    <string name="myAccessibilityService_title">Serviço de acessibilidade.</string>
-    <string name="myAccessibilityService_desc">
-        Este é a forma de salvar as mensagens enviadas pelo WhatsApp. Com ele ativado, ao enviar qualquer mensagem para qualquer contato
-        utilizando o WhatsApp, essa mensagem será salva para posterior análise de sentimento.
-    </string>
-
     <!-- Nomes botoes activity prinipal -->
     <string name="btn_net_usage">Ver uso de internet.</string>
-    <string name="btn_cancelar_lexico">Configurar execução automática.</string>
-    <string name="bt_continuar">Continuar</string>
-    <string name="bt_cancel">Cancelar</string>
-    <string name="btIniciarAplicacao">Iniciar aplicação.</string>
-    <string name="btPararAplicacao">Parar aplicação.</string>
     <string name="btResultadoClassificador">Resultado final.</string>
     <string name="btHelpUsoInternetDescription">Uso de internet do celular.</string>
     <string name="btHelpResultadoLexicoDescription">Resultado léxico.</string>
-    <string name="btHelpResultadoFinalDescription">Resultado final do processamento.</string>
+    <string name="btHelpResultadoFinalDescription">Resultado obtido.</string>
     <string name="btHelpIniciaPararAplicacaoDescription">Iniciar / Parar aplicação.</string>
     <string name="btAjudaUsoDeInternet">
         Aqui está o resultado da captura de dados pela internet. Caso não tenha nenhum dado informado, verifique se o serviço de captura está
@@ -69,26 +32,15 @@
         e então e definido o sentimento do usuário no intervalo indicado, o consumo de dados de internet nesse tempo, no
         modelo já definido para análise destes dados.
     </string>
-    <string name="btAjudaIniciaParaAplicacao">
-        Aqui e onde é iniciado e configurado o tempo de captura dos dados de consumo de internet.
-        Assim como e dada as devidas autorizações para a coleta de dados de consumo de internet funcionar corretamente.
-        Caso o serviço esteja em execução, lê será interrompido e automaticamente será revogado as autorizações de funcionamento.
-    </string>
-
 
     <!-- Nomes activity netusage -->
     <string name="bt_reload">Recarregar</string>
-    <string name="dt_inicio">Inicio: %s.</string>
-    <string name="dt_fim">Fim: %s.</string>
     <string name="time">Tempo: %d minutos.</string>
     <string name="tx_wifi">Wifi: %s.</string>
     <string name="tx_mobile">Mobile: %s.</string>
-    <string name="tx_total">Total: </string>
-    <!-- Nomes activity lista menssagens usuario -->
-    <string name="bt_usr_msg">Mensagens do usuário</string>
-    <string name="tx_msgs">Mensagens salvas pelo aplicativo.</string>
-    <string name="tx_usr_data">Data: %s</string>
-    <string name="tx_usr_msg">MSG: %s</string>
+    <string name="tx_total">Total: %s</string>
+    <string name="dt_fim">Data: %s</string>
+    <string name="dt_inicio">Data: %s</string>
 
     <!-- Nomes activity lexico_result -->
     <string name="tx_lexico_desc">Frases processadas pelo léxico.</string>
@@ -98,24 +50,35 @@
     <!-- Strings activity_resultado_final -->
     <string name="tx_sentimento">Sentimento: %s</string>
     <string name="title_activity_recebe_conversa_exportada_whatsapp">
-        ActivityRecebeConversaExportadaWhatsapp
+        Mensagens recebidas
     </string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
 
-
-    <string name="btAjudaAcessoTelefone">Essa autorização e necessaria pra que seja possivel capturar os dados de uso de redes móveis.</string>
-    <string name="btAjudaAcessoDadosTelefoneTexto">Essa autorização e para que seja possivel a captura de dados de uso conectado a WI-FI.</string>
-    <string name="btAjudaCapturaMensagensText">Para que seja possivel capturar as mensagens que é enviada pelo WhatsApp.</string>
-    <string name="btAjudaTempoExecucaoLexicoTexto">Configura o intervalo que será realizado a análise das mensagens e a captura dos dados de uso de internet.</string>
     <string name="bt_ajuda_aplicativo">Sobre Aplicativo</string>
-    <string name="bt_inicia_analise_mensagens">Iniciar Análise</string>
     <string name="instrucao_autor">Escolha um autor das mensagens para realizar a análise do sentimento.</string>
-    <string name="btAjudaAplicativo">Esse aplicativo foi desenvolivido para poder realizar análise léxica das mensagens
-    enviadas pelo WhatsApp, capturar dados sobre a quantidade de internet utilizada no dispositivo no horário estipulado
-    pela captura de mensagens e então poder traçar um perfil que relaciona o sentimento do usuário em Positivo e Negativo
-    e o seu consumo de internet.</string>
+    <string name="btAjudaAplicativo">
+    Esse aplicativo foi desenvolvido para poder realizar análise léxica das mensagens enviadas pelo WhatsApp.
+        Capturar quantidade de trafego de dados recebidos/transmitidos.
+        capturar dados sobre a quantidade de internet utilizada no dispositivo no horário estipulado pela captura
+        de mensagens e então poder traçar um perfil que relaciona o sentimento do usuário em Positivo e Negativo e
+        o seu consumo de internet.
+    </string>
+
+    <string name="ic_help_menu">Ajuda</string>
+    <string name="ic_contato_menu">Contato</string>
+    <string name="contato_descricao">Caso queira entrar em contato para participar da pesquisa, envie um email para nós!</string>
+    <string name="bt_contato">Enviar Email</string>
+    <string name="contato_participar">
+        Olá, gostaria de participar da pesquisa!
+    </string>
+    <string name="email_padrao">email@email.com</string>
+    <string name="aplicativoEmailNaoInstalado">
+        Por favor, instale um aplicativo de email para poder enviar os dados.
+    </string>
+
+    <string name="ajuda_tela_mensagens_exportada">
+        Nessa tela e mostrada as mensagens que você selecionou para realizar a analise léxica. Para prosseguir,
+        você deve selecionar o botão que corresponde ao seu nome de usuário, então a análise ira iniciar, e apos
+        finalizar sera levado a tela inicial da aplicação, onde poderá ver os resultados da análise, ver seu consumo
+        de internet no período das mensagens (baseado na data de envio de cada mensagem) e poder enviar os resultados para análise.
+    </string>
 </resources>

@@ -17,9 +17,9 @@ public class ResultadoLexicoProcessado implements Serializable {
                                     _FRASE + " TEXT, " +
                                     _SENTIMENTO + " TEXT, " +
                                     _ID + " INTEGER PRIMARY KEY AUTOINCREMENT);";
-    private Data data;
-    private String frase;
-    private Sentimento sentimento;
+    private final Data data;
+    private final String frase;
+    private final Sentimento sentimento;
 
     public ResultadoLexicoProcessado(Data d, String frase, Sentimento s){
         this.data = d;
@@ -31,8 +31,8 @@ public class ResultadoLexicoProcessado implements Serializable {
         return data;
     }
 
-    public String getSentimento() {
-        return sentimento.toString();
+    public Sentimento getSentimento() {
+        return sentimento;
     }
 
     public String getFrase() {

@@ -16,7 +16,7 @@ import java.util.Date;
 public class BuscadorConsumoInternet {
     private final String tag = "NetworkUsageService";
 
-    private BancoDeDados banco;
+    private final BancoDeDados banco;
     private Context mContext;
 
     public BuscadorConsumoInternet(Context context){
