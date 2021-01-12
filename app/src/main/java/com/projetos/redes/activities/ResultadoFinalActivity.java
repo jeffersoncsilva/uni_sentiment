@@ -20,6 +20,7 @@ import com.projetos.redes.R;
 import com.projetos.redes.adapters.ResultadoFinalAdapter;
 import com.projetos.redes.bd.BancoDeDados;
 import com.projetos.redes.modelos.ResultadoFinalLexico;
+import com.projetos.redes.task.SendMailTask;
 
 import java.util.List;
 
@@ -86,15 +87,8 @@ public class ResultadoFinalActivity extends AppCompatActivity {
             sb.append(rf.toString());
             sb.append("\n");
         }
-        Intent in = new Intent(Intent.ACTION_SENDTO);
-        in.setData(Uri.parse("mailto:"));
-        in.putExtra(Intent.EXTRA_EMAIL, "alterar.email.para@real.com");
-        in.putExtra(Intent.EXTRA_SUBJECT, "Dados de sentimentos de usuario");
-        in.putExtra(Intent.EXTRA_TEXT, sb.toString());
-        if(in.resolveActivity(getPackageManager()) != null)
-            startActivity(in);
-        else
-            Toast.makeText(getApplicationContext(), "Por favor, instale um aplicativo de email para poder enviar os dados.", Toast.LENGTH_LONG).show();
+        SendMailTask task = new SendMailTask(this, sb.toString());
+        task.execute();
     }
 
     protected class PegarDadosBanco extends AsyncTask<Void, Void, Void>{
