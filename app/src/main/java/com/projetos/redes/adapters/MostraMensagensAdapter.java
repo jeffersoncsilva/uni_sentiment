@@ -17,6 +17,15 @@ import java.util.List;
 
 public class MostraMensagensAdapter extends RecyclerView.Adapter<MostraMensagensAdapter.MensagensUsuarioHolder> {
     private List<MensagemUsuario> mensagens;
+    private List<MensagemUsuario> autores;
+
+    public List<MensagemUsuario> getAutores() {
+        return autores;
+    }
+
+    public void setAutores(List<MensagemUsuario> autores) {
+        this.autores = autores;
+    }
 
     public List<MensagemUsuario> getMensagens() {
         return mensagens;

@@ -54,6 +54,12 @@ public class SendMailTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        Toast.makeText(mContext, "Mensagem enviada!", Toast.LENGTH_SHORT).show();
+    }
+
     private String[] toStringArray(JSONArray array) throws JSONException{
         String[] arr = new String[array.length()];
         for(int i = 0; i < array.length(); i++)

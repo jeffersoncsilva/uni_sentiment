@@ -41,14 +41,14 @@ public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdap
         h.dt_fim.setText(String.format(c.getString(R.string.dt_fim), nu.getFim().toString()));
         long wifi = nu.getConsumo().getWifi();
         long mobile = nu.getConsumo().getMobile();
-        if(position >= 1){
+        /*if(position >= 1){
             UsoDeInternet n = data.get(position-1);
             wifi -= n.getConsumo().getWifi();
             mobile -= n.getConsumo().getMobile();
-        }
+        }*/
         h.tx_wifi.setText(String.format(c.getString(R.string.tx_wifi), convertMb(wifi)));
         h.tx_mobile.setText(String.format(c.getString(R.string.tx_mobile), convertMb(mobile)));
-        h.tx_total.setText(String.format("%s%s",c.getString(R.string.tx_total),convertMb(wifi+mobile)));
+        h.tx_total.setText(String.format(c.getString(R.string.tx_total),convertMb(wifi+mobile)));
     }
 
     @Override

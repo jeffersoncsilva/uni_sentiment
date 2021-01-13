@@ -39,8 +39,8 @@
     <string name="tx_wifi">Wifi: %s.</string>
     <string name="tx_mobile">Mobile: %s.</string>
     <string name="tx_total">Total: %s</string>
-    <string name="dt_fim">Data: %s</string>
-    <string name="dt_inicio">Data: %s</string>
+    <string name="dt_fim">Fim: %s</string>
+    <string name="dt_inicio">Inicio: %s</string>
 
     <!-- Nomes activity lexico_result -->
     <string name="tx_lexico_desc">Frases processadas pelo léxico.</string>
@@ -54,17 +54,16 @@
     </string>
 
     <string name="bt_ajuda_aplicativo">Sobre Aplicativo</string>
-    <string name="instrucao_autor">Escolha um autor das mensagens para realizar a análise do sentimento.</string>
+    <string name="escolha_nome">Escolha seu nome abaixo:</string>
     <string name="btAjudaAplicativo">
-    Esse aplicativo foi desenvolvido para poder realizar análise léxica das mensagens enviadas pelo WhatsApp.
-        Capturar quantidade de trafego de dados recebidos/transmitidos.
-        capturar dados sobre a quantidade de internet utilizada no dispositivo no horário estipulado pela captura
-        de mensagens e então poder traçar um perfil que relaciona o sentimento do usuário em Positivo e Negativo e
+        Esse aplicativo foi desenvolvido para poder realizar análise léxica das mensagens enviadas pelo WhatsApp.
+        Capturar quantidade de trafego de dados recebidos/transmitidos no horário e intervalo estipulado pelo usuário,
+        e então poder traçar um perfil que relaciona o sentimento do usuário em Positivo e Negativo e
         o seu consumo de internet.
     </string>
 
     <string name="ic_help_menu">Ajuda</string>
-    <string name="ic_contato_menu">Contato</string>
+    <string name="ic_contato_menu">Participar da Pesquisa</string>
     <string name="contato_descricao">Caso queira entrar em contato para participar da pesquisa, envie um email para nós!</string>
     <string name="bt_contato">Enviar Email</string>
     <string name="contato_participar">
@@ -81,4 +80,8 @@
         finalizar sera levado a tela inicial da aplicação, onde poderá ver os resultados da análise, ver seu consumo
         de internet no período das mensagens (baseado na data de envio de cada mensagem) e poder enviar os resultados para análise.
     </string>
+
+    <string name="btIniciaAnalize">Iniciar Análise</string>
+    <string name="tutorial">Como usar o aplicativo</string>
+    <string name="tempo_execucao">Selecione o tempo de captura dos dados de internet.</string>
 </resources>

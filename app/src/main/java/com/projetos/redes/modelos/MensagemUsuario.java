@@ -29,4 +29,18 @@ public class MensagemUsuario {
     public String toString(){
         return data + " " + autor + " " + mensagem;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof MensagemUsuario){
+            MensagemUsuario mu = (MensagemUsuario)o;
+            return mu.getAutor().equals(autor);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return autor.hashCode();
+    }
 }

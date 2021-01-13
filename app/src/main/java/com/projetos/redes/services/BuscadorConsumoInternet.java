@@ -11,8 +11,6 @@ import com.projetos.redes.bd.BancoDeDados;
 import com.projetos.redes.modelos.UsoDeInternet;
 import com.projetos.redes.utilidades.Data;
 
-import java.util.Date;
-
 public class BuscadorConsumoInternet {
     private final String tag = "NetworkUsageService";
 
@@ -28,7 +26,21 @@ public class BuscadorConsumoInternet {
         this.banco = l;
     }
 
-    public UsoDeInternet pegarConsumoNoIntervalo(Data dataInicio, Data dataFim, int intervalo){
+    public void salvarConsumoDataInicialAteAtualNoIntervalo(Data inicio, int intervalo){
+        banco.limparDadosDeConsumo();
+        long fimIntervalo = System.currentTimeMillis();
+        long inicioIntervalo = inicio.dataEmMilisegundos();
+
+        while (inicioIntervalo < fimIntervalo){
+            Data dtIni = new Data(inicioIntervalo);
+            inicioIntervalo += (intervalo * 60000);
+            Data dtFim = new Data(inicioIntervalo);
+            UsoDeInternet uso = pegarConsumoNoIntervalo(dtIni, dtFim);
+            banco.insereDadosDeRede(uso);
+        }
+    }
+
+    public UsoDeInternet pegarConsumoNoIntervalo(Data dataInicio, Data dataFim){
         NetworkStatsManager man = (NetworkStatsManager) mContext.getSystemService(Context.NETWORK_STATS_SERVICE);
         long wifi = pegarConsumoWiFi(man, dataInicio.dataEmMilisegundos(), dataFim.dataEmMilisegundos());
         long mobile = pegarConsumoMobile(man, dataInicio.dataEmMilisegundos(), dataFim.dataEmMilisegundos());

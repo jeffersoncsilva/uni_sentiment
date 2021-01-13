@@ -27,32 +27,29 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
     private String TAG = "MsgTask";
     private Intent intent;
     private List<MensagemUsuario> mensagens;
+    private List<MensagemUsuario> autores;
     private ProgressBar pBarCarregando;
-    private Button autor1;
-    private Button autor2;
+    private Button iniciarLexico;
     private RecyclerView rcMensagens;
     private MostraMensagensAdapter adapter;
     private Context mContext;
-    private String[] autores;
 
-    public CarregaMensagensIntentTask(Intent in, Context context, ProgressBar pBarCarregando, Button autor1, Button autor2, RecyclerView rc, MostraMensagensAdapter adp){
+    public CarregaMensagensIntentTask(Intent in, Context context, ProgressBar pBarCarregando, Button iniciarLexico, RecyclerView rc, MostraMensagensAdapter adp){
         this.intent = in;
         this.mContext = context;
         this.pBarCarregando = pBarCarregando;
-        this.autor1 = autor1;
-        this.autor2 = autor2;
+        this.iniciarLexico = iniciarLexico;
         this.rcMensagens = rc;
         this.adapter = adp;
         this.mensagens = new ArrayList<>();
-        autores = new String[2];
+        this.autores = new ArrayList<>();
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         pBarCarregando.setVisibility(View.VISIBLE);
-        autor1.setVisibility(View.GONE);
-        autor2.setVisibility(View.GONE);
+        iniciarLexico.setVisibility(View.GONE);
     }
 
     @Override
@@ -71,9 +68,11 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
                     if(p2 < 0)
                         continue;
                     String dt = str.substring(0, p1);
-                    String au = str.substring(p1, p2);
+                    String au = str.substring(p1, p2).replaceAll("-", "");
                     String mg = str.substring(++p2);
                     MensagemUsuario msg = new MensagemUsuario(new Data(dt), au, mg);
+                    if(!autores.contains(msg))
+                        autores.add(msg);
                     mensagens.add(msg);
                 }
             }
@@ -82,7 +81,6 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
             Log.e(TAG, "ERRO: " + e.getMessage()+"\n");
             Log.e(TAG, "toString(): "+e.toString()+"\n");
         }
-        autores = pegarAutoresMensagens();
         return null;
     }
 
@@ -91,26 +89,10 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
         pBarCarregando.setVisibility(View.GONE);
         adapter.setMensagens(mensagens);
+        adapter.setAutores(autores);
         adapter.notifyDataSetChanged();
         rcMensagens.setVisibility(View.VISIBLE);
-        autor1.setText(autores[0]);
-        autor1.setVisibility(View.VISIBLE);
-        autor2.setText(autores[1]);
-        autor2.setVisibility(View.VISIBLE);
+        iniciarLexico.setVisibility(View.VISIBLE);
     }
 
-    private String[] pegarAutoresMensagens(){
-        String[] nomes = new String[2];
-        boolean naoEncontrouNomesDiferentes = true;
-        for(int i = 0; i < mensagens.size(); i++){
-            if(i+1 < mensagens.size() && naoEncontrouNomesDiferentes){
-                if(!mensagens.get(i).getAutor().equals(mensagens.get(i+1).getAutor())){
-                    nomes[0] = mensagens.get(i).getAutor();
-                    nomes[1] = mensagens.get(i+1).getAutor();
-                    naoEncontrouNomesDiferentes = false;
-                }
-            }
-        }
-        return nomes;
-    }
 }

@@ -10,6 +10,10 @@ public class Data {
     public static final String DATA_SEM_HORAS = "dd/MM/yy";
     private final Date date;
 
+    public Data(long tempo){
+        this.date = new Date(tempo);
+    }
+
     public Data(Date d){
         this.date = d;
     }

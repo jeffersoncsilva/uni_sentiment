@@ -11,6 +11,7 @@ import com.projetos.redes.modelos.ResultadoFinalLexico;
 import com.projetos.redes.modelos.ResultadoLexicoProcessado;
 import com.projetos.redes.modelos.UsoDeInternet;
 import com.projetos.redes.services.BuscadorConsumoInternet;
+import com.projetos.redes.utilidades.Data;
 
 import java.util.List;
 
@@ -56,34 +57,26 @@ public class Lexico {
     }
 
     public void montaResultadoFinal(){
-        int positivos = 0, negativos = 0;
-        List<ResultadoLexicoProcessado> resultados = banco.pegarResultadoLexico();
-        ResultadoLexicoProcessado ultimoContado = resultados.get(0);
-        final BuscadorConsumoInternet buscadorConsumoInternet = new BuscadorConsumoInternet(context);
-        for(ResultadoLexicoProcessado rp : resultados){
-            if(intervaloAcabou(rp, ultimoContado)){
-                classificaIntervalo(positivos, negativos, rp, ultimoContado, buscadorConsumoInternet);
-                positivos = 0;
-                negativos = 0;
-                ultimoContado = rp;
+        List<UsoDeInternet> usoInternet = banco.pegarDadosUsoInternet();
+        List<ResultadoLexicoProcessado> lp = banco.pegarResultadoLexico();
+        for(UsoDeInternet uso : usoInternet){
+            Data inicio = uso.getInicio();
+            Data fim = uso.getFim();
+            int positivo = 0, negativo = 0;
+            for(int i = 0;i < lp.size(); i++){
+                if(lp.get(i).getDate().dataEmMilisegundos() > inicio.dataEmMilisegundos()
+                   && lp.get(i).getDate().dataEmMilisegundos() < fim.dataEmMilisegundos()){
+                    if(lp.get(i).getSentimento().equals(Sentimento.POSITIVO))
+                        positivo++;
+                    else
+                        negativo++;
+                    lp.remove(i);
+                }
             }
-            if(rp.getSentimento().equals(Sentimento.POSITIVO))
-                positivos++;
-            else
-                negativos++;
+            Sentimento s = (positivo > negativo ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
+            ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, uso, s, mIntervalo);
+            banco.insereResultadoFinalLexico(rf);
         }
-    }
-
-    private boolean intervaloAcabou(ResultadoLexicoProcessado rp, ResultadoLexicoProcessado ultimoContado){
-        return rp.getDate().dataEmMilisegundos() > ultimoContado.getDate().dataEmMilisegundos() + mIntervalo;
-    }
-
-    private void classificaIntervalo(int positivos, int negativos, ResultadoLexicoProcessado primeiroResultado, ResultadoLexicoProcessado segundoResultado, BuscadorConsumoInternet buscadorUsoInternet){
-        Sentimento s = (positivos >= negativos ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
-        UsoDeInternet uso = buscadorUsoInternet.pegarConsumoNoIntervalo(segundoResultado.getDate(), primeiroResultado.getDate(), mIntervalo);
-        ResultadoFinalLexico rf = new ResultadoFinalLexico(segundoResultado.getDate(), primeiroResultado.getDate(), uso, s);
-        banco.insereResultadoFinalLexico(rf);
-        banco.insereDadosDeRede(uso);
     }
 
     /**

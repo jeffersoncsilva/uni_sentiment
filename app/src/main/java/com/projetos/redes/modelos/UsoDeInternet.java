@@ -20,14 +20,18 @@ public class UsoDeInternet implements Serializable {
 
 
     private long id;
-    private final Consumo consumo;
-    private final Data inicio;
-    private final Data fim;
+    private Consumo consumo;
+    private Data inicio;
+    private Data fim;
 
     public UsoDeInternet(Consumo consumo, Data inicio, Data fim){
         this.consumo = consumo;
         this.inicio = inicio;
         this.fim = fim;
+    }
+
+    public void setDataInicio(Data inicio){
+        this.inicio = inicio;
     }
 
     public long getId() {

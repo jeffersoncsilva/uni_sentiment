@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,10 +84,13 @@ public class ResultadoFinalActivity extends AppCompatActivity {
 
     private void iniciarActivityEnviarEmail(){
         StringBuilder sb = new StringBuilder();
+        sb.append("<html> <body>");
         for(ResultadoFinalLexico rf : adapter.getItems()){
-            sb.append(rf.toString());
-            sb.append("\n");
+            sb.append(rf.resultadoParaEnviar());
+            sb.append("<br>");
         }
+        sb.append("</body></html>");
+        Log.d("HTMLEMAIL", sb.toString());
         SendMailTask task = new SendMailTask(this, sb.toString());
         task.execute();
     }

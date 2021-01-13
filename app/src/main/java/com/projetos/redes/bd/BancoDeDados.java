@@ -78,7 +78,7 @@ public class BancoDeDados {
 
     public List<ResultadoFinalLexico> pegarResultadoFinal() {
         List<ResultadoFinalLexico> ls = new ArrayList<>();
-        Cursor c = select.rawQuery("SELECT dt_fim, dt_inicio, sentimento, wifi, mobile FROM tb_result_final;", null);
+        Cursor c = select.rawQuery("SELECT dt_fim, dt_inicio, sentimento, wifi, mobile, intervalo FROM tb_result_final;", null);
         if (c != null && c.moveToFirst()) {
             while (c.moveToNext()) {
                 Data fim = new Data(c.getString(0));
@@ -86,7 +86,7 @@ public class BancoDeDados {
                 String sent = c.getString(2);
                 Sentimento s = (sent.equals(Sentimento.POSITIVO.toString()) ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
                 UsoDeInternet.Consumo co = new UsoDeInternet.Consumo(c.getLong(2), c.getLong(4));
-                ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, new UsoDeInternet(co, inicio, fim), s);
+                ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, new UsoDeInternet(co, inicio, fim), s, c.getInt(5));
                 ls.add(rf);
             }
         }
@@ -132,7 +132,7 @@ public class BancoDeDados {
 
     public boolean insereResultadoFinalLexico(ResultadoFinalLexico rf) {
         try {
-            String sql = String.format("INSERT INTO tb_result_final (dt_fim, dt_inicio, sentimento, wifi, mobile) VALUES (\"%s\", \"%s\", \"%s\", %d, %d);", rf.getFim(), rf.getInicio(), rf.getSentimento().toString(), rf.getUsoDeInternet().getConsumo().getWifi(), rf.getUsoDeInternet().getConsumo().getMobile());
+            String sql = String.format("INSERT INTO tb_result_final (dt_fim, dt_inicio, sentimento, wifi, mobile, intervalo) VALUES (\"%s\", \"%s\", \"%s\", %d, %d, %d);", rf.getFim(), rf.getInicio(), rf.getSentimento().toString(), rf.getUsoDeInternet().getConsumo().getWifi(), rf.getUsoDeInternet().getConsumo().getMobile(), rf.getIntervalo());
             insert.execSQL(sql);
             return true;
         } catch (Exception e) {
@@ -144,5 +144,9 @@ public class BancoDeDados {
 
     public void limparTabelaLexicoProcessado() {
         insert.rawQuery("delete from tb_lexico_result",null);
+    }
+
+    public void limparDadosDeConsumo(){
+        insert.rawQuery("delete from tb_net_usage",null);
     }
 }

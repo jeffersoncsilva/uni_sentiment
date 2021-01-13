@@ -1,5 +1,7 @@
 package com.projetos.redes.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,8 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.projetos.redes.Utils;
 import com.projetos.redes.alerts.AcessoAoTelefoneAutorizacao;
 import com.projetos.redes.alerts.AutorizacaoAcessoAosDadosTelefone;
+import com.projetos.redes.services.BuscadorConsumoInternet;
 import com.projetos.redes.task.CarregaMensagensIntentTask;
 import com.projetos.redes.Lexico;
 import com.projetos.redes.R;
@@ -31,8 +37,9 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     protected static final String TAG = "ConversaExportadaAct";
     private ProgressBar carregando;
     private RecyclerView mensagensUsuarioRecycler;
-    private Button autor1, autor2;
+    private Button iniciaAnalise;
     private MostraMensagensAdapter mensagensUsuarioAdapter;
+    private boolean podeIniciarLexico = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +50,26 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         mensagensUsuarioRecycler.setLayoutManager(new LinearLayoutManager(this));
         mensagensUsuarioAdapter = new MostraMensagensAdapter(this);
         mensagensUsuarioRecycler.setAdapter(mensagensUsuarioAdapter);
-        autor1 = findViewById(R.id.btAutor1);
-        autor1.setOnClickListener(new View.OnClickListener() {
+        iniciaAnalise = findViewById(R.id.btIniciaAnalise);
+        iniciaAnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iniciaLexico(autor1.getText().toString());
-            }
-        });
-        autor2 = findViewById(R.id.btAutor2);
-        autor2.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                iniciaLexico(autor2.getText().toString());
+                podeIniciarLexico = true;
+                realizaPreparativosLexico();
             }
         });
 
         Intent in = getIntent();
-        new CarregaMensagensIntentTask(in, this, carregando, autor1, autor2, mensagensUsuarioRecycler, mensagensUsuarioAdapter).execute();
+        new CarregaMensagensIntentTask(in, this, carregando, iniciaAnalise, mensagensUsuarioRecycler, mensagensUsuarioAdapter).execute();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "podeIniciarLexico: "+podeIniciarLexico);
+        if(podeIniciarLexico){
+            realizaPreparativosLexico();
+        }
     }
 
     @Override
@@ -83,41 +93,58 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void iniciaLexico(String nomeUsuario){
-        if(temPermisoesNecessarias()){
-            IniciaAnaliseLexico lexico = new IniciaAnaliseLexico(nomeUsuario,15);
-            lexico.execute();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "Recebido resultado pedido autorização.");
+        if(podeIniciarLexico) {
+            realizaPreparativosLexico();
         }
     }
 
-    private boolean temPermisoesNecessarias(){
-        if(!Utils.verificaSeTemPermisaoReadPhoneState(getApplicationContext())){
-            AcessoAoTelefoneAutorizacao acesso = new AcessoAoTelefoneAutorizacao();
-            acesso.show(getSupportFragmentManager(), "Autorizacao de acesso ao telefone.");
-            return false;
-        }
-        else if(!Utils.verificaPermissaoAcessoAosDadosTelefone(getApplicationContext())){
+    private void realizaPreparativosLexico(){
+        Log.d(TAG, "Realizando preparativos do lexico!");
+        if(!temPermissaoDeAcessoAosDadosCelular()){
             AutorizacaoAcessoAosDadosTelefone aut = new AutorizacaoAcessoAosDadosTelefone();
             aut.show(getSupportFragmentManager(), "Autorização acesso aos dados.");
-            return false;
+            return;
         }
-        return true;
+
+        if(!temAutorizacaoDeAcessoAoTelefone()){
+            AcessoAoTelefoneAutorizacao acesso = new AcessoAoTelefoneAutorizacao();
+            acesso.show(getSupportFragmentManager(), "Autorizacao de acesso ao telefone.");
+            return;
+        }
+
+        Log.d(TAG, "OK, autorizações obitida para o lexico.");
+
+        mostraOpcaoEscolhaAutor();
+
+    }
+
+    private boolean temPermissaoDeAcessoAosDadosCelular(){
+        return Utils.verificaPermissaoAcessoAosDadosTelefone(getApplicationContext());
+    }
+
+    private boolean temAutorizacaoDeAcessoAoTelefone(){
+        return Utils.verificaSeTemPermisaoReadPhoneState(getApplicationContext());
     }
 
     private class IniciaAnaliseLexico extends AsyncTask<Void, Void, Void>{
 
-        private final String autorMensagens;
+        private final MensagemUsuario usuario;
         private final int mIntervalo;
+        private final Context mContext;
 
-        public IniciaAnaliseLexico(String nomeUsuario, int intervalo) {
-            this.autorMensagens = nomeUsuario;
+        public IniciaAnaliseLexico(MensagemUsuario user, int intervalo, Context context) {
+            this.usuario = user;
             mIntervalo = intervalo;
+            this.mContext = context;
         }
 
         @Override
         protected void onPreExecute() {
-            autor1.setVisibility(View.GONE);
-            autor2.setVisibility(View.GONE);
+            iniciaAnalise.setVisibility(View.GONE);
             mensagensUsuarioRecycler.setVisibility(View.GONE);
             carregando.setVisibility(View.VISIBLE);
             super.onPreExecute();
@@ -125,10 +152,14 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            List<MensagemUsuario> mensagensFiltradas = filtraMensagensAutor(autorMensagens);
+            MensagemUsuario primeiraMensagemEnviada = mensagensUsuarioAdapter.getMensagens().get(0);
+            List<MensagemUsuario> mensagensFiltradas = filtraMensagensAutor(usuario.getAutor());
             Lexico lx = new Lexico(getApplicationContext(), mensagensFiltradas, mIntervalo);
-
             lx.executarLexico();
+
+            BuscadorConsumoInternet consumoInternet = new BuscadorConsumoInternet(mContext);
+            consumoInternet.salvarConsumoDataInicialAteAtualNoIntervalo(primeiraMensagemEnviada.getData(), mIntervalo);
+
             lx.montaResultadoFinal();
 
             Log.d(TAG, "processamendo concluido.");
@@ -140,6 +171,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             Intent in = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(in);
+            finish();
         }
 
         private List<MensagemUsuario> filtraMensagensAutor(String autor){
@@ -151,5 +183,46 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             }
             return msg;
         }
+    }
+
+    private void mostraOpcaoEscolhaAutor(){
+        String[] autores = getAutoresMensagens();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.escolha_nome));
+        builder.setItems(autores, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MensagemUsuario escolhido = mensagensUsuarioAdapter.getAutores().get(which);
+                mostraOpcoesIntervaloCapturaDados(escolhido);
+                Toast.makeText(getBaseContext(), "Escolhido " + escolhido.getAutor(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void mostraOpcoesIntervaloCapturaDados(final MensagemUsuario mu){
+        String[] tempos = { "15 minutos", "30 minutos", "45 minutos", "1 hora"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.tempo_execucao);
+        builder.setItems(tempos, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                int intervalo = (i*15) + 15;
+                Toast.makeText(getApplicationContext(), "Intervalo de capura de mensagem: " + intervalo + " minutos.", Toast.LENGTH_SHORT).show();
+                IniciaAnaliseLexico analise = new IniciaAnaliseLexico(mu, intervalo, getApplicationContext());
+                analise.execute();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private String[] getAutoresMensagens(){
+        String[] aut = new String[mensagensUsuarioAdapter.getAutores().size()];
+        for(int i = 0 ; i < mensagensUsuarioAdapter.getAutores().size(); i++)
+            aut[i] = mensagensUsuarioAdapter.getAutores().get(i).getAutor();
+        return aut;
     }
 }

@@ -12,4 +12,7 @@
         android:title="@string/ic_contato_menu"
         android:icon="@android:drawable/ic_menu_help"
         app:showAsAction="collapseActionView" />
+    <item android:id="@+id/tutorial"
+        android:title="@string/tutorial"
+        app:showAsAction="collapseActionView" />
 </menu>
