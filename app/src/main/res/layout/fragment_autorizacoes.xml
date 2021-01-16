@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.tutoriais.ExplicacaoAutorizacoesFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/acessoDadosWiFi"
+        android:textSize="@dimen/tamanhoPadraoTitulo"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/autorizacao_wifi" />
+    <Button
+        android:id="@+id/autorizarWiFi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/botaoAutorizarWiFi"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/medium_margin"
+        android:paddingStart="@dimen/large_margin"
+        android:paddingEnd="@dimen/large_margin"
+        android:background="@drawable/botao_padrao"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/autorizarDadosMoveisTitulo"
+        android:textSize="@dimen/tamanhoPadraoTitulo"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/autorizarDadosMoveisExplicacao" />
+    <Button
+        android:id="@+id/autorizarDadosMoveis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/botaoAutorizarDadosMoveis"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/medium_margin"
+        android:paddingStart="@dimen/large_margin"
+        android:paddingEnd="@dimen/large_margin"
+        android:background="@drawable/botao_padrao"/>
+
+</LinearLayout>

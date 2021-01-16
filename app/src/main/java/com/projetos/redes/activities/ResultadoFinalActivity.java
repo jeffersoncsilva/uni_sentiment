@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projetos.redes.R;
+import com.projetos.redes.Utils;
 import com.projetos.redes.adapters.ResultadoFinalAdapter;
 import com.projetos.redes.bd.BancoDeDados;
 import com.projetos.redes.modelos.ResultadoFinalLexico;
@@ -72,6 +73,10 @@ public class ResultadoFinalActivity extends AppCompatActivity {
         }else if(item.getItemId() == R.id.ic_contato){
             Intent contato = new Intent(getApplicationContext(), ContatoActivity.class);
             startActivity(contato);
+        }else if(item.getItemId() == R.id.tutorial){
+            Intent in = new Intent(getApplicationContext(), TutorialActivity.class);
+            Utils.DesativarPularTutorial(getApplicationContext());
+            startActivity(in);
         }
         return super.onOptionsItemSelected(item);
     }

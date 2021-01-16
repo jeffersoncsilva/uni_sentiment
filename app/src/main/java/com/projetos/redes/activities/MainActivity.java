@@ -1,6 +1,5 @@
 package com.projetos.redes.activities;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -10,8 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.projetos.redes.R;
+import com.projetos.redes.Utils;
 import com.projetos.redes.bd.InicializaBancoDeDados;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int PERMISSION_READ_STATE = 1234;
@@ -104,6 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(item.getItemId() == R.id.ic_contato){
             Intent contato = new Intent(getApplicationContext(), ContatoActivity.class);
             startActivity(contato);
+        }else if(item.getItemId() == R.id.tutorial){
+            Intent in = new Intent(getApplicationContext(), TutorialActivity.class);
+            Utils.DesativarPularTutorial(getApplicationContext());
+            startActivity(in);
         }
         return super.onOptionsItemSelected(item);
     }

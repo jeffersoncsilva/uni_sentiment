@@ -31,4 +31,9 @@
     -->
     <dimen name="inner_frame_layout_padding">5dp</dimen>
     <dimen name="pbar_carregar_mensagens">128dp</dimen>
+
+    <dimen name="buttonRadius">14dp</dimen>
+    <dimen name="inputRadius">8dp</dimen>
+    <dimen name="tamanhoPadraoTexto">18sp</dimen>
+    <dimen name="tamanhoPadraoTitulo">26sp</dimen>
 </resources>

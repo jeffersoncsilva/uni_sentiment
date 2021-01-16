@@ -70,6 +70,8 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
                     String dt = str.substring(0, p1);
                     String au = str.substring(p1, p2).replaceAll("-", "");
                     String mg = str.substring(++p2);
+                    if(mg.contains("<Arquivo de mídia"))
+                        continue;
                     MensagemUsuario msg = new MensagemUsuario(new Data(dt), au, mg);
                     if(!autores.contains(msg))
                         autores.add(msg);

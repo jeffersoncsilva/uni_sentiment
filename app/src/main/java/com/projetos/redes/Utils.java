@@ -3,6 +3,7 @@ package com.projetos.redes;
 import android.Manifest;
 import android.app.AppOpsManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
@@ -14,9 +15,16 @@ import java.util.Date;
 
 import static android.app.AppOpsManager.MODE_ALLOWED;
 import static android.app.AppOpsManager.OPSTR_GET_USAGE_STATS;
+import static android.content.Context.MODE_PRIVATE;
 
 public class Utils {
+    public static final String ID_USUARIO = "id_usuario";
+    public static final String TEMPO_CAPTURA_REDE = "tempo_redes";
+    public static final String ATIVAR_TUTORIAL = "ativa_tutorial";
     public final static String PADRAO_DATA = "dd/MM/yy hh:mm a";
+    public static final String CONFIG = "config";
+    public static final String JA_VIU_TUTORIAL = "tutorial_cumprido";
+
     /**
      * Checa se foi dada autorização do usuario para o app acessar dados do dispositivo (tempo ligado, consumo de redes, e outros)
      * @param c contexto da aplicação
@@ -78,5 +86,11 @@ public class Utils {
 
         }
         return d1;
+    }
+
+    public static void DesativarPularTutorial(Context con){
+        SharedPreferences.Editor edit = con.getSharedPreferences(CONFIG, MODE_PRIVATE).edit();
+        edit.putBoolean(JA_VIU_TUTORIAL, false);
+        edit.commit();
     }
 }

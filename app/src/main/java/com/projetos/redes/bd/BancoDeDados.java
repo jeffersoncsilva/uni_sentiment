@@ -80,32 +80,39 @@ public class BancoDeDados {
         List<ResultadoFinalLexico> ls = new ArrayList<>();
         Cursor c = select.rawQuery("SELECT dt_fim, dt_inicio, sentimento, wifi, mobile, intervalo FROM tb_result_final;", null);
         if (c != null && c.moveToFirst()) {
-            while (c.moveToNext()) {
+           do {
                 Data fim = new Data(c.getString(0));
                 Data inicio = new Data(c.getString(1));
                 String sent = c.getString(2);
-                Sentimento s = (sent.equals(Sentimento.POSITIVO.toString()) ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
+                Sentimento s = (Sentimento.POSITIVO.toString().equals(sent) ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
                 UsoDeInternet.Consumo co = new UsoDeInternet.Consumo(c.getLong(2), c.getLong(4));
                 ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, new UsoDeInternet(co, inicio, fim), s, c.getInt(5));
                 ls.add(rf);
-            }
+            } while (c.moveToNext());
         }
         c.close();
         return ls;
     }
 
     public Cursor getTableSaldoSentenca(String msg) {
-        return select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.frase", TABELA_FRASES, msg), null);
+        Cursor c = select.query(TABELA_FRASES, new String[] { "peso"}, "frase = ?", new String[] { msg }, null, null,null );
+        //return select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.frase", TABELA_FRASES, msg), null);
+        return c;
     }
 
     public Cursor getSaldoPalavra(String p) {
-        return select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.sentenca", TABELA_PALAVRAS, p), null);
+        Cursor c = select.query(TABELA_PALAVRAS, new String[] { "peso"}, "sentenca = ?", new String[] { p }, null, null, null);
+        //return select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.sentenca", TABELA_PALAVRAS, p), null);
+        return c;
     }
 
     public boolean insereResultadoLexicoProcessado(ResultadoLexicoProcessado r) {
         try {
-            String sql = r.getSqlInsert();
-            insert.execSQL(sql);
+            ContentValues cv = new ContentValues();
+            cv.put(ResultadoLexicoProcessado._FRASE, r.getFrase());
+            cv.put(ResultadoLexicoProcessado._DATA, r.getDate().toString());
+            cv.put(ResultadoLexicoProcessado._SENTIMENTO, r.getSentimento().toString());
+            insert.insert(ResultadoLexicoProcessado.TB_LEXICO_RESULT, null, cv);
             return true;
         } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados na base de dados. ERRO: " + e.getMessage());
@@ -132,8 +139,14 @@ public class BancoDeDados {
 
     public boolean insereResultadoFinalLexico(ResultadoFinalLexico rf) {
         try {
-            String sql = String.format("INSERT INTO tb_result_final (dt_fim, dt_inicio, sentimento, wifi, mobile, intervalo) VALUES (\"%s\", \"%s\", \"%s\", %d, %d, %d);", rf.getFim(), rf.getInicio(), rf.getSentimento().toString(), rf.getUsoDeInternet().getConsumo().getWifi(), rf.getUsoDeInternet().getConsumo().getMobile(), rf.getIntervalo());
-            insert.execSQL(sql);
+            ContentValues cv = new ContentValues();
+            cv.put("dt_fim", rf.getFim().toString());
+            cv.put("dt_inicio", rf.getInicio().toString());
+            cv.put("wifi", rf.getUsoDeInternet().getConsumo().getWifi());
+            cv.put("mobile", rf.getUsoDeInternet().getConsumo().getMobile());
+            cv.put("intervalo", rf.getIntervalo());
+            cv.put("sentimento", rf.getSentimento().toString());
+            insert.insert("tb_result_final", null, cv);
             return true;
         } catch (Exception e) {
             Log.d(tag, "Erro ao inserir dados finais na tabela resultado final: ERRO:  " + e.getMessage());

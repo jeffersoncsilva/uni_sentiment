@@ -29,4 +29,5 @@ dependencies {
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

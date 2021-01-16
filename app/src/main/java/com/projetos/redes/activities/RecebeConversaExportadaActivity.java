@@ -89,6 +89,10 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         }else if(item.getItemId() == R.id.ic_contato){
             Intent contato = new Intent(getApplicationContext(), ContatoActivity.class);
             startActivity(contato);
+        }else if(item.getItemId() == R.id.tutorial){
+            Intent in = new Intent(getApplicationContext(), TutorialActivity.class);
+            Utils.DesativarPularTutorial(getApplicationContext());
+            startActivity(in);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -203,7 +207,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     }
 
     private void mostraOpcoesIntervaloCapturaDados(final MensagemUsuario mu){
-        String[] tempos = { "15 minutos", "30 minutos", "45 minutos", "1 hora"};
+        String[] tempos = getResources().getStringArray(R.array.intervalos_captura_dados_rede);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.tempo_execucao);
         builder.setItems(tempos, new DialogInterface.OnClickListener() {

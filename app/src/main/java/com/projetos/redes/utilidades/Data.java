@@ -49,8 +49,12 @@ public class Data {
         String[] dates = data.split(" ");
         if(dates.length > 1) {
             String d = dates[0] + " " + dates[1];
-            d += (dates[2].contains("da manha") ? " AM" : " PM") ;
+            if(dates.length < 2)
+                d += (dates[2].contains("da manha") ? " AM" : " PM") ;
+            else
+                d += " AM";
             try {
+                d = d.replaceAll(",","");
                 dt = sdf.parse(d);
             } catch (ParseException pe) {
                 pe.printStackTrace();

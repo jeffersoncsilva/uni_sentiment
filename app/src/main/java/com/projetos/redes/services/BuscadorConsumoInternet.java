@@ -31,13 +31,13 @@ public class BuscadorConsumoInternet {
         long fimIntervalo = System.currentTimeMillis();
         long inicioIntervalo = inicio.dataEmMilisegundos();
 
-        while (inicioIntervalo < fimIntervalo){
+        do{
             Data dtIni = new Data(inicioIntervalo);
             inicioIntervalo += (intervalo * 60000);
             Data dtFim = new Data(inicioIntervalo);
             UsoDeInternet uso = pegarConsumoNoIntervalo(dtIni, dtFim);
             banco.insereDadosDeRede(uso);
-        }
+        }while (inicioIntervalo < fimIntervalo);
     }
 
     public UsoDeInternet pegarConsumoNoIntervalo(Data dataInicio, Data dataFim){

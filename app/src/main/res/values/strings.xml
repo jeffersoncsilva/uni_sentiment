@@ -3,13 +3,13 @@
     <!-- String de permisão das autorizações do android -->
     <string name="autorizacao_acesso_dados_de_uso">Autorização para obter dados do dispositivo.</string>
     <string name="autorizacao_acesso_dados_de_uso_descricao">
-        Essa autorização e necessária, e utilizada somente para obter o histórico de consumo de ‘internet’ do dispositivo
+        Essa autorização e necessária para obter o histórico de consumo de ‘internet’ do dispositivo
         no tempo em que esteve conectado a uma rede WI-FI.
     </string>
     <string name="permisao_acesso_telefone">Autorização para obter dados da rede de telefonia móvel.</string>
     <string name="permisao_acesso_telefone_descricao">
-        Essa permissão e necessária, e utilizada somente para obter os dados de utilização de redes móveis. Caso não seja concedida, os dados referentes a utilização
-        de rede móvel não será coletado.
+        Essa permissão e necessária para obter os dados de utilização de redes móveis. 
+        Caso não seja concedida, os dados referentes a utilizaçã de rede móvel não será coletado.
     </string>
     <string name="permission_authorize">Autorizar</string>
     <!-- Nomes botoes activity prinipal -->
@@ -64,7 +64,7 @@
 
     <string name="ic_help_menu">Ajuda</string>
     <string name="ic_contato_menu">Participar da Pesquisa</string>
-    <string name="contato_descricao">Caso queira entrar em contato para participar da pesquisa, envie um email para nós!</string>
+    <string name="contato_descricao">Para poder participar da pesquisa é fácil, envie um email para vcmborges@ufg.br dizendo que deseja participar da pesquisa!</string>
     <string name="bt_contato">Enviar Email</string>
     <string name="contato_participar">
         Olá, gostaria de participar da pesquisa!
@@ -84,4 +84,88 @@
     <string name="btIniciaAnalize">Iniciar Análise</string>
     <string name="tutorial">Como usar o aplicativo</string>
     <string name="tempo_execucao">Selecione o tempo de captura dos dados de internet.</string>
+    <string name="bt_proximo">Proximo</string>
+    <string name="bt_voltar">Voltar</string>
+
+    <string name="parte_um_frag">
+        Olá, seja bem-vindo ao UniSentiment.
+        Esse aplicativo foi desenvolvido para auxílio
+        a uma pesquisa que visa associar o sentimento
+        do usuário com o seu consumo de “internet”.
+        Isso e feito analisando as mensagens que é
+        enviado pelo WhatsApp e capturando dados
+        de uso de “internet” no dispositivo.
+        Para poder participar da pesquisa, basta enviar
+        um e-mail para vcmborges@ufg.br dizendo que
+        deseja participar, e seguir as demais instruções.
+        Para ajudar, clique no botão abaixo que será aberto o aplicativo de e-mail padrão do celular com os dados preenchidos.
+    </string>
+
+    <!-- Tutorial tela como usar o aplicativo -->
+    <string name="comoUsar">Como funciona?</string>
+    <string name="comoFuncionaExpliccao">
+        A análise das mensagens e feita usando o algoritmo Léxico, com isso as mensagens são classificadas como sendo Positivas ou Negativas.
+    </string>
+    <string name="comoExportarMensagens">
+        Como o aplicativo tem acesso as mensagens?
+    </string>
+    <string name="exportarMsg1">
+        Para isso, você deve abrir o WhatsApp escolher uma conversa que será então exportada para o aplicativo. Ir nas opções da conversa.
+    </string>
+    <string name="exportarMsg2">
+        Escolher a opção mais.
+    </string>
+    <string name="exortarMsg3">
+        Após escolher, deverá ser mostrada uma opção semelhante a essa, onde e possível ver o ícone do aplicativo e
+        demais outros aplicativos. Escolha o Uni Sentiment - Mensagens, e então a conversa será exportada para o aplicativo.
+    </string>
+    <string name="exportarMsg4">
+        Após a escolha do aplicativo, essa será a tela inicial, onde temos  as mensagens que foi enviada, e a opção de iniciar a análise das mensagens.
+    </string>
+    <string name="exportarMsg5">
+        Ao clicar em iniciar análise, será pedido algumas autorizações caso não tenha feito. Será explicado mais nas próximas telas.
+    </string>
+
+    <string name="acessoDadosWiFi">Acesso aos dados Wi-Fi.</string>
+
+    <string name="autorizacao_wifi">
+        Sem essa permissão não será possível coletar os dados recebidos e transmitidos na Internet, que e essencial para a pesquisa.
+        Essa autorização pode ser dada agora, ao clicar no botão abaixo. Caso não de, será pedida ao iniciar a execução do léxico.
+        No caso da autorização não ser dada, a análise não poderá ser executada.
+    </string>
+
+    <string name="botaoAutorizarWiFi">Autorizar Wi-Fi</string>
+    <string name="botaoAutorizarDadosMoveis">Autorizar dados móveis</string>
+    <string name="autorizarDadosMoveisTitulo">Acesso a dados internet móvel</string>
+    <string name="autorizarDadosMoveisExplicacao">
+        Caso essa permissão não seja dada, não será possível capturar esses dados, o algoritmo não será executado.
+        Caso queira dar essa permissão agora, apenas clique no botão abaixo para autorizar. Se essa autorização for
+        revogada, ou não dada nesse momento, sempre que a execução do algoritmo iniciar, ela será pedida caso não seja concedida.
+    </string>
+
+    <string name="tempoCapturaDadosRede">Aqui você deve configurar o intervalo da captura dos dados de internet.</string>
+    <string-array name="intervalos_captura_dados_rede">
+        <item>15 Minutos</item>
+        <item>30 Minutos</item>
+        <item>45 Minutos</item>
+        <item>1 Hora</item>
+        <item>2 Horas</item>
+        <item>4 Horas</item>
+        <item>8 Horas</item>
+    </string-array>
+
+    <string name="tx_identificador_usuario">
+        Para finalizar, ao solicitar participar da pesquisa, você deve ter recebido um identificador único, logo digite esse
+        identificador abaixo, ele servirá apenas para identificar o resultado produzido. Em nenhum momento nenhuma mensagem
+        sua será enviada para nós. Apenas os resultados finais, que será a data da execução do algorítimo, a soma do consumo
+        de internet, pelo Wi-Fi e dados móveis. Caso ainda não tenha essa identificação, poderá ser dada ao realizar
+        a análise das mensagens.
+    </string>
+    <string name="nao_pode_gravar_configuracoes">
+        Não pode finalizar sem inserir um identificador de usuário.
+    </string>
+    <string name="edtIdentificadorUsuarioHint">Insira aqui seu identificador</string>
+    <string name="btAutorizarAplicacao">Autorizar aplicação</string>
+    <string name="btConfgIntervaloCapturaDadosRedes">Confirar intervalo de captura de dados da rede</string>
+    <string name="btFinalizarConfiguracao">Finalizar Configuração.</string>
 </resources>

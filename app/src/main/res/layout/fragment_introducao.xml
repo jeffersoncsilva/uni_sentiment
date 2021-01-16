@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/parte_um_frag"
+        android:layout_margin="@dimen/medium_margin"
+        android:textSize="16sp"
+        android:textColor="@color/textColor"
+        />
+
+    <Button
+        android:id="@+id/bt_entrar_em_contato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/ic_contato_menu"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/medium_margin"
+        android:background="@drawable/botao_padrao"/>
+
+</LinearLayout>

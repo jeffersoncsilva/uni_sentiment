@@ -7,4 +7,28 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="inputstyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="android:colorForeground">@android:color/white</item>
+        <item name="android:hint">@string/edtIdentificadorUsuarioHint</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+    <style name="inputPadrao">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+    </style>
+
+    <style name="padraoTexto">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/tamanhoPadraoTexto</item>
+    </style>
+
+    <style name="padraoTitulo">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/tamanhoPadraoTitulo</item>
+    </style>
+
 </resources>

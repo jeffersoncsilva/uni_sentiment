@@ -45,7 +45,7 @@ public class ResultadoFinalLexico {
     }
 
     public String resultadoParaEnviar(){
-        return inicio.pegarDataSemHoras() + ":" +inicio.pegarHorasDaData() + ":"+usoDeInternet.toString()+":"+sentimento.toString()+":"+(intervaloConsiderado/60000);
+        return inicio.pegarDataSemHoras() + ";" +inicio.pegarHorasDaData() +":00"+ ";"+usoDeInternet.toString()+";"+sentimento.toString()+";"+(intervaloConsiderado/60000);
     }
 
 }
