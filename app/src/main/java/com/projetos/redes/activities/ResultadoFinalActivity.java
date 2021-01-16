@@ -53,7 +53,7 @@ public class ResultadoFinalActivity extends AppCompatActivity {
                 iniciarActivityEnviarEmail();
             }
         });
-
+        setTitle("UniSentiment - Resultado final");
     }
 
     @Override

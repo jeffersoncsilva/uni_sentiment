@@ -39,6 +39,7 @@ public class UsoDeInternetActivity extends AppCompatActivity implements View.OnC
         bt_reloadData = findViewById(R.id.bt_usodados);
         bt_reloadData.setOnClickListener(this);
         new CarregaDadosDoBanco(getApplicationContext()).execute();
+        setTitle("UniSentiment - Consumo Internet");
     }
 
     @Override

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Uni-Sentiment</string>
+    <string name="app_name">UniSentiment</string>
     <!-- String de permisão das autorizações do android -->
     <string name="autorizacao_acesso_dados_de_uso">Autorização para obter dados do dispositivo.</string>
     <string name="autorizacao_acesso_dados_de_uso_descricao">

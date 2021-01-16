@@ -43,6 +43,7 @@ public class LexicoProcessadoActivity extends AppCompatActivity {
             }
         });
         new LexicoResultTask(getApplicationContext()).execute();
+        setTitle("UniSentiment - Resultado análise");
     }
 
     @Override

@@ -17,7 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/tx_netusage_margin"
-        android:text="@string/bt_reload"/>
+        android:text="@string/bt_reload"
+        android:background="@drawable/botao_padrao"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/large_margin"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_data"
         android:layout_width="match_parent"

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btHelpUsoInternet).setOnClickListener(this);
         findViewById(R.id.btHelpResultadoLexico).setOnClickListener(this);
         findViewById(R.id.btHelpResultadoFinal).setOnClickListener(this);
-        findViewById(R.id.btAjudaAplicativo).setOnClickListener(this);
+
 
     }
 
@@ -71,11 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btHelpResultadoFinal:
                 extra = new Bundle();
                 extra.putString("ajuda_nome", getString(R.string.btAjudaResultadoFinal));
-                in = new Intent(MainActivity.this, AjudaActivity.class);
-                break;
-            case R.id.btAjudaAplicativo:
-                extra = new Bundle();
-                extra.putString("ajuda_nome", getString(R.string.btAjudaAplicativo));
                 in = new Intent(MainActivity.this, AjudaActivity.class);
                 break;
         }

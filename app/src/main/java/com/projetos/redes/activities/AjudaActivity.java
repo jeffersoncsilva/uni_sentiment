@@ -25,7 +25,7 @@ public class AjudaActivity extends AppCompatActivity {
         txAjuda.setText(ajuda);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setTitle("UniSentiment - Ajuda");
     }
 
     @Override

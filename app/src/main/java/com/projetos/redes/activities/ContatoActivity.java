@@ -24,6 +24,7 @@ public class ContatoActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("UniSentiment - Contato");
     }
 
     @Override
