@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.projetos.redes.fragments.tutoriais.ConfiguraDiasAnterioresParaAnalisarFragment;
 import com.projetos.redes.fragments.tutoriais.FinalisaEConfiguraIdentificacaoFragment;
 import com.projetos.redes.fragments.tutoriais.TempoCapturaDadosRedeFragment;
 import com.projetos.redes.fragments.tutoriais.ExplicacaoAutorizacoesFragment;
@@ -31,6 +32,8 @@ public class TutorialPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 return new TempoCapturaDadosRedeFragment();
             case 4:
+                return new ConfiguraDiasAnterioresParaAnalisarFragment();
+            case 5:
                 return new FinalisaEConfiguraIdentificacaoFragment();
             default:
                 return null;
@@ -39,7 +42,7 @@ public class TutorialPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 6;
     }
 
 

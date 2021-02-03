@@ -24,6 +24,7 @@ public class Utils {
     public final static String PADRAO_DATA = "dd/MM/yy hh:mm a";
     public static final String CONFIG = "config";
     public static final String JA_VIU_TUTORIAL = "tutorial_cumprido";
+    public static final String DIAS_ANTERIOR_PARA_ANALISAR = "DAPA  ";
 
     /**
      * Checa se foi dada autorização do usuario para o app acessar dados do dispositivo (tempo ligado, consumo de redes, e outros)

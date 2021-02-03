@@ -33,7 +33,7 @@ public class Lexico {
 
     public void executarLexico() {
         int saldoSomaPalavras, saldoFraseTotal;
-        limparTabelaResultado();
+        // limparTabelaResultado();
         for(MensagemUsuario mu : mensagens) {
             saldoSomaPalavras = pegarSaldoDaSomaDasPalavrasDaFrase(mu.getMensagem().toLowerCase());
             saldoFraseTotal = pegarSaldoFrase(mu.getMensagem().toLowerCase());
@@ -63,7 +63,10 @@ public class Lexico {
             Data inicio = uso.getInicio();
             Data fim = uso.getFim();
             int positivo = 0, negativo = 0;
+            boolean temMsg = false;
             for(int i = 0;i < lp.size(); i++){
+                // Verifica se o resultado esta dentro do intervalo especificado,
+                // caso esteja, tem mensagem nesse intervalo de coleta.
                 if(lp.get(i).getDate().dataEmMilisegundos() > inicio.dataEmMilisegundos()
                    && lp.get(i).getDate().dataEmMilisegundos() < fim.dataEmMilisegundos()){
                     if(lp.get(i).getSentimento().equals(Sentimento.POSITIVO))
@@ -71,11 +74,14 @@ public class Lexico {
                     else
                         negativo++;
                     lp.remove(i);
+                    temMsg = true;
                 }
             }
-            Sentimento s = (positivo > negativo ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
-            ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, uso, s, mIntervalo);
-            banco.insereResultadoFinalLexico(rf);
+            if(temMsg) {
+                Sentimento s = (positivo > negativo ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
+                ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, uso, s, mIntervalo);
+                banco.insereResultadoFinalLexico(rf);
+            }
         }
     }
 

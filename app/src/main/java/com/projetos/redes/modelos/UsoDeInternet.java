@@ -62,7 +62,7 @@ public class UsoDeInternet implements Serializable {
         public long getMobile() { return mobile; }
 
         public String toString(){
-            return "" + (wifi + mobile);
+            return String.format("%d", (wifi + mobile));
         }
 
     }

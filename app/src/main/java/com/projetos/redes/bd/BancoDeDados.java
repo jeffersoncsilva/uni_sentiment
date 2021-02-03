@@ -85,7 +85,7 @@ public class BancoDeDados {
                 Data inicio = new Data(c.getString(1));
                 String sent = c.getString(2);
                 Sentimento s = (Sentimento.POSITIVO.toString().equals(sent) ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
-                UsoDeInternet.Consumo co = new UsoDeInternet.Consumo(c.getLong(2), c.getLong(4));
+                UsoDeInternet.Consumo co = new UsoDeInternet.Consumo(c.getLong(3), c.getLong(4));
                 ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, new UsoDeInternet(co, inicio, fim), s, c.getInt(5));
                 ls.add(rf);
             } while (c.moveToNext());

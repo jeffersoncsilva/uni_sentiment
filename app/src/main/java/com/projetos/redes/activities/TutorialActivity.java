@@ -55,6 +55,9 @@ public class TutorialActivity extends AppCompatActivity {
                         setTitle("UniSentiment - Tempo Execução");
                         break;
                     case 4:
+                        setTitle("UniSentiment - Dias");
+                        break;
+                    case 5:
                         setTitle("UniSentiment - Fim");
                         break;
                 }

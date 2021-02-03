@@ -4,12 +4,12 @@
     <string name="autorizacao_acesso_dados_de_uso">Autorização para obter dados do dispositivo.</string>
     <string name="autorizacao_acesso_dados_de_uso_descricao">
         Essa autorização e necessária para obter o histórico de consumo de ‘internet’ do dispositivo
-        no tempo em que esteve conectado a uma rede WI-FI.
+        no tempo em que esteve conectado a uma rede Wi-Fi.
     </string>
     <string name="permisao_acesso_telefone">Autorização para obter dados da rede de telefonia móvel.</string>
     <string name="permisao_acesso_telefone_descricao">
         Essa permissão e necessária para obter os dados de utilização de redes móveis. 
-        Caso não seja concedida, os dados referentes a utilizaçã de rede móvel não será coletado.
+        Caso não seja concedida, os dados referentes a utilização de rede móvel não será coletado.
     </string>
     <string name="permission_authorize">Autorizar</string>
     <!-- Nomes botoes activity prinipal -->
@@ -18,17 +18,18 @@
     <string name="btHelpUsoInternetDescription">Uso de internet do celular.</string>
     <string name="btHelpResultadoLexicoDescription">Resultado léxico.</string>
     <string name="btHelpResultadoFinalDescription">Resultado obtido.</string>
-    <string name="btHelpIniciaPararAplicacaoDescription">Iniciar / Parar aplicação.</string>
+    <!-- <string name="btHelpIniciaPararAplicacaoDescription">Iniciar / Parar aplicação.</string> -->
     <string name="btAjudaUsoDeInternet">
         Aqui está o resultado da captura de dados pela internet. Caso não tenha nenhum dado informado, verifique se o serviço de captura está
         ativo e foi dada as autorizações de acesso a serviço de telefone, que e responsável por fornecer acesso os dados móveis usados,
         e autorização de acesso aos dados do telefone, que é responsável por fornece acesso aos dados de uso de WI-FI.
     </string>
+
     <string name="btAjudaResultadoLexico">
         Aqui está o resultado da análise léxica de cada sentença analisada.
     </string>
     <string name="btAjudaResultadoFinal">
-        Aqui está o compilado da análise, isto é, quando e definido o intervalo de tempo da análise, e feita a análise das mensagens
+        Aqui está o resultado da análise, isto é, quando e definido o intervalo de tempo da análise, e feita a análise das mensagens
         e então e definido o sentimento do usuário no intervalo indicado, o consumo de dados de internet nesse tempo, no
         modelo já definido para análise destes dados.
     </string>
@@ -36,7 +37,7 @@
     <!-- Nomes activity netusage -->
     <string name="bt_reload">Recarregar</string>
     <string name="time">Tempo: %d minutos.</string>
-    <string name="tx_wifi">Wifi: %s.</string>
+    <string name="tx_wifi">Wi-Fi: %s.</string>
     <string name="tx_mobile">Mobile: %s.</string>
     <string name="tx_total">Total: %s</string>
     <string name="dt_fim">Fim: %s</string>
@@ -104,7 +105,7 @@
     <!-- Tutorial tela como usar o aplicativo -->
     <string name="comoUsar">Como funciona?</string>
     <string name="comoFuncionaExpliccao">
-        A análise das mensagens e feita usando o algoritmo Léxico, com isso as mensagens são classificadas como sendo Positivas ou Negativas.
+        A análise das mensagens é feita usando o algoritmo Léxico, com isso as mensagens são classificadas como sendo Positivas ou Negativas.
     </string>
     <string name="comoExportarMensagens">
         Como o aplicativo tem acesso as mensagens?
@@ -123,27 +124,27 @@
         Após a escolha do aplicativo, essa será a tela inicial, onde temos  as mensagens que foi enviada, e a opção de iniciar a análise das mensagens.
     </string>
     <string name="exportarMsg5">
-        Ao clicar em iniciar análise, será pedido algumas autorizações caso não tenha feito. Será explicado mais nas próximas telas.
+        Ao clicar em iniciar análise, será pedido as autorizações caso não tenha sido permitidas anteriormente. Será explicado mais nas próximas telas.
     </string>
 
     <string name="acessoDadosWiFi">Acesso aos dados Wi-Fi.</string>
 
     <string name="autorizacao_wifi">
-        Sem essa permissão não será possível coletar os dados recebidos e transmitidos na Internet, que e essencial para a pesquisa.
-        Essa autorização pode ser dada agora, ao clicar no botão abaixo. Caso não de, será pedida ao iniciar a execução do léxico.
-        No caso da autorização não ser dada, a análise não poderá ser executada.
+        Sem essa permissão não será possível coletar os dados recebidos e transmitidos pelo Wi-Fi, que e essencial para a pesquisa.
+        Essa autorização pode ser fornecida nesse momento clicando no botão abaixo. Caso não seja fornecida, será requisitada ao iniciar a execução do léxico.
+        Sem essa autorização, a análise não será executada.
     </string>
 
     <string name="botaoAutorizarWiFi">Autorizar Wi-Fi</string>
     <string name="botaoAutorizarDadosMoveis">Autorizar dados móveis</string>
     <string name="autorizarDadosMoveisTitulo">Acesso a dados internet móvel</string>
     <string name="autorizarDadosMoveisExplicacao">
-        Caso essa permissão não seja dada, não será possível capturar esses dados, o algoritmo não será executado.
-        Caso queira dar essa permissão agora, apenas clique no botão abaixo para autorizar. Se essa autorização for
-        revogada, ou não dada nesse momento, sempre que a execução do algoritmo iniciar, ela será pedida caso não seja concedida.
+        Sem essa permissão não será possível coletar os dados recebidos e transmitidos pela rede móvel, que e essencial para a pesquisa.
+        Essa autorização pode ser fornecida nesse momento clicando no botão abaixo. Caso não seja fornecida, será requisitada ao iniciar a execução do léxico.
+        Sem essa autorização, a análise não será executada.
     </string>
 
-    <string name="tempoCapturaDadosRede">Aqui você deve configurar o intervalo da captura dos dados de internet.</string>
+    <string name="tempoCapturaDadosRede">Aqui, deve ser configurado o intervalo de coleta do consumo de internet, tanto pelo Wi-Fi quanto dos dados móveis.</string>
     <string-array name="intervalos_captura_dados_rede">
         <item>15 Minutos</item>
         <item>30 Minutos</item>
@@ -157,7 +158,7 @@
     <string name="tx_identificador_usuario">
         Para finalizar, ao solicitar participar da pesquisa, você deve ter recebido um identificador único, logo digite esse
         identificador abaixo, ele servirá apenas para identificar o resultado produzido. Em nenhum momento nenhuma mensagem
-        sua será enviada para nós. Apenas os resultados finais, que será a data da execução do algorítimo, a soma do consumo
+        sua será enviada para nós. Apenas os resultados finais, que será a data da execução do algorítimo, a soma do uso
         de internet, pelo Wi-Fi e dados móveis. Caso ainda não tenha essa identificação, poderá ser dada ao realizar
         a análise das mensagens.
     </string>
@@ -166,6 +167,20 @@
     </string>
     <string name="edtIdentificadorUsuarioHint">Insira aqui seu identificador</string>
     <string name="btAutorizarAplicacao">Autorizar aplicação</string>
-    <string name="btConfgIntervaloCapturaDadosRedes">Confirar intervalo de captura de dados da rede</string>
+    <string name="btConfgIntervaloCapturaDadosRedes">Confirar intervalo de coleta de consumo de internet</string>
     <string name="btFinalizarConfiguracao">Finalizar Configuração.</string>
+
+    <string name="dataMinimaMensagensAnalisadas">
+        Aqui deve ser escolhido os dias anteriores que deve ser considerado
+        para a análise das mensagens exportada para realizar a análise.
+    </string>
+    <string name="diasParaAnalise">Dias a ser considerados</string>
+    <string-array name="diasMinimosParaAnalisar">
+        <item>1 dia</item>
+        <item>2 dias</item>
+        <item>4 dias</item>
+        <item>1 semana</item>
+        <item>2 semanas</item>
+    </string-array>
+
 </resources>

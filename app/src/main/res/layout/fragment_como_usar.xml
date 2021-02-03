@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/comoUsar"
+        android:textSize="@dimen/tamanhoTituloTutorial"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/comoFuncionaExpliccao"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloPag" />
 
@@ -40,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/comoExportarMensagens"
+        android:textSize="@dimen/tamanhoTituloTutorial"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/explicacao" />
 
@@ -57,11 +60,12 @@
     <TextView
 
         android:id="@+id/textView7"
+        style="@style/padraoTexto"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/exportarMsg1"
         android:gravity="center|left"
-        style="@style/padraoTexto"
+        android:text="@string/exportarMsg1"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintBottom_toBottomOf="@+id/imgP1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgP1"
@@ -90,11 +94,12 @@
 
     <TextView
         android:id="@+id/textView8"
+        style="@style/padraoTexto"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/exportarMsg2"
         android:gravity="center|right"
-        style="@style/padraoTexto"
+        android:text="@string/exportarMsg2"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,11 +107,12 @@
 
     <TextView
         android:id="@+id/textView9"
+        style="@style/padraoTexto"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/exortarMsg3"
         android:gravity="center|left"
-        style="@style/padraoTexto"
+        android:text="@string/exortarMsg3"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -123,11 +129,12 @@
 
     <TextView
         android:id="@+id/textView10"
+        style="@style/padraoTexto"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/exportarMsg4"
         android:gravity="center|right"
-        style="@style/padraoTexto"
+        android:text="@string/exportarMsg4"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,8 +152,9 @@
         android:id="@+id/textView11"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/exportarMsg4"
         android:gravity="left|center"
+        android:text="@string/exportarMsg4"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
@@ -159,8 +167,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/exportarMsg5"
         android:gravity="center"
+        android:text="@string/exportarMsg5"
+        android:textSize="@dimen/tamanhoTextoTutorial"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

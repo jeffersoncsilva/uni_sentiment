@@ -3,6 +3,7 @@ package com.projetos.redes.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -29,8 +28,10 @@ import com.projetos.redes.Lexico;
 import com.projetos.redes.R;
 import com.projetos.redes.adapters.MostraMensagensAdapter;
 import com.projetos.redes.modelos.MensagemUsuario;
+import com.projetos.redes.utilidades.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RecebeConversaExportadaActivity extends AppCompatActivity {
@@ -137,13 +138,15 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     private class IniciaAnaliseLexico extends AsyncTask<Void, Void, Void>{
 
         private final MensagemUsuario usuario;
-        private final int mIntervalo;
+        private final int intCapturaMensagens;
+        private final int qtdDiasAnterioresParaAnalise;
         private final Context mContext;
 
-        public IniciaAnaliseLexico(MensagemUsuario user, int intervalo, Context context) {
+        public IniciaAnaliseLexico(MensagemUsuario user, int intervalo, int diasAnteriores, Context context) {
             this.usuario = user;
-            mIntervalo = intervalo;
+            intCapturaMensagens = intervalo;
             this.mContext = context;
+            qtdDiasAnterioresParaAnalise = diasAnteriores;
         }
 
         @Override
@@ -156,13 +159,14 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            MensagemUsuario primeiraMensagemEnviada = mensagensUsuarioAdapter.getMensagens().get(0);
-            List<MensagemUsuario> mensagensFiltradas = filtraMensagensAutor(usuario.getAutor());
-            Lexico lx = new Lexico(getApplicationContext(), mensagensFiltradas, mIntervalo);
+            // '            primeiraMensagemEnviada
+            List<MensagemUsuario> mensagensFiltradas = filtraMensagensAutor(usuario.getAutor(), qtdDiasAnterioresParaAnalise);
+            MensagemUsuario pme = mensagensUsuarioAdapter.getMensagens().get(0);
+            Lexico lx = new Lexico(getApplicationContext(), mensagensFiltradas, intCapturaMensagens);
             lx.executarLexico();
 
             BuscadorConsumoInternet consumoInternet = new BuscadorConsumoInternet(mContext);
-            consumoInternet.salvarConsumoDataInicialAteAtualNoIntervalo(primeiraMensagemEnviada.getData(), mIntervalo);
+            consumoInternet.salvarConsumoDataInicialAteAtualNoIntervalo(new Data( System.currentTimeMillis() - (qtdDiasAnterioresParaAnalise * 3600000 * 24)), intCapturaMensagens);
 
             lx.montaResultadoFinal();
 
@@ -178,11 +182,25 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             finish();
         }
 
-        private List<MensagemUsuario> filtraMensagensAutor(String autor){
+        // Para limitar a busca
+        private Data pegarDataInicioCaptura(MensagemUsuario pme){
+            long dd = System.currentTimeMillis() - (qtdDiasAnterioresParaAnalise * 6000000);
+            Data d = new Data(dd);
+            Data dpme = pme.getData();
+            if(dpme.dataEmMilisegundos() < d.dataEmMilisegundos())
+                return dpme;
+            return d;
+        }
+
+        private List<MensagemUsuario> filtraMensagensAutor(String autor, int dias){
             List<MensagemUsuario> msg = new ArrayList<>();
+            final long tempo = System.currentTimeMillis() - (dias * 3600000 * 24);
             for(MensagemUsuario mu : mensagensUsuarioAdapter.getMensagens()){
                 if(mu.getAutor().equals(autor)){
-                    msg.add(mu);
+                    if(mu.getData().dataEmMilisegundos() >= tempo)
+                        msg.add(mu);
+                    else
+                        break;
                 }
             }
             return msg;
@@ -197,30 +215,169 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MensagemUsuario escolhido = mensagensUsuarioAdapter.getAutores().get(which);
-                mostraOpcoesIntervaloCapturaDados(escolhido);
-                Toast.makeText(getBaseContext(), "Escolhido " + escolhido.getAutor(), Toast.LENGTH_SHORT).show();
-
+                verificaIntervaloFoiSalvo(escolhido);
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
+    // Verifica se o usuario salvou o intervalo para a analise de mensagem (e captura de uso de internet).
+    private void verificaIntervaloFoiSalvo(final MensagemUsuario mu){
+        final SharedPreferences prefs = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
+        if(prefs.contains(Utils.TEMPO_CAPTURA_REDE)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String tempo = pegaTempoCapturaSalvo(prefs);
+            builder.setTitle("Deseja alterar o invalo de análise configurado anteriormente de"+tempo+"?");
+            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    mostraOpcoesIntervaloCapturaDados(mu);
+                }
+            });
+            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    verificaSeSalvoLimiteDiasAnalise(mu, prefs.getInt(Utils.TEMPO_CAPTURA_REDE, 15));
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }else
+            mostraOpcoesIntervaloCapturaDados(mu);
+    }
+
+    // Usuario escolher o intervalo de analise das mensagens (e captura de uso de internet).
     private void mostraOpcoesIntervaloCapturaDados(final MensagemUsuario mu){
-        String[] tempos = getResources().getStringArray(R.array.intervalos_captura_dados_rede);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.tempo_execucao);
+            String[] tempos = getResources().getStringArray(R.array.intervalos_captura_dados_rede);
+            builder.setTitle(R.string.tempo_execucao);
+            builder.setItems(tempos, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    verificaSeSalvoLimiteDiasAnalise(mu, pegarIntervaloCapturaRede(i));
+                }
+            });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    // Verifica se o usuario escolheu a quantidade de dias atras para analise das mensagens.
+    private void verificaSeSalvoLimiteDiasAnalise(final MensagemUsuario mu, final int intervaloCapturaRede){
+        final SharedPreferences prefs = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
+        if(prefs.contains(Utils.DIAS_ANTERIOR_PARA_ANALISAR)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String tempo = pegaQuantidadeDiasSalvo(prefs);
+            builder.setTitle("Deseja alterar o intervalo de dias para análise de "+tempo+"?");
+            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // se refere a quantidade de dias anteriores que deve ser considerado na alise.
+                    alterarDiasParaAnalise(mu, intervaloCapturaRede);
+                }
+            });
+            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    iniciaAnlaliseLexico(mu, prefs.getInt(Utils.TEMPO_CAPTURA_REDE, 15), prefs.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 1));
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }else
+            alterarDiasParaAnalise(mu, intervaloCapturaRede);
+    }
+
+    // Usuario escolhe quantos dias atras para analisar as mensagens.
+    private void alterarDiasParaAnalise(final MensagemUsuario mu, final int intRede){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] tempos = getResources().getStringArray(R.array.diasMinimosParaAnalisar);
+        builder.setTitle(R.string.diasParaAnalise);
         builder.setItems(tempos, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                int intervalo = (i*15) + 15;
-                Toast.makeText(getApplicationContext(), "Intervalo de capura de mensagem: " + intervalo + " minutos.", Toast.LENGTH_SHORT).show();
-                IniciaAnaliseLexico analise = new IniciaAnaliseLexico(mu, intervalo, getApplicationContext());
-                analise.execute();
+                // Saber se ele escolheu 1, 2, 4, 7 ou 14 dias.
+                int diasEscolhidos = pegarDiasEscolhidos(i);
+                iniciaAnlaliseLexico(mu, intRede, diasEscolhidos);
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private int pegarDiasEscolhidos(int i){
+        switch (i){
+            case 1:
+                return 2;
+            case 2:
+                return 4;
+            case 3:
+                return 7;
+            case 4:
+                return 14;
+            default:
+                return 1;
+        }
+    }
+
+    private void iniciaAnlaliseLexico(final MensagemUsuario msg, int intervaloCapturaRede, int limiteDiasAnalise){
+        IniciaAnaliseLexico analise = new IniciaAnaliseLexico(msg, intervaloCapturaRede, limiteDiasAnalise, getApplicationContext());
+        analise.execute();
+    }
+
+    private int pegarIntervaloCapturaRede(int i){
+        switch (i){
+            case 0:
+                return 15;
+            case 1:
+                return 30;
+            case 2:
+                return  45;
+            case 3:
+                return 60;
+            case 4:
+                return 120;
+            case 5:
+                return 240;
+            default:
+                return 480;
+        }
+    }
+
+    private String pegaTempoCapturaSalvo(SharedPreferences p){
+        int t = p.getInt(Utils.TEMPO_CAPTURA_REDE, 15);
+        switch (t){
+            case 15:
+                return " 15 Minutos";
+            case 30:
+                return " 30 Minutos";
+            case 45:
+                return " 45 Minutos";
+            case 60:
+                return " 1 Hora";
+            case 120:
+                return " 2 Horas";
+            case 240:
+                return " 4 Horas";
+            default:
+                return " 8 Horas";
+        }
+    }
+
+    private String pegaQuantidadeDiasSalvo(SharedPreferences sp){
+        int dia = sp.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 1);
+        switch (dia){
+            case 1:
+                return "2 dias";
+            case 2:
+                return "4 dias";
+            case 3:
+                return "1 semana";
+            case 4:
+                return "2 semanas";
+            default:
+                return "1 dia";
+        }
     }
 
     private String[] getAutoresMensagens(){
