@@ -36,9 +36,7 @@ public class LexicoProcessadoAdapter extends RecyclerView.Adapter<LexicoProcessa
     @Override
     public void onBindViewHolder(@NonNull HolderLexico h, int p) {
         ResultadoLexicoProcessado r = data.get(p);
-        h.tx_msg.setText(r.getFrase());
-        h.tx_saldo.setText(String.format(con.getString(R.string.tx_result_ls), r.getSentimento()));
-        h.tx_data.setText(r.getDate().toString());
+        h.tx_msg.setText("MENSAGEM: " + r.getFrase() + "\nSENTIMENTO: " + r.getSentimento() + "\nHORA: " + r.getHora()+":"+r.getMinuto());
     }
 
     @Override
@@ -47,12 +45,10 @@ public class LexicoProcessadoAdapter extends RecyclerView.Adapter<LexicoProcessa
     }
 
     protected class HolderLexico extends RecyclerView.ViewHolder{
-        public TextView tx_msg, tx_saldo, tx_data;
+        public TextView tx_msg;
         public HolderLexico(View v){
             super(v);
-            tx_msg = v.findViewById(R.id.txMsg);
-            tx_saldo = v.findViewById(R.id.txRes);
-            tx_data = v.findViewById(R.id.txDate);
+            tx_msg = v.findViewById(R.id.txtMsg);
         }
 
     }

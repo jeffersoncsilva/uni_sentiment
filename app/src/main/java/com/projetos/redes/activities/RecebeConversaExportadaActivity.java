@@ -19,19 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.projetos.redes.Lexico;
 import com.projetos.redes.Utils;
 import com.projetos.redes.alerts.AcessoAoTelefoneAutorizacao;
 import com.projetos.redes.alerts.AutorizacaoAcessoAosDadosTelefone;
-import com.projetos.redes.services.BuscadorConsumoInternet;
+import com.projetos.redes.task.CapturaDadosRedeTask;
 import com.projetos.redes.task.CarregaMensagensIntentTask;
-import com.projetos.redes.Lexico;
 import com.projetos.redes.R;
 import com.projetos.redes.adapters.MostraMensagensAdapter;
 import com.projetos.redes.modelos.MensagemUsuario;
-import com.projetos.redes.utilidades.Data;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class RecebeConversaExportadaActivity extends AppCompatActivity {
@@ -159,18 +158,15 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            // '            primeiraMensagemEnviada
+            // primeiraMensagemEnviada
             List<MensagemUsuario> mensagensFiltradas = filtraMensagensAutor(usuario.getAutor(), qtdDiasAnterioresParaAnalise);
-            MensagemUsuario pme = mensagensUsuarioAdapter.getMensagens().get(0);
-            Lexico lx = new Lexico(getApplicationContext(), mensagensFiltradas, intCapturaMensagens);
+            Log.d(TAG, "Iniciando execução da task que realiza a analise lexica.");
+            Lexico lx = new Lexico(mContext, mensagensFiltradas);
             lx.executarLexico();
-
-            BuscadorConsumoInternet consumoInternet = new BuscadorConsumoInternet(mContext);
-            consumoInternet.salvarConsumoDataInicialAteAtualNoIntervalo(new Data( System.currentTimeMillis() - (qtdDiasAnterioresParaAnalise * 3600000 * 24)), intCapturaMensagens);
-
-            lx.montaResultadoFinal();
-
-            Log.d(TAG, "processamendo concluido.");
+            // Pega a data da primeira mensagem.
+            CapturaDadosRedeTask redeTask = new CapturaDadosRedeTask(mContext, mensagensFiltradas);
+            Log.d(TAG, "Iniciando captura de dados da internet.");
+            redeTask.doIt();
             return null;
         }
 
@@ -183,10 +179,10 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         }
 
         // Para limitar a busca
-        private Data pegarDataInicioCaptura(MensagemUsuario pme){
+        private UtilidadeData pegarDataInicioCaptura(MensagemUsuario pme){
             long dd = System.currentTimeMillis() - (qtdDiasAnterioresParaAnalise * 6000000);
-            Data d = new Data(dd);
-            Data dpme = pme.getData();
+            UtilidadeData d = new UtilidadeData(dd);
+            UtilidadeData dpme = pme.getUtilidadeData();
             if(dpme.dataEmMilisegundos() < d.dataEmMilisegundos())
                 return dpme;
             return d;
@@ -197,10 +193,8 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             final long tempo = System.currentTimeMillis() - (dias * 3600000 * 24);
             for(MensagemUsuario mu : mensagensUsuarioAdapter.getMensagens()){
                 if(mu.getAutor().equals(autor)){
-                    if(mu.getData().dataEmMilisegundos() >= tempo)
+                    if(mu.getUtilidadeData().dataEmMilisegundos() >= tempo)
                         msg.add(mu);
-                    else
-                        break;
                 }
             }
             return msg;
@@ -228,7 +222,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         if(prefs.contains(Utils.TEMPO_CAPTURA_REDE)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             String tempo = pegaTempoCapturaSalvo(prefs);
-            builder.setTitle("Deseja alterar o invalo de análise configurado anteriormente de"+tempo+"?");
+            builder.setTitle("Deseja alterar o intervalo de "+tempo+" dias anteriores de análise?");
             builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

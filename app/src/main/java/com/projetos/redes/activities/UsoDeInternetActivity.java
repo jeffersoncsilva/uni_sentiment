@@ -17,7 +17,8 @@ import com.projetos.redes.R;
 import com.projetos.redes.Utils;
 import com.projetos.redes.adapters.UsoDeInternetAdapter;
 import com.projetos.redes.bd.BancoDeDados;
-import com.projetos.redes.modelos.UsoDeInternet;
+import com.projetos.redes.modelos.ConsumoInternet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class UsoDeInternetActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_netusage);
 
         rc_netusage = findViewById(R.id.rc_data);
-        adapter = new UsoDeInternetAdapter(new ArrayList<UsoDeInternet>(), this);
+        adapter = new UsoDeInternetAdapter(new ArrayList<ConsumoInternet>(), this);
         rc_netusage.setLayoutManager( new LinearLayoutManager(this)) ;
         rc_netusage.setAdapter(adapter);
         bt_reloadData = findViewById(R.id.bt_usodados);
@@ -76,7 +77,7 @@ public class UsoDeInternetActivity extends AppCompatActivity implements View.OnC
 
     protected class CarregaDadosDoBanco extends AsyncTask<Void, Void, Void>{
         private final Context context;
-        List<UsoDeInternet> c = new ArrayList<>();
+        List<ConsumoInternet> c = new ArrayList<>();
 
         public CarregaDadosDoBanco(Context con){
             context = con;

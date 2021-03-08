@@ -1,15 +1,15 @@
 package com.projetos.redes.modelos;
 
-import com.projetos.redes.utilidades.Data;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 public class MensagemUsuario {
     private final String autor;
     private final String mensagem;
-    private final Data data;
+    private final UtilidadeData utilidadeData;
 
 
-    public MensagemUsuario(Data data, String autor, String msg){
-        this.data = data;
+    public MensagemUsuario(UtilidadeData utilidadeData, String autor, String msg){
+        this.utilidadeData = utilidadeData;
         this.autor = autor;
         this.mensagem = msg;
     }
@@ -22,12 +22,12 @@ public class MensagemUsuario {
         return mensagem;
     }
 
-    public Data getData() {
-        return data;
+    public UtilidadeData getUtilidadeData() {
+        return utilidadeData;
     }
 
     public String toString(){
-        return data + " " + autor + " " + mensagem;
+        return utilidadeData + " " + autor + " " + mensagem;
     }
 
     @Override

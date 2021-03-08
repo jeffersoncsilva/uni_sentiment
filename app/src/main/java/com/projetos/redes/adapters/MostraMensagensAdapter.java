@@ -51,7 +51,7 @@ public class MostraMensagensAdapter extends RecyclerView.Adapter<MostraMensagens
     @Override
     public void onBindViewHolder( MensagensUsuarioHolder holder, int position) {
         MensagemUsuario msg = mensagens.get(position);
-        holder.data.setText(msg.getData().toString());
+        holder.data.setText(msg.getUtilidadeData().toString());
         holder.autor.setText(msg.getAutor());
         holder.mensagem.setText(msg.getMensagem());
     }

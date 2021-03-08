@@ -79,7 +79,7 @@
         Nessa tela e mostrada as mensagens que você selecionou para realizar a analise léxica. Para prosseguir,
         você deve selecionar o botão que corresponde ao seu nome de usuário, então a análise ira iniciar, e apos
         finalizar sera levado a tela inicial da aplicação, onde poderá ver os resultados da análise, ver seu consumo
-        de internet no período das mensagens (baseado na data de envio de cada mensagem) e poder enviar os resultados para análise.
+        de internet no período das mensagens (baseado na utilidadeData de envio de cada mensagem) e poder enviar os resultados para análise.
     </string>
 
     <string name="btIniciaAnalize">Iniciar Análise</string>
@@ -158,7 +158,7 @@
     <string name="tx_identificador_usuario">
         Para finalizar, ao solicitar participar da pesquisa, você deve ter recebido um identificador único, logo digite esse
         identificador abaixo, ele servirá apenas para identificar o resultado produzido. Em nenhum momento nenhuma mensagem
-        sua será enviada para nós. Apenas os resultados finais, que será a data da execução do algorítimo, a soma do uso
+        sua será enviada para nós. Apenas os resultados finais, que será a utilidadeData da execução do algorítimo, a soma do uso
         de internet, pelo Wi-Fi e dados móveis. Caso ainda não tenha essa identificação, poderá ser dada ao realizar
         a análise das mensagens.
     </string>
@@ -167,12 +167,11 @@
     </string>
     <string name="edtIdentificadorUsuarioHint">Insira aqui seu identificador</string>
     <string name="btAutorizarAplicacao">Autorizar aplicação</string>
-    <string name="btConfgIntervaloCapturaDadosRedes">Confirar intervalo de coleta de consumo de internet</string>
+    <string name="btConfgIntervaloCapturaDadosRedes">Configurar intervalo de coleta de consumo de internet</string>
     <string name="btFinalizarConfiguracao">Finalizar Configuração.</string>
 
     <string name="dataMinimaMensagensAnalisadas">
-        Aqui deve ser escolhido os dias anteriores que deve ser considerado
-        para a análise das mensagens exportada para realizar a análise.
+        Escolher a opção da quantidade de  ultimas dias  a ser considerado  como histórico para análise de mensagens:
     </string>
     <string name="diasParaAnalise">Dias a ser considerados</string>
     <string-array name="diasMinimosParaAnalisar">

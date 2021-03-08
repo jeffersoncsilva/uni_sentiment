@@ -6,20 +6,32 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Data {
+public class UtilidadeData {
     public static final String DATA_SEM_HORAS = "dd/MM/yy";
     private final Date date;
 
-    public Data(long tempo){
+    public UtilidadeData(long tempo){
         this.date = new Date(tempo);
     }
 
-    public Data(Date d){
+    public UtilidadeData(Date d){
         this.date = d;
     }
 
-    public Data(String data){
+    public UtilidadeData(String data){
         this.date = formataDataParaDate(data);
+    }
+
+    public int getHora(){
+        return date.getHours();
+    }
+
+    public Date getDate(){
+        return this.date;
+    }
+
+    public int getMinutos(){
+        return date.getMinutes();
     }
 
     public long dataEmMilisegundos() {

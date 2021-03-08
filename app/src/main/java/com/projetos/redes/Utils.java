@@ -94,4 +94,9 @@ public class Utils {
         edit.putBoolean(JA_VIU_TUTORIAL, false);
         edit.commit();
     }
+
+    public static String pegarDataAtual(){
+        return pegarFormatadorDatasPadrao().format(new Date(System.currentTimeMillis()));
+    }
+
 }

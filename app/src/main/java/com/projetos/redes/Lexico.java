@@ -7,28 +7,20 @@ import android.util.Log;
 import com.projetos.redes.bd.BancoDeDados;
 import com.projetos.redes.enums.Sentimento;
 import com.projetos.redes.modelos.MensagemUsuario;
-import com.projetos.redes.modelos.ResultadoFinalLexico;
 import com.projetos.redes.modelos.ResultadoLexicoProcessado;
-import com.projetos.redes.modelos.UsoDeInternet;
-import com.projetos.redes.services.BuscadorConsumoInternet;
-import com.projetos.redes.utilidades.Data;
 
 import java.util.List;
 
 public class Lexico {
     private static final String tag = "AnalisadorLexico";
-    private final Context context;
+    private Context context;
     public BancoDeDados banco;
-    private final BuscadorConsumoInternet nus;
-    private final List<MensagemUsuario> mensagens;
-    private final int mIntervalo;
+    private List<MensagemUsuario> mensagens;
 
-    public Lexico(Context c, List<MensagemUsuario> msgs, int intervalo) {
+    public Lexico(Context c, List<MensagemUsuario> msgs){
         this.context = c;
-        this.banco = new BancoDeDados(c);
-        this.nus = new BuscadorConsumoInternet(this.banco);
         this.mensagens = msgs;
-        this.mIntervalo = intervalo * 60000;
+        this.banco = new BancoDeDados(c);
     }
 
     public void executarLexico() {
@@ -37,51 +29,18 @@ public class Lexico {
         for(MensagemUsuario mu : mensagens) {
             saldoSomaPalavras = pegarSaldoDaSomaDasPalavrasDaFrase(mu.getMensagem().toLowerCase());
             saldoFraseTotal = pegarSaldoFrase(mu.getMensagem().toLowerCase());
-            Sentimento s;
+            int s = 0;
             if (saldoFraseTotal == 1) {
-                s = Sentimento.POSITIVO;
+                s = 1;
             } else if (saldoFraseTotal == -1) {
-                s = Sentimento.NEGATIVO;
+                s = 2;
             } else if (saldoSomaPalavras >= 0) {
-                s = Sentimento.POSITIVO;
+                s = 1;
             } else {
-                s = Sentimento.NEGATIVO;
+                s = 2;
             }
-            ResultadoLexicoProcessado lr = new ResultadoLexicoProcessado(mu.getData(), mu.getMensagem(), s);
+            ResultadoLexicoProcessado lr = new ResultadoLexicoProcessado(mu.getMensagem(), s, mu.getUtilidadeData().getHora(), mu.getUtilidadeData().getMinutos(), mu.getUtilidadeData().pegarDataSemHoras());
             banco.insereResultadoLexicoProcessado(lr);
-        }
-    }
-
-    private void limparTabelaResultado() {
-        banco.limparTabelaLexicoProcessado();
-    }
-
-    public void montaResultadoFinal(){
-        List<UsoDeInternet> usoInternet = banco.pegarDadosUsoInternet();
-        List<ResultadoLexicoProcessado> lp = banco.pegarResultadoLexico();
-        for(UsoDeInternet uso : usoInternet){
-            Data inicio = uso.getInicio();
-            Data fim = uso.getFim();
-            int positivo = 0, negativo = 0;
-            boolean temMsg = false;
-            for(int i = 0;i < lp.size(); i++){
-                // Verifica se o resultado esta dentro do intervalo especificado,
-                // caso esteja, tem mensagem nesse intervalo de coleta.
-                if(lp.get(i).getDate().dataEmMilisegundos() > inicio.dataEmMilisegundos()
-                   && lp.get(i).getDate().dataEmMilisegundos() < fim.dataEmMilisegundos()){
-                    if(lp.get(i).getSentimento().equals(Sentimento.POSITIVO))
-                        positivo++;
-                    else
-                        negativo++;
-                    lp.remove(i);
-                    temMsg = true;
-                }
-            }
-            if(temMsg) {
-                Sentimento s = (positivo > negativo ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
-                ResultadoFinalLexico rf = new ResultadoFinalLexico(inicio, fim, uso, s, mIntervalo);
-                banco.insereResultadoFinalLexico(rf);
-            }
         }
     }
 
@@ -136,6 +95,4 @@ public class Lexico {
         }
         return 0;
     }
-
-
 }

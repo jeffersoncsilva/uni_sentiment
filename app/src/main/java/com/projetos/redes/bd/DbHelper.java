@@ -3,10 +3,6 @@ package com.projetos.redes.bd;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import com.projetos.redes.modelos.ResultadoLexicoProcessado;
-import com.projetos.redes.modelos.UsoDeInternet;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String tag = "DbHelper";

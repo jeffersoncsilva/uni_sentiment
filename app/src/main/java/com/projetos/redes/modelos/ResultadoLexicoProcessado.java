@@ -1,49 +1,46 @@
 package com.projetos.redes.modelos;
 
 import com.projetos.redes.enums.Sentimento;
-import com.projetos.redes.utilidades.Data;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class ResultadoLexicoProcessado implements Serializable {
     public static final String TB_LEXICO_RESULT = "tb_lexico_result";
-    public static final String _ID = "id";
-    public static final String _DATA = "data";
-    public static final String _FRASE = "frase";
-    public static final String _SENTIMENTO = "sentimento";
-    public static final String SQL_CREATE_TABLE_LR = "CREATE TABLE IF NOT EXISTS " + ResultadoLexicoProcessado.TB_LEXICO_RESULT +
-                                    " ( " + _DATA + " TEXT, " +
-                                    _FRASE + " TEXT, " +
-                                    _SENTIMENTO + " TEXT, " +
-                                    _ID + " INTEGER PRIMARY KEY AUTOINCREMENT);";
-    private final Data data;
-    private final String frase;
-    private final Sentimento sentimento;
 
-    public ResultadoLexicoProcessado(Data d, String frase, Sentimento s){
-        this.data = d;
+    private String frase, dia;
+    private Sentimento sentimento;
+    private int hora, minuto;
+
+    public ResultadoLexicoProcessado(String frase, int iSentimento, int hora, int minuto, String dia) {
         this.frase = frase;
-        this.sentimento = s;
+        this.sentimento = (iSentimento == 2 ? Sentimento.NEGATIVO : Sentimento.POSITIVO);
+        this.hora = hora;
+        this.minuto = minuto;
+        this.dia = dia;
     }
 
-    public Data getDate(){
-        return data;
-    }
-
-    public Sentimento getSentimento() {
-        return sentimento;
+    public String getDia(){
+        return dia;
     }
 
     public String getFrase() {
         return frase;
     }
 
-    public String getSqlInsert(){
-        return String.format(" INSERT INTO "+TB_LEXICO_RESULT + " (" + _DATA + ", " + _FRASE + ", "+ _SENTIMENTO + ") VALUES ( '"+data.toString()+"', '"+getFrase()+"', '"+getSentimento()+"');");
+    public Sentimento getSentimento() {
+        return sentimento;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public int getMinuto() {
+        return minuto;
     }
 
     public String toString(){
-         return data + " :: " + frase + " :: " + sentimento.toString();
+         return String.format("Frase: %s - Sentimento: %s - Hora: %d - Minuto: %d - Dia: %s", frase, sentimento, hora, minuto, dia);
     }
 }

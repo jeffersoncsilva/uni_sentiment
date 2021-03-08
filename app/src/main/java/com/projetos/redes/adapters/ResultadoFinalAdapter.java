@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.projetos.redes.R;
 import com.projetos.redes.modelos.ResultadoFinalLexico;
+
 import java.util.ArrayList;
 import java.util.List;
 

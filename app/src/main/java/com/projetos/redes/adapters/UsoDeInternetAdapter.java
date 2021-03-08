@@ -10,20 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.projetos.redes.R;
-import com.projetos.redes.modelos.UsoDeInternet;
+import com.projetos.redes.modelos.ConsumoInternet;
 
 import java.util.List;
 
 public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdapter.HolderNet> {
-    private List<UsoDeInternet> data;
+    private List<ConsumoInternet> data;
     private final Context c;
 
-    public UsoDeInternetAdapter(List<UsoDeInternet> data, Context con){
+    public UsoDeInternetAdapter(List<ConsumoInternet> data, Context con){
         this.data = data;
         this.c = con;
     }
 
-    public void setLst(List<UsoDeInternet> lsr){
+    public void setLst(List<ConsumoInternet> lsr){
         this.data = lsr;
     }
 
@@ -36,16 +36,11 @@ public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdap
 
     @Override
     public void onBindViewHolder(@NonNull HolderNet h, int position) {
-        UsoDeInternet nu = data.get(position);
-        h.dt_inicio.setText(String.format(c.getString(R.string.dt_inicio), nu.getInicio().toString()));
-        h.dt_fim.setText(String.format(c.getString(R.string.dt_fim), nu.getFim().toString()));
-        long wifi = nu.getConsumo().getWifi();
-        long mobile = nu.getConsumo().getMobile();
-        /*if(position >= 1){
-            UsoDeInternet n = data.get(position-1);
-            wifi -= n.getConsumo().getWifi();
-            mobile -= n.getConsumo().getMobile();
-        }*/
+        ConsumoInternet nu = data.get(position);
+        h.dt_inicio.setText("Inicio: " + nu.getHora()+":"+nu.getMinuto_inicial());
+        h.dt_fim.setText("FIM: "+nu.getHora()+":"+nu.getMinuto_final());
+        long wifi = nu.getWifi();
+        long mobile = nu.getMobile();
         h.tx_wifi.setText(String.format(c.getString(R.string.tx_wifi), convertMb(wifi)));
         h.tx_mobile.setText(String.format(c.getString(R.string.tx_mobile), convertMb(mobile)));
         h.tx_total.setText(String.format(c.getString(R.string.tx_total),convertMb(wifi+mobile)));

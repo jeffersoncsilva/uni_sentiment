@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.projetos.redes.adapters.MostraMensagensAdapter;
 import com.projetos.redes.modelos.MensagemUsuario;
-import com.projetos.redes.utilidades.Data;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -72,7 +72,7 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
                     String mg = str.substring(++p2);
                     if(mg.contains("<Arquivo de mídia"))
                         continue;
-                    MensagemUsuario msg = new MensagemUsuario(new Data(dt), au, mg);
+                    MensagemUsuario msg = new MensagemUsuario(new UtilidadeData(dt), au, mg);
                     if(!autores.contains(msg))
                         autores.add(msg);
                     mensagens.add(msg);
