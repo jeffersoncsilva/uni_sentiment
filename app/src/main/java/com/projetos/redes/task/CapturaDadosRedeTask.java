@@ -53,7 +53,7 @@ public class CapturaDadosRedeTask {
         long fim = d.getTime();
         long wifi = buscador.pegarConsumoWiFi(inicio, fim);
         long mobile = buscador.pegarConsumoMobile(inicio, fim);
-        banco.insereIntervaloConsumoInternet(new ConsumoInternet( hora, mIni, mFim, wifi, mobile));
+        banco.insereIntervaloConsumoInternet(new ConsumoInternet( utilidadeData.pegarDataSemHoras(), hora, mIni, mFim, wifi, mobile));
     }
 
     // int hora, int minuto_inicial, int minuto_final, long wifi, long mobile

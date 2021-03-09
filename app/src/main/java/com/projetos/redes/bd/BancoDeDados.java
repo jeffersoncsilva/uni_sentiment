@@ -34,16 +34,17 @@ public class BancoDeDados {
      */
     public List<ConsumoInternet> pegarDadosUsoInternet() {
         List<ConsumoInternet> lst = new ArrayList<>();
-        Cursor c = select.rawQuery("select hora, minuto_inicial, minuto_final, wi_fi, mobile from uso_de_internet;", null);
+        Cursor c = select.rawQuery("select dia, hora, minuto_inicial, minuto_final, wi_fi, mobile from uso_de_internet;", null);
         if (c != null && c.moveToFirst()) {
             do {
                 // int hora, int minuto_inicial, int minuto_final, long wifi, long mobile
                 ConsumoInternet co = new ConsumoInternet(
-                        c.getInt(0),
+                        c.getString(0),
                         c.getInt(1),
                         c.getInt(2),
                         c.getInt(3),
-                        c.getInt(4));
+                        c.getInt(4),
+                        c.getInt(5));
                 lst.add(co);
             }while (c.moveToNext());
         }
@@ -107,13 +108,29 @@ public class BancoDeDados {
         insert.rawQuery("delete from tb_net_usage",null);
     }
 
+    public int[] pegaResultadoSentimento(String sql){
+        int[] res = new int[2];
+        try{
+            Cursor c = select.rawQuery(sql, null);
+            if(c != null && c.moveToFirst()){
+                res[0] = c.getInt(0);
+                c.moveToNext();
+                res[1] = c.getInt(0);
+            }
+        }catch (Exception e){
+            Log.e(tag, "erro ao obter os dados da internet.");
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public ConsumoInternet pegaIntervaloDoBanco(int hora, int minuto){
         ConsumoInternet consumo = null;
-        String sql = "select * from uso_de_internet where hora == " + hora + " AND minuto_inicial <= "
+        String sql = "select dia, hora, minuto_inicial, minuto_final, wi_fi, mobile from uso_de_internet where hora == " + hora + " AND minuto_inicial <= "
                         + minuto  + " AND minuto_final >= " + minuto+";";
         Cursor c = select.rawQuery(sql, null);
         if(c != null && c.moveToFirst()){
-                consumo = new ConsumoInternet(c.getInt(0),c.getInt(3), c.getInt(4), c.getInt(5), c.getInt(1), c.getInt(2));
+                consumo = new ConsumoInternet(c.getString(0),c.getInt(1), c.getInt(2), c.getInt(3), c.getInt(4), c.getInt(5));
         }
         return consumo;
     }
@@ -125,6 +142,7 @@ public class BancoDeDados {
         cv.put("minuto_final", con.getMinuto_final());
         cv.put("wi_fi", con.getWifi());
         cv.put("mobile", con.getMobile());
+        cv.put("dia", con.getDia());
         try{
             insert.insert("uso_de_internet", null, cv);
         }catch (Exception e){

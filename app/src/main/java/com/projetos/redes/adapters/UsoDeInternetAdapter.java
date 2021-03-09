@@ -17,10 +17,12 @@ import java.util.List;
 public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdapter.HolderNet> {
     private List<ConsumoInternet> data;
     private final Context c;
+    private StringBuilder sb;
 
     public UsoDeInternetAdapter(List<ConsumoInternet> data, Context con){
         this.data = data;
         this.c = con;
+        sb = new StringBuilder();
     }
 
     public void setLst(List<ConsumoInternet> lsr){
@@ -37,13 +39,26 @@ public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdap
     @Override
     public void onBindViewHolder(@NonNull HolderNet h, int position) {
         ConsumoInternet nu = data.get(position);
-        h.dt_inicio.setText("Inicio: " + nu.getHora()+":"+nu.getMinuto_inicial());
-        h.dt_fim.setText("FIM: "+nu.getHora()+":"+nu.getMinuto_final());
         long wifi = nu.getWifi();
         long mobile = nu.getMobile();
-        h.tx_wifi.setText(String.format(c.getString(R.string.tx_wifi), convertMb(wifi)));
-        h.tx_mobile.setText(String.format(c.getString(R.string.tx_mobile), convertMb(mobile)));
-        h.tx_total.setText(String.format(c.getString(R.string.tx_total),convertMb(wifi+mobile)));
+        sb.append("Dia: ");
+        sb.append(nu.getDia());
+        sb.append("\nInicio: ");
+        sb.append(nu.getHora());
+        sb.append(":");
+        sb.append(nu.getMinuto_inicial());
+        sb.append("\nFIM: ");
+        sb.append(nu.getHora());
+        sb.append(":");
+        sb.append(nu.getMinuto_final());
+        sb.append("\nWI-FI:");
+        sb.append(convertMb(wifi));
+        sb.append("\nMOBILE: ");
+        sb.append(convertMb(mobile));
+        sb.append("\nTOTAL: ");
+        sb.append(convertMb(wifi+mobile));
+        h.dt_inicio.setText(sb.toString());
+        sb.setLength(0);
     }
 
     @Override
@@ -73,14 +88,10 @@ public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdap
     }
 
     protected class HolderNet extends RecyclerView.ViewHolder{
-        public TextView dt_inicio, dt_fim,  tx_wifi, tx_mobile, tx_total;
+        public TextView dt_inicio;
         public HolderNet(@NonNull View v){
             super(v);
             dt_inicio = v.findViewById(R.id.tx_dt_inicio);
-            dt_fim  = v.findViewById(R.id.tx_dt_fim);
-            tx_mobile  = v.findViewById(R.id.tx_mobile);
-            tx_wifi  = v.findViewById(R.id.tx_wifi);
-            tx_total  = v.findViewById(R.id.tx_total);
         }
     }
 }

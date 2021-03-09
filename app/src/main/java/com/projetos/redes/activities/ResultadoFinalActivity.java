@@ -2,6 +2,7 @@ package com.projetos.redes.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +20,12 @@ import com.projetos.redes.R;
 import com.projetos.redes.Utils;
 import com.projetos.redes.adapters.ResultadoFinalAdapter;
 import com.projetos.redes.bd.BancoDeDados;
+import com.projetos.redes.enums.Sentimento;
+import com.projetos.redes.modelos.ConsumoInternet;
 import com.projetos.redes.modelos.ResultadoFinalLexico;
 import com.projetos.redes.task.SendMailTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultadoFinalActivity extends AppCompatActivity {
@@ -99,7 +103,7 @@ public class ResultadoFinalActivity extends AppCompatActivity {
     }
 
     protected class PegarDadosBanco extends AsyncTask<Void, Void, Void>{
-        private List<ResultadoFinalLexico> lst;
+        private List<ResultadoFinalLexico> lst = new ArrayList<>();
         private final Context context;
 
         public PegarDadosBanco(Context con){
@@ -115,7 +119,21 @@ public class ResultadoFinalActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             BancoDeDados db = new BancoDeDados(context);
-            //lst = db.pegarResultadoFinal();
+            List<ConsumoInternet> consumo = db.pegarDadosUsoInternet();
+            for(ConsumoInternet ci : consumo){
+                /*
+                select count(sentimento) from tb_lexico_result where 	hora = 10 AND minuto >= 15 AND minuto <= 20 GROUP BY sentimento;
+                */
+                String sql = "select count(sentimento) from tb_lexico_result where hora ="+ ci.getHora() +" AND minuto >= "+ci.getMinuto_inicial()+
+                                "+ AND minuto <="+ci.getMinuto_final()+" GROUP BY sentimento;";
+                int[] res = db.pegaResultadoSentimento(sql);
+                ResultadoFinalLexico rf = new ResultadoFinalLexico(ci.getDia(), ci.getHora(), ci.getMobile()+ci.getWifi(), ci.getMinuto_final()-ci.getMinuto_inicial());
+                if(res[0] > res[1])
+                    rf.setSentimento(Sentimento.POSITIVO);
+                else
+                    rf.setSentimento(Sentimento.NEGATIVO);
+                lst.add(rf);
+            }
             return null;
         }
 

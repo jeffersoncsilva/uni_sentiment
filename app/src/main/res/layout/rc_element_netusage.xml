@@ -19,26 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dt_inicio"/>
-    <TextView
-        android:id="@+id/tx_dt_fim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dt_fim"/>
-    <TextView
-        android:id="@+id/tx_wifi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tx_wifi"/>
-    <TextView
-        android:id="@+id/tx_mobile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tx_mobile"/>
-    <TextView
-        android:id="@+id/tx_total"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tx_total"/>
 
 
 </LinearLayout>

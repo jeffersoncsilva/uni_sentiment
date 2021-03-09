@@ -39,7 +39,7 @@ public class ResultadoFinalAdapter extends RecyclerView.Adapter<ResultadoFinalAd
     @Override
     public void onBindViewHolder(@NonNull FimAdapter h, int position) {
         ResultadoFinalLexico rf = data.get(position);
-        h.tx_sentimento.setText(rf.resultadoParaEnviar());
+        h.tx_sentimento.setText(rf.toString());
     }
 
     @Override
