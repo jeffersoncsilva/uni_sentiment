@@ -1,9 +1,29 @@
 package com.projetos.redes.modelos;
 
+import com.projetos.redes.utilidades.UtilidadeData;
+
 public class ConsumoInternet {
-    private String dia;
-    private int hora, minuto_inicial, minuto_final;
+    private UtilidadeData data;
+    private int minuto_inicial, minuto_final, hora;
     private long wifi, mobile, id;
+
+    public ConsumoInternet(UtilidadeData data, int hora, int minuto_inicial, int minuto_final, long wifi, long mobile) {
+        this.hora = hora;
+        this.data = data;
+        this.minuto_inicial = minuto_inicial;
+        this.minuto_final = minuto_final;
+        this.wifi = wifi;
+        this.mobile = mobile;
+    }
+
+    public ConsumoInternet(UtilidadeData data, int hora, int minuto_inicial, int minuto_final, long wifi, long mobile, int id){
+        this(data, hora, minuto_inicial, minuto_final, wifi, mobile);
+        this.id = id;
+    }
+
+    public UtilidadeData getData(){
+        return data;
+    }
 
     public String getId(){
         return id + "";
@@ -15,28 +35,6 @@ public class ConsumoInternet {
 
     public void setMobile(long mobile) {
         this.mobile = mobile;
-    }
-
-    public ConsumoInternet(int id, String dia, int hora, int minuto_inicial, int minuto_final, long wifi, long mobile){
-        this(dia, hora, minuto_inicial, minuto_final, wifi, mobile);
-        this.id = id;
-    }
-
-    public ConsumoInternet(String dia, int hora, int minuto_inicial, int minuto_final, long wifi, long mobile) {
-        this.hora = hora;
-        this.minuto_inicial = minuto_inicial;
-        this.minuto_final = minuto_final;
-        this.wifi = wifi;
-        this.mobile = mobile;
-        this.dia = dia;
-    }
-
-    public String getDia(){
-        return this.dia;
-    }
-
-    public int getHora() {
-        return hora;
     }
 
     public int getMinuto_inicial() {
@@ -53,5 +51,12 @@ public class ConsumoInternet {
 
     public long getMobile() {
         return mobile;
+    }
+
+    public String toString(){
+        return "Data: " + data.toString() +
+                "\nINICIO: "+hora+":"+minuto_inicial+
+                "\nFIM: "+hora+":"+minuto_final+
+                "\nWIFI: "+wifi+"\nMOBILE: "+mobile;
     }
 }

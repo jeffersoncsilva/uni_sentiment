@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class UtilidadeData {
     public static final String DATA_SEM_HORAS = "dd/MM/yy";
-    private final Date date;
+    private Date date;
 
     public UtilidadeData(long tempo){
         this.date = new Date(tempo);
@@ -18,8 +18,24 @@ public class UtilidadeData {
         this.date = d;
     }
 
+    public UtilidadeData(int dia, int mes, int ano){
+        this.date = new Date(dia, mes, ano);
+    }
+
     public UtilidadeData(String data){
         this.date = formataDataParaDate(data);
+    }
+
+    public int dia(){
+        return date.getDate();
+    }
+
+    public int mes(){
+        return date.getMonth();
+    }
+
+    public int ano(){
+        return date.getYear();
     }
 
     public int getHora(){

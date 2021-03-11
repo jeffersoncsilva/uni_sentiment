@@ -17,12 +17,10 @@ import java.util.List;
 public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdapter.HolderNet> {
     private List<ConsumoInternet> data;
     private final Context c;
-    private StringBuilder sb;
 
     public UsoDeInternetAdapter(List<ConsumoInternet> data, Context con){
         this.data = data;
         this.c = con;
-        sb = new StringBuilder();
     }
 
     public void setLst(List<ConsumoInternet> lsr){
@@ -39,26 +37,7 @@ public class UsoDeInternetAdapter extends RecyclerView.Adapter<UsoDeInternetAdap
     @Override
     public void onBindViewHolder(@NonNull HolderNet h, int position) {
         ConsumoInternet nu = data.get(position);
-        long wifi = nu.getWifi();
-        long mobile = nu.getMobile();
-        sb.append("Dia: ");
-        sb.append(nu.getDia());
-        sb.append("\nInicio: ");
-        sb.append(nu.getHora());
-        sb.append(":");
-        sb.append(nu.getMinuto_inicial());
-        sb.append("\nFIM: ");
-        sb.append(nu.getHora());
-        sb.append(":");
-        sb.append(nu.getMinuto_final());
-        sb.append("\nWI-FI:");
-        sb.append(convertMb(wifi));
-        sb.append("\nMOBILE: ");
-        sb.append(convertMb(mobile));
-        sb.append("\nTOTAL: ");
-        sb.append(convertMb(wifi+mobile));
-        h.dt_inicio.setText(sb.toString());
-        sb.setLength(0);
+        h.dt_inicio.setText(nu.toString());
     }
 
     @Override

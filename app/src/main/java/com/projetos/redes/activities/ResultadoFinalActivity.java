@@ -121,13 +121,16 @@ public class ResultadoFinalActivity extends AppCompatActivity {
             BancoDeDados db = new BancoDeDados(context);
             List<ConsumoInternet> consumo = db.pegarDadosUsoInternet();
             for(ConsumoInternet ci : consumo){
-                /*
-                select count(sentimento) from tb_lexico_result where 	hora = 10 AND minuto >= 15 AND minuto <= 20 GROUP BY sentimento;
-                */
-                String sql = "select count(sentimento) from tb_lexico_result where hora ="+ ci.getHora() +" AND minuto >= "+ci.getMinuto_inicial()+
-                                "+ AND minuto <="+ci.getMinuto_final()+" GROUP BY sentimento;";
+                String sql = "select count(sentimento) from "+ BancoDeDados.TB_LEXICO_PROCESSADO +
+                                " where hora ="+ ci.getData().getHora() +
+                                " AND minuto >= "+ci.getMinuto_inicial() +
+                                " AND minuto <="+ci.getMinuto_final() +
+                                " AND dia == " + ci.getData().dia() +
+                                " AND mes == "+ci.getData().mes() +
+                                " AND ano == " + ci.getData().ano() +
+                                " GROUP BY sentimento;";
                 int[] res = db.pegaResultadoSentimento(sql);
-                ResultadoFinalLexico rf = new ResultadoFinalLexico(ci.getDia(), ci.getHora(), ci.getMobile()+ci.getWifi(), ci.getMinuto_final()-ci.getMinuto_inicial());
+                ResultadoFinalLexico rf = new ResultadoFinalLexico(ci.getData().pegarDataSemHoras(), ci.getData().getHora(), ci.getMobile()+ci.getWifi(), ci.getMinuto_final()-ci.getMinuto_inicial());
                 if(res[0] > res[1])
                     rf.setSentimento(Sentimento.POSITIVO);
                 else

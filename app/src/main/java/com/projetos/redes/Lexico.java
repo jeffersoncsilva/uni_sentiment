@@ -39,7 +39,7 @@ public class Lexico {
             } else {
                 s = 2;
             }
-            ResultadoLexicoProcessado lr = new ResultadoLexicoProcessado(mu.getMensagem(), s, mu.getUtilidadeData().getHora(), mu.getUtilidadeData().getMinutos(), mu.getUtilidadeData().pegarDataSemHoras());
+            ResultadoLexicoProcessado lr = new ResultadoLexicoProcessado(mu.getMensagem(), s, mu.getUtilidadeData().getHora(), mu.getUtilidadeData().getMinutos(), mu.getUtilidadeData().pegarDataSemHoras(), mu.getUtilidadeData());
             banco.insereResultadoLexicoProcessado(lr);
         }
     }

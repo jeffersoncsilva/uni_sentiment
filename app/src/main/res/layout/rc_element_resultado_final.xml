@@ -12,6 +12,11 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/small_margin"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DIA - HORA - USO - SENTIMENTO - INTERVALO "/>
         <TextView
             android:id="@+id/tx_sentimento"
             android:layout_width="match_parent"

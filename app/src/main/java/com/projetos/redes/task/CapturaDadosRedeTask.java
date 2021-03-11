@@ -33,7 +33,7 @@ public class CapturaDadosRedeTask {
         for(MensagemUsuario mu : msgs) {
             int hora = mu.getUtilidadeData().getHora();
             int minuto = mu.getUtilidadeData().getMinutos();
-            ConsumoInternet uso = banco.pegaIntervaloDoBanco(hora, minuto);
+            ConsumoInternet uso = banco.pegaIntervaloDoBanco(mu.getUtilidadeData(), minuto);
             if(uso == null)
                 insereIntervaloBanco(mu.getUtilidadeData(), hora, minuto);
             else
@@ -53,13 +53,13 @@ public class CapturaDadosRedeTask {
         long fim = d.getTime();
         long wifi = buscador.pegarConsumoWiFi(inicio, fim);
         long mobile = buscador.pegarConsumoMobile(inicio, fim);
-        banco.insereIntervaloConsumoInternet(new ConsumoInternet( utilidadeData.pegarDataSemHoras(), hora, mIni, mFim, wifi, mobile));
+        banco.insereIntervaloConsumoInternet(new ConsumoInternet( utilidadeData, hora, mIni, mFim, wifi, mobile));
     }
 
     // int hora, int minuto_inicial, int minuto_final, long wifi, long mobile
     private void atualizaIntervaloNoBanco(ConsumoInternet uso, UtilidadeData da){
         Date d = da.getDate();
-        d.setHours(uso.getHora());
+        d.setHours(uso.getData().getHora());
         d.setMinutes(uso.getMinuto_inicial());
         long inicio = d.getTime();
         d.setMinutes(uso.getMinuto_final());
