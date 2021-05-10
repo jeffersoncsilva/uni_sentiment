@@ -40,11 +40,13 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     private Button iniciaAnalise;
     private MostraMensagensAdapter mensagensUsuarioAdapter;
     private boolean podeIniciarLexico = false;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recebe_conversa_exportada_whatsapp);
+        preferences = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
         carregando = findViewById(R.id.carregarResultado);
         mensagensUsuarioRecycler = findViewById(R.id.mensagensUsuario);
         mensagensUsuarioRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -107,23 +109,17 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     }
 
     private void realizaPreparativosLexico(){
-        Log.d(TAG, "Realizando preparativos do lexico!");
         if(!temPermissaoDeAcessoAosDadosCelular()){
             AutorizacaoAcessoAosDadosTelefone aut = new AutorizacaoAcessoAosDadosTelefone();
             aut.show(getSupportFragmentManager(), "Autorização acesso aos dados.");
             return;
         }
-
         if(!temAutorizacaoDeAcessoAoTelefone()){
             AcessoAoTelefoneAutorizacao acesso = new AcessoAoTelefoneAutorizacao();
             acesso.show(getSupportFragmentManager(), "Autorizacao de acesso ao telefone.");
             return;
         }
-
-        Log.d(TAG, "OK, autorizações obitida para o lexico.");
-
         mostraOpcaoEscolhaAutor();
-
     }
 
     private boolean temPermissaoDeAcessoAosDadosCelular(){
@@ -218,11 +214,10 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
 
     // Verifica se o usuario salvou o intervalo para a analise de mensagem (e captura de uso de internet).
     private void verificaIntervaloFoiSalvo(final MensagemUsuario mu){
-        final SharedPreferences prefs = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
-        if(prefs.contains(Utils.TEMPO_CAPTURA_REDE)){
+        if(preferences.contains(Utils.TEMPO_CAPTURA_REDE)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            String tempo = pegaTempoCapturaSalvo(prefs);
-            builder.setTitle("Deseja alterar o intervalo de "+tempo+" dias anteriores de análise?");
+            String tempo = pegaTempoCapturaSalvo(preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 15));
+            builder.setTitle("Deseja alterar o intervalo de captura de dados de "+tempo+"?");
             builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -232,7 +227,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    verificaSeSalvoLimiteDiasAnalise(mu, prefs.getInt(Utils.TEMPO_CAPTURA_REDE, 15));
+                    verificaSeSalvoLimiteDiasAnalise(mu, preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 15));
                 }
             });
             AlertDialog dialog = builder.create();
@@ -249,6 +244,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             builder.setItems(tempos, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
+                    preferences.edit().putInt(Utils.TEMPO_CAPTURA_REDE, Utils.tempoCapturaRedeMinutos(i)).commit();
                     verificaSeSalvoLimiteDiasAnalise(mu, pegarIntervaloCapturaRede(i));
                 }
             });
@@ -258,10 +254,9 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
 
     // Verifica se o usuario escolheu a quantidade de dias atras para analise das mensagens.
     private void verificaSeSalvoLimiteDiasAnalise(final MensagemUsuario mu, final int intervaloCapturaRede){
-        final SharedPreferences prefs = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
-        if(prefs.contains(Utils.DIAS_ANTERIOR_PARA_ANALISAR)){
+        if(preferences.contains(Utils.DIAS_ANTERIOR_PARA_ANALISAR)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            String tempo = pegaQuantidadeDiasSalvo(prefs);
+            String tempo = pegaQuantidadeDiasSalvo(preferences);
             builder.setTitle("Deseja alterar o intervalo de dias para análise de "+tempo+"?");
             builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                 @Override
@@ -273,7 +268,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    iniciaAnlaliseLexico(mu, prefs.getInt(Utils.TEMPO_CAPTURA_REDE, 15), prefs.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 1));
+                    iniciaAnlaliseLexico(mu, preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 15), preferences.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 1));
                 }
             });
             AlertDialog dialog = builder.create();
@@ -292,6 +287,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 // Saber se ele escolheu 1, 2, 4, 7 ou 14 dias.
                 int diasEscolhidos = pegarDiasEscolhidos(i);
+                preferences.edit().putInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, diasEscolhidos).commit();
                 iniciaAnlaliseLexico(mu, intRede, diasEscolhidos);
             }
         });
@@ -315,6 +311,8 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     }
 
     private void iniciaAnlaliseLexico(final MensagemUsuario msg, int intervaloCapturaRede, int limiteDiasAnalise){
+        String str = "Rede: " + intervaloCapturaRede + "\nLimiteDias: "+limiteDiasAnalise;
+        Log.d("RecebCvsExprtAct", str);
         IniciaAnaliseLexico analise = new IniciaAnaliseLexico(msg, intervaloCapturaRede, limiteDiasAnalise, getApplicationContext());
         analise.execute();
     }
@@ -338,9 +336,8 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         }
     }
 
-    private String pegaTempoCapturaSalvo(SharedPreferences p){
-        int t = p.getInt(Utils.TEMPO_CAPTURA_REDE, 15);
-        switch (t){
+    private String pegaTempoCapturaSalvo(int tempo){
+        switch (tempo){
             case 15:
                 return " 15 Minutos";
             case 30:

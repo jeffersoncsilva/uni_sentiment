@@ -117,14 +117,16 @@
         Escolher a opção mais.
     </string>
     <string name="exortarMsg3">
-        Após escolher, deverá ser mostrada uma opção semelhante a essa, onde e possível ver o ícone do aplicativo e
-        demais outros aplicativos. Escolha o Uni Sentiment - Mensagens, e então a conversa será exportada para o aplicativo.
+        Após, devera escolher exportar mensagens, e quando perguntar escolha sem mídia.
     </string>
     <string name="exportarMsg4">
-        Após a escolha do aplicativo, essa será a tela inicial, onde temos  as mensagens que foi enviada, e a opção de iniciar a análise das mensagens.
+        Agora, ira mostrar uma lista de aplicativos que é possível enviar os dados das mensagens. Escolha o aplicativo UniSentiment.
     </string>
     <string name="exportarMsg5">
-        Ao clicar em iniciar análise, será pedido as autorizações caso não tenha sido permitidas anteriormente. Será explicado mais nas próximas telas.
+        Esta e a tela com as mensagens que foram enviadas ao aplicativo. Aqui é possível ler as mensagens enviadas, quem enviou e a hora que foi enviada.
+    </string>
+    <string name="exportarMsg6">
+        Ao clicar em iniciar análise, será pedido as autorizações caso não tenham sido dadas anteriormente. Nas próximas telas e falado mais sobre elas.
     </string>
 
     <string name="acessoDadosWiFi">Acesso aos dados Wi-Fi.</string>

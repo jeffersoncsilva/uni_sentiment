@@ -99,4 +99,23 @@ public class Utils {
         return pegarFormatadorDatasPadrao().format(new Date(System.currentTimeMillis()));
     }
 
+    public static int tempoCapturaRedeMinutos(int i){
+        switch (i){
+            case 0:
+                return 15;
+            case 1:
+                return 30;
+            case 2:
+                return 45;
+            case 3:
+                return 60;
+            case 4:
+                return 120;
+            case 5:
+                return 240;
+            default:
+                return 840;
+        }
+    }
+
 }

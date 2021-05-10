@@ -59,7 +59,6 @@ public class BancoDeDados {
 
     public Cursor getSaldoPalavra(String p) {
         Cursor c = select.query(TABELA_PALAVRAS, new String[] { "peso"}, "sentenca = ?", new String[] { p }, null, null, null);
-        //return select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.sentenca", TABELA_PALAVRAS, p), null);
         return c;
     }
 
@@ -70,7 +69,7 @@ public class BancoDeDados {
             cv.put("hora", r.getHora());
             cv.put("minuto", r.getMinuto());
             cv.put("sentimento", r.getSentimento().getId());
-            cv.put("dia", r.getData().dia());
+            cv.put("dia",r.getData().dia());
             cv.put("mes", r.getData().mes());
             cv.put("ano", r.getData().ano());
             insert.insert(TB_LEXICO_PROCESSADO, null, cv);
@@ -87,7 +86,7 @@ public class BancoDeDados {
     }
 
     public void limparDadosDeConsumo(){
-        insert.rawQuery("delete from tb_net_usage",null);
+        insert.rawQuery("delete from uso_de_internet",null);
     }
 
     public int[] pegaResultadoSentimento(String sql){
@@ -114,7 +113,7 @@ public class BancoDeDados {
      */
     public List<ConsumoInternet> pegarDadosUsoInternet() {
         List<ConsumoInternet> lst = new ArrayList<>();
-        Cursor c = select.rawQuery("select dia, mes, ano, hora, minuto_inicial, minuto_final, wi_fi, mobile from uso_de_internet;", null);
+        Cursor c = select.rawQuery("select dia, mes, ano, hora, minuto_inicial, minuto_final, wifi, mobile from uso_de_internet;", null);
         if (c != null && c.moveToFirst()) {
             do {
                 // UtilidadeData data, int minuto_inicial, int minuto_final, long wifi, long mobile
@@ -134,7 +133,7 @@ public class BancoDeDados {
 
     public ConsumoInternet pegaIntervaloDoBanco(UtilidadeData d, int minuto){
         ConsumoInternet consumo = null;
-        String sql = "select dia, mes, ano, hora, minuto_inicial, minuto_final, wi_fi, mobile, id from uso_de_internet where hora == " + d.pegarHorasDaData() + " AND minuto_inicial <= "
+        String sql = "select dia, mes, ano, hora, minuto_inicial, minuto_final, wifi, mobile, id from uso_de_internet where hora == " + d.pegarHorasDaData() + " AND minuto_inicial <= "
                         + minuto  + " AND minuto_final >= " + minuto+" AND dia == "+d.dia()+" AND mes == "+ d.mes()+" AND ano == "+d.ano()+";";
         Cursor c = select.rawQuery(sql, null);
         if(c != null && c.moveToFirst()){
@@ -154,7 +153,7 @@ public class BancoDeDados {
         cv.put("hora", con.getData().getHora());
         cv.put("minuto_inicial", con.getMinuto_inicial());
         cv.put("minuto_final", con.getMinuto_final());
-        cv.put("wi_fi", con.getWifi());
+        cv.put("wifi", con.getWifi());
         cv.put("mobile", con.getMobile());
         cv.put("dia", con.getData().dia());
         cv.put("ano", con.getData().ano());

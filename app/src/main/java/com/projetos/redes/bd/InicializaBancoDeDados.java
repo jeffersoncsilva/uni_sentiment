@@ -35,7 +35,7 @@ public class InicializaBancoDeDados {
                     Log.d("InicializaBancoDeDados","diretorio criado com sucesso!!");
             }
             InputStream inputStream = mContext.getAssets().open(DbHelper.DATA_BASE_NAME);
-            OutputStream outputStream = new FileOutputStream("/data/data/com.projetos.redes/databases/DbLexico");
+            OutputStream outputStream = new FileOutputStream("/data/data/com.projetos.redes/databases/DbLexico.db");
             byte[] buff = new byte[1024];
             int legth;
             while ((legth = inputStream.read(buff))>0){
@@ -46,6 +46,7 @@ public class InicializaBancoDeDados {
             Toast.makeText(mContext,"Banco copiado com sucesso!",Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(mContext, "Arquivo de dados não encontrado. Verifique o código fonte.", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

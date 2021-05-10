@@ -1,0 +1,11 @@
+{
+  "fromEmail": "",
+  "passwordEmail": "",
+  "host": "",
+  "port": "",
+  "sport": "",
+  "toArr": [
+    "",
+    ""
+  ]
+}

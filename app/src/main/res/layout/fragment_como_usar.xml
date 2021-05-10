@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.tutoriais.ComoUsarFragment">
@@ -19,20 +17,20 @@
         android:layout_height="wrap_content"
         android:text="@string/comoUsar"
         android:textSize="@dimen/tamanhoTituloTutorial"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        />
 
     <TextView
-
         android:id="@+id/explicacao"
         style="@style/padraoTexto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_below="@id/tituloPag"
         android:text="@string/comoFuncionaExpliccao"
-        android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloPag" />
+        android:textSize="@dimen/tamanhoTextoTutorial" />
 
     <TextView
 
@@ -40,139 +38,131 @@
         style="@style/padraoTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/comoExportarMensagens"
         android:textSize="@dimen/tamanhoTituloTutorial"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/explicacao" />
+        android:textAlignment="center"
+        android:layout_below="@id/explicacao"/>
 
     <ImageView
-
         android:id="@+id/imgP1"
         android:layout_width="120dp"
         android:layout_height="160dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/parte_um"
+        android:layout_below="@id/terAcessoMsg"
         style="@style/padraoTexto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/terAcessoMsg" />
-
+        />
     <TextView
-
         android:id="@+id/textView7"
         style="@style/padraoTexto"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center|left"
         android:text="@string/exportarMsg1"
         android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintBottom_toBottomOf="@+id/imgP1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgP1"
-        app:layout_constraintTop_toTopOf="@+id/imgP1" />
+        android:layout_below="@id/terAcessoMsg"
+        android:layout_toEndOf="@id/imgP1"
+        android:layout_marginTop="@dimen/large_margin"/>
 
     <ImageView
-
-        android:id="@+id/imageView"
+        android:id="@+id/imgP2"
         android:layout_width="120dp"
         android:layout_height="160dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/parte_dois"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgP1" />
-
-    <ImageView
-
-        android:id="@+id/imageView2"
-        style="@style/padraoTexto"
-        android:layout_width="120dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/parte_dois"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
+        android:layout_below="@id/imgP1"
+        android:layout_alignParentEnd="true"/>
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/txP2"
         style="@style/padraoTexto"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center|right"
         android:text="@string/exportarMsg2"
         android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <TextView
-        android:id="@+id/textView9"
-        style="@style/padraoTexto"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center|left"
-        android:text="@string/exortarMsg3"
-        android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        android:layout_below="@id/imgP1"
+        android:layout_toLeftOf="@id/imgP2"
+        android:layout_marginTop="@dimen/large_margin"/>
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imgP3"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/parte_tres"
+        android:layout_below="@id/imgP2"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/txP3"
+        style="@style/padraoTexto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exortarMsg3"
+        android:textSize="@dimen/tamanhoTextoTutorial"
+        android:layout_below="@id/imgP2"
+        android:layout_toRightOf="@id/imgP3"
+        android:layout_marginTop="@dimen/large_margin" />
+
+    <ImageView
+        android:id="@+id/imgP4"
         android:layout_width="120dp"
         android:layout_height="160dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/parte_quatro"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
+        android:layout_below="@id/imgP3"
+        android:layout_alignParentEnd="true"/>
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/txP4"
         style="@style/padraoTexto"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center|right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/exportarMsg4"
         android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        android:textAlignment="textEnd"
+        android:layout_below="@id/imgP3"
+        android:layout_toLeftOf="@id/imgP4"
+        android:layout_marginTop="@dimen/large_margin" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imgP5"
         android:layout_width="120dp"
         android:layout_height="160dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/parte_cinco"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
+        android:layout_below="@id/imgP4"
+        android:layout_alignParentStart="true"/>
     <TextView
-        android:id="@+id/textView11"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="left|center"
-        android:text="@string/exportarMsg4"
-        android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
-
-    <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/txP5"
         style="@style/padraoTexto"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
         android:text="@string/exportarMsg5"
         android:textSize="@dimen/tamanhoTextoTutorial"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_below="@id/imgP4"
+        android:layout_toRightOf="@id/imgP5"
+        android:layout_marginTop="@dimen/large_margin" />
+
+    <TextView
+        android:id="@+id/txP6"
+        style="@style/padraoTexto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exportarMsg5"
+        android:textSize="@dimen/tamanhoTextoTutorial"
+        android:layout_below="@id/imgP4"
+        android:layout_toRightOf="@id/imgP5"
+        android:layout_marginTop="@dimen/large_margin" />
+
+    <TextView
+        android:id="@+id/txP7"
+        style="@style/padraoTexto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exportarMsg6"
+        android:textSize="@dimen/tamanhoTextoTutorial"
+        android:layout_below="@id/imgP5"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/large_margin" />
+
+</RelativeLayout>
 </ScrollView>
