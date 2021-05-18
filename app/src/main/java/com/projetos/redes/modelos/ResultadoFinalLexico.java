@@ -1,66 +1,33 @@
 package com.projetos.redes.modelos;
 
-import android.provider.Telephony;
-
+import com.projetos.redes.enums.MinutosCapturaDados;
 import com.projetos.redes.enums.Sentimento;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 public class ResultadoFinalLexico {
-    private String data,  hora;
+    private UtilidadeData data;
     private Sentimento sentimento;
-    private int minuto;
-    private long usoRede;
+    private ConsumoInternet usoRede;
+    private MinutosCapturaDados intervaloConsiderado;
 
-    public ResultadoFinalLexico(String data, int hora, int sentimento, long usoRede, int minuto) {
+    public ResultadoFinalLexico(UtilidadeData data, Sentimento sentimento, ConsumoInternet usoRede, MinutosCapturaDados intervaloConsiderado) {
         this.data = data;
-        this.hora = formataHora(hora);
-        this.sentimento = (sentimento==1 ? Sentimento.POSITIVO : Sentimento.NEGATIVO);
-        this.usoRede = usoRede;
-        this.minuto = minuto;
-    }
-
-    public ResultadoFinalLexico(String data, int hora, long usoRede, int minuto) {
-        this.data = data;
-        this.hora = formataHora(hora);
-        this.minuto = minuto;
-        this.usoRede = usoRede;
-    }
-
-    public void setSentimento(Sentimento sentimento) {
         this.sentimento = sentimento;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public String getHora() {
-        return hora;
+        this.usoRede = usoRede;
+        this.intervaloConsiderado = intervaloConsiderado;
     }
 
     public Sentimento getSentimento() {
         return sentimento;
     }
 
-    public long getUsoRede() {
+    public ConsumoInternet getUsoRede() {
         return usoRede;
     }
 
-    public int getMinuto() {
-        return minuto;
-    }
-
     public String toString(){
-        return data+";"+hora+";"+usoRede+";"+sentimento+";"+minuto;
+        return String.format("%s;%s;%d;%s;%d",
+                data.pegarDataSemHoras(),data.pegarHorasDaData(),usoRede.getTotal(),sentimento.toString(),this.intervaloConsiderado.getValor());
     }
 
-    private String formataHora(int hora){
-        if(hora < 10)
-            return "0"+hora+":00";
-        else
-            return hora+":00";
-    }
-
-    public String resultadoParaEnviar(){
-        return "Resultado";
-    }
 }

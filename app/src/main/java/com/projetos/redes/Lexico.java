@@ -29,18 +29,17 @@ public class Lexico {
         for(MensagemUsuario mu : mensagens) {
             saldoSomaPalavras = pegarSaldoDaSomaDasPalavrasDaFrase(mu.getMensagem().toLowerCase());
             saldoFraseTotal = pegarSaldoFrase(mu.getMensagem().toLowerCase());
-            int s = 0;
+            Sentimento s;
             if (saldoFraseTotal == 1) {
-                s = 1;
+                s = Sentimento.POSITIVO;
             } else if (saldoFraseTotal == -1) {
-                s = 2;
+                s = Sentimento.NEGATIVO;
             } else if (saldoSomaPalavras >= 0) {
-                s = 1;
+                s = Sentimento.POSITIVO;
             } else {
-                s = 2;
+                s = Sentimento.NEGATIVO;
             }
-            ResultadoLexicoProcessado lr = new ResultadoLexicoProcessado(mu.getMensagem(), s, mu.getUtilidadeData().getHora(), mu.getUtilidadeData().getMinutos(), mu.getUtilidadeData().pegarDataSemHoras(), mu.getUtilidadeData());
-            banco.insereResultadoLexicoProcessado(lr);
+            banco.insereResultadoLexicoProcessado(new ResultadoLexicoProcessado(mu.getMensagem(), s, mu.getUtilidadeData()));
         }
     }
 
@@ -69,10 +68,8 @@ public class Lexico {
 
         String[] s = frase.split(" ");
         for (String i : s) {
-            if (i.isEmpty() || i.equals(" ") || i.equals("?")) {
-                Log.d(tag, "string invalida." + i);
+            if (i.isEmpty() || i.equals(" ") || i.equals("?"))
                 continue;
-            }
             saldoSomaPalavras += pegarSaldoPalavra(i);
         }
         return saldoSomaPalavras;

@@ -6,13 +6,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class UtilidadeData {
     public static final String DATA_SEM_HORAS = "dd/MM/yy";
     private Calendar calendar;
 
     private UtilidadeData(){
-        calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
     }
 
     public UtilidadeData(long tempo){
@@ -28,7 +29,7 @@ public class UtilidadeData {
     public UtilidadeData(String data){
         // "10/05/21 2:32 da tarde
         this();
-        if(data.contains("tarde") || data.contains("manha")){
+        if(data.contains("tarde") || data.contains("manhã")){
             formataDataParaDate(data);
         }else{
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -54,7 +55,7 @@ public class UtilidadeData {
     }
 
     public int getHora(){
-        return calendar.get(Calendar.HOUR);
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     public Date getDate(){
@@ -66,18 +67,20 @@ public class UtilidadeData {
     }
 
     public long dataEmMilisegundos() {
+
         return  calendar.getTimeInMillis();
     }
 
     public String toString(){
-        return new SimpleDateFormat("dd/MM/yy hh:mm a").format(calendar.getTime());
+        String data = new SimpleDateFormat(Utils.PADRAO_DATA).format(calendar.getTime());
+        return data;
     }
 
     public String pegarDataSemHoras(){
         return new SimpleDateFormat(DATA_SEM_HORAS).format(calendar.getTime());
     }
 
-    public String pegarHorasDaData(){ return getHora() + "";}
+    public String pegarHorasDaData(){ return String.format("%d:00", getHora());}
 
     private void formataDataParaDate(String data){
         SimpleDateFormat sdf = new SimpleDateFormat(Utils.PADRAO_DATA);
@@ -85,7 +88,7 @@ public class UtilidadeData {
         if(dates.length > 1) {
             String d = dates[0] + " " + dates[1];
             if(dates.length > 2)
-                d += (dates[2].contains("da manha") ? " AM" : " PM") ;
+                d += (dates[3].contains("manhã") ? " AM" : " PM");
             else
                 d += " AM";
             try {
@@ -95,5 +98,9 @@ public class UtilidadeData {
                 pe.printStackTrace();
             }
         }
+    }
+
+    public static String toDateString(long timeStamp){
+        return new SimpleDateFormat(Utils.PADRAO_DATA).format(new Date(timeStamp));
     }
 }

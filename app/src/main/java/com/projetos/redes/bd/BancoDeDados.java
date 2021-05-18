@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.projetos.redes.enums.Sentimento;
 import com.projetos.redes.modelos.ConsumoInternet;
 import com.projetos.redes.modelos.ResultadoLexicoProcessado;
 import com.projetos.redes.utilidades.UtilidadeData;
@@ -16,7 +17,7 @@ import java.util.List;
 public class BancoDeDados {
     private final String TABELA_PALAVRAS = "tb_palavras";
     private final String TABELA_FRASES = "tb_frases";
-    public static final String TB_LEXICO_PROCESSADO = "tb_lexico_processado";
+    private final String TB_LEXICO_PROCESSADO = "tb_lexico_processado";
 
     private static final String tag = "LexicoDb";
     private final SQLiteDatabase select;
@@ -37,14 +38,14 @@ public class BancoDeDados {
      */
     public List<ResultadoLexicoProcessado> pegarResultadoLexico() {
         List<ResultadoLexicoProcessado> lst = new ArrayList<>();
-        String sql ="select frase, sentimento, hora, minuto, dia, ano, mes from "+TB_LEXICO_PROCESSADO+";";
+        String sql ="select frase, sentimento, data from "+TB_LEXICO_PROCESSADO+";";
         Cursor c = select.rawQuery(sql, null);
         if (c != null && c.moveToFirst()) {
             do {
-                ResultadoLexicoProcessado lr = new ResultadoLexicoProcessado(c.getString(0), c.getInt(1), c.getInt(2),
-                                                c.getInt(3), "",
-                                                new UtilidadeData(c.getInt(4), c.getInt(5), c.getInt(6)));
-                lst.add(lr);
+                lst.add(new ResultadoLexicoProcessado(c.getString(0),                  // frase
+                                                      Sentimento.factory(c.getInt(1)), // sentimento
+                                                      new UtilidadeData(c.getLong(2)))  // data
+                );
             }while (c.moveToNext());
             c.close();
         }
@@ -66,12 +67,8 @@ public class BancoDeDados {
         try {
             ContentValues cv = new ContentValues();
             cv.put("frase", r.getFrase());
-            cv.put("hora", r.getHora());
-            cv.put("minuto", r.getMinuto());
+            cv.put("data", r.getData().dataEmMilisegundos());
             cv.put("sentimento", r.getSentimento().getId());
-            cv.put("dia",r.getData().dia());
-            cv.put("mes", r.getData().mes());
-            cv.put("ano", r.getData().ano());
             insert.insert(TB_LEXICO_PROCESSADO, null, cv);
             return true;
         } catch (Exception e) {
@@ -95,8 +92,10 @@ public class BancoDeDados {
             Cursor c = select.rawQuery(sql, null);
             if(c != null && c.moveToFirst()){
                 res[0] = c.getInt(0);
-                c.moveToNext();
-                res[1] = c.getInt(0);
+                if(c.moveToNext())
+                    res[1] = c.getInt(0);
+                else
+                    res[1] = 0;
             }
         }catch (Exception e){
             Log.e(tag, "erro ao obter os dados da internet.");
@@ -107,29 +106,69 @@ public class BancoDeDados {
 
     /********** CONSUMO DE INTERNET *****************/
 
+    /*public void insereOuAtualizaConsumoInternet(ConsumoInternet consumo){
+        if(temInconsumoNoBanco(consumo))
+            atualizaConsumo(consumo);
+        else
+            insereConsumo(consumo);
+    }*/
+
+    public void atualizaConsumo(ConsumoInternet con){
+        ContentValues cv = new ContentValues();
+        cv.put("wifi", con.getWifi());
+        cv.put("mobile", con.getMobile());
+        cv.put("data_inicio", con.getDataInicio());
+        cv.put("data_fim", con.getDataFim());
+        try{
+            insert.update("uso_de_internet", cv, "data_inicio == ? AND data_fim == ?", new String[] { ""+con.getDataInicio(), ""+con.getDataFim() });
+            Log.d(tag, "Atualizado consumo!");
+        }catch (Exception e){
+            Log.e(tag, "Erro ao inserir o consumo.");
+            e.printStackTrace();
+        }
+    }
+
+    public void insereNovoConsumo(ConsumoInternet con){
+        ContentValues cv = new ContentValues();
+        cv.put("wifi", con.getWifi());
+        cv.put("mobile", con.getMobile());
+        cv.put("data_inicio", con.getDataInicio());
+        cv.put("data_fim", con.getDataFim());
+        try{
+            insert.insert("uso_de_internet", null, cv);
+        }catch (Exception e){
+            Log.e(tag, "Erro ao inserir o consumo.");
+            e.printStackTrace();
+        }
+    }
+
+    public ConsumoInternet temInconsumoNesseIntervalo(long tempo){
+        ConsumoInternet consumo = null;
+        String sql = String.format("select wifi, mobile, data_inicio, data_fim from uso_de_internet where data_inicio <= %d AND data_fim >= %d;",tempo, tempo);
+        Cursor cursor = select.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()){
+            consumo = new ConsumoInternet(cursor.getLong(0),cursor.getLong(1), cursor.getLong(2), cursor.getLong(3));
+            cursor.close();
+        }
+        return consumo;
+    }
+
+    public List<ConsumoInternet> pegarDadosUsoInternet() {
+        List<ConsumoInternet> lst = new ArrayList<>();
+        Cursor cursor = select.rawQuery("select wifi, mobile, data_inicio, data_fim from uso_de_internet;", null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                lst.add(new ConsumoInternet(cursor.getLong(0),cursor.getLong(1), cursor.getLong(2), cursor.getLong(3)));
+            }while (cursor.moveToNext());
+            cursor.close();
+        }
+        return lst;
+    }
     /**
      * Pega o resultado de dados de consumo de internet salvo no banco de dados.
      * @return lista contendo os dados separados por intervalo de tempo.
      */
-    public List<ConsumoInternet> pegarDadosUsoInternet() {
-        List<ConsumoInternet> lst = new ArrayList<>();
-        Cursor c = select.rawQuery("select dia, mes, ano, hora, minuto_inicial, minuto_final, wifi, mobile from uso_de_internet;", null);
-        if (c != null && c.moveToFirst()) {
-            do {
-                // UtilidadeData data, int minuto_inicial, int minuto_final, long wifi, long mobile
-                ConsumoInternet co = new ConsumoInternet(
-                        new UtilidadeData(c.getInt(0), c.getInt(1), c.getInt(2)),
-                        c.getInt(3),
-                        c.getInt(4),
-                        c.getInt(5),
-                        c.getInt(6),
-                        c.getInt(7));
-                lst.add(co);
-            }while (c.moveToNext());
-        }
-        c.close();
-        return lst;
-    }
+    /*
 
     public ConsumoInternet pegaIntervaloDoBanco(UtilidadeData d, int minuto){
         ConsumoInternet consumo = null;
@@ -158,6 +197,7 @@ public class BancoDeDados {
         cv.put("dia", con.getData().dia());
         cv.put("ano", con.getData().ano());
         cv.put("mes", con.getData().mes());
+        cv.put("data", con.getData().dataEmMilisegundos());
         try{
             insert.insert("uso_de_internet", null, cv);
         }catch (Exception e){
@@ -172,11 +212,12 @@ public class BancoDeDados {
         cv.put("minuto_final", con.getMinuto_final());
         cv.put("wifi", con.getWifi());
         cv.put("mobile", con.getMobile());
+        cv.put("data", con.getData().dataEmMilisegundos());
         try{
             insert.update("uso_de_internet", cv, "id = ?", new String[] { con.getId() });
         }catch (Exception e){
             Log.e(tag, "Erro ao inserir o consumo.");
             e.printStackTrace();
         }
-    }
+     */
 }

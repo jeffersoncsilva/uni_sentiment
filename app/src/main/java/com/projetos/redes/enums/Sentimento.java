@@ -25,4 +25,10 @@ public enum Sentimento {
         return this.desc;
     }
 
+    public static Sentimento factory(int i){
+        if(i == 1)
+            return POSITIVO;
+        else
+            return NEGATIVO;
+    }
 }

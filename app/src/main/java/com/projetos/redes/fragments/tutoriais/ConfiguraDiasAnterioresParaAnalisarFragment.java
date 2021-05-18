@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.projetos.redes.R;
 import com.projetos.redes.Utils;
+import com.projetos.redes.enums.DiasAnterioresParaAnalise;
 
 public class ConfiguraDiasAnterioresParaAnalisarFragment extends Fragment {
 
@@ -39,27 +40,12 @@ public class ConfiguraDiasAnterioresParaAnalisarFragment extends Fragment {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 SharedPreferences prefs = getContext().getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
                 SharedPreferences.Editor edit = prefs.edit();
-                int qtdDia = pegarQuantidadeDiasEscolhido(i);
-                edit.putInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, qtdDia);
+                DiasAnterioresParaAnalise dias = DiasAnterioresParaAnalise.factory(i);
+                edit.putInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, dias.getId());
                 edit.commit();
             }
         });
 
         return v;
-    }
-
-    private int pegarQuantidadeDiasEscolhido(int i){
-        switch (i){
-            case 1:
-                return 2;
-            case 2:
-                return 4;
-            case 3:
-                return 7;
-            case 4:
-                return 14;
-            default:
-                return 1;
-        }
     }
 }

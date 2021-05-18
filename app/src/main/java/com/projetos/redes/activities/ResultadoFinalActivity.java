@@ -2,7 +2,6 @@ package com.projetos.redes.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,20 +9,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.projetos.redes.R;
 import com.projetos.redes.Utils;
 import com.projetos.redes.adapters.ResultadoFinalAdapter;
 import com.projetos.redes.bd.BancoDeDados;
+import com.projetos.redes.enums.MinutosCapturaDados;
 import com.projetos.redes.enums.Sentimento;
 import com.projetos.redes.modelos.ConsumoInternet;
 import com.projetos.redes.modelos.ResultadoFinalLexico;
 import com.projetos.redes.task.SendMailTask;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +92,7 @@ public class ResultadoFinalActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         sb.append("<html> <body>");
         for(ResultadoFinalLexico rf : adapter.getItems()){
-            sb.append(rf.resultadoParaEnviar());
+            sb.append(rf.toString());
             sb.append("<br>");
         }
         sb.append("</body></html>");
@@ -120,22 +119,20 @@ public class ResultadoFinalActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             BancoDeDados db = new BancoDeDados(context);
             List<ConsumoInternet> consumo = db.pegarDadosUsoInternet();
-            for(ConsumoInternet ci : consumo){
-                String sql = "select count(sentimento) from "+ BancoDeDados.TB_LEXICO_PROCESSADO +
-                                " where hora ="+ ci.getData().getHora() +
-                                " AND minuto >= "+ci.getMinuto_inicial() +
-                                " AND minuto <="+ci.getMinuto_final() +
-                                " AND dia == " + ci.getData().dia() +
-                                " AND mes == "+ci.getData().mes() +
-                                " AND ano == " + ci.getData().ano() +
-                                " GROUP BY sentimento;";
+            MinutosCapturaDados intervalo = MinutosCapturaDados.factory(context.getSharedPreferences(Utils.CONFIG, MODE_PRIVATE).getInt(Utils.TEMPO_CAPTURA_REDE, 15));
+            for(ConsumoInternet con : consumo){
+                String sql = String.format("select count(sentimento) from tb_lexico_processado where "+
+                    "data >= %d AND data <= %d GROUP BY sentimento", con.getDataInicio(), con.getDataFim());
                 int[] res = db.pegaResultadoSentimento(sql);
-                ResultadoFinalLexico rf = new ResultadoFinalLexico(ci.getData().pegarDataSemHoras(), ci.getData().getHora(), ci.getMobile()+ci.getWifi(), ci.getMinuto_final()-ci.getMinuto_inicial());
+                Sentimento s;
                 if(res[0] > res[1])
-                    rf.setSentimento(Sentimento.POSITIVO);
+                    s = Sentimento.POSITIVO;
                 else
-                    rf.setSentimento(Sentimento.NEGATIVO);
-                lst.add(rf);
+                    s = Sentimento.NEGATIVO;
+                Log.d("resultadoFinal", "res[0]: " + res[0] + " --- res[1]: " + res[1]);
+                Log.d("resultadoFinal", "Sentimento: " +s.toString());
+                UtilidadeData data = new UtilidadeData(con.getDataInicio());
+                lst.add(new ResultadoFinalLexico(data, s, con, intervalo));
             }
             return null;
         }

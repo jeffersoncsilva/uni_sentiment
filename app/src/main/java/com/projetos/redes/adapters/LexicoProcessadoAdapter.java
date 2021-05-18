@@ -36,7 +36,7 @@ public class LexicoProcessadoAdapter extends RecyclerView.Adapter<LexicoProcessa
     @Override
     public void onBindViewHolder(@NonNull HolderLexico h, int p) {
         ResultadoLexicoProcessado r = data.get(p);
-        h.tx_msg.setText("MENSAGEM: " + r.getFrase() + "\nSENTIMENTO: " + r.getSentimento() + "\nHORA: " + r.getHora()+":"+r.getMinuto());
+        h.tx_msg.setText(r.toString());
     }
 
     @Override

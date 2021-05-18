@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
+public class CarregaMensagensIntentTask extends AsyncTask<Void, Void, Void> {
     private String TAG = "MsgTask";
     private Intent intent;
     private List<MensagemUsuario> mensagens;
@@ -34,7 +34,7 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
     private MostraMensagensAdapter adapter;
     private Context mContext;
 
-    public CarregaMensagensIntentTask(Intent in, Context context, ProgressBar pBarCarregando, Button iniciarLexico, RecyclerView rc, MostraMensagensAdapter adp){
+    public CarregaMensagensIntentTask(Intent in, Context context, ProgressBar pBarCarregando, Button iniciarLexico, RecyclerView rc, MostraMensagensAdapter adp) {
         this.intent = in;
         this.mContext = context;
         this.pBarCarregando = pBarCarregando;
@@ -55,33 +55,39 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
+
             ClipData data = intent.getClipData();
-            for(int i = 0; i < data.getItemCount(); i++){
-                Uri uri = data.getItemAt(i).getUri();
-                InputStream stream = mContext.getContentResolver().openInputStream(uri);
-                InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
-                BufferedReader bReader = new BufferedReader(reader);
-                String str;
-                while((str=bReader.readLine())!=null){
+            //for(int i = 0; i < data.getItemCount(); i++){
+            Uri uri = data.getItemAt(0).getUri();
+            InputStream stream = mContext.getContentResolver().openInputStream(uri);
+            InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
+            BufferedReader bReader = new BufferedReader(reader);
+            String str;
+            while ((str = bReader.readLine()) != null) {
+                try {
                     int p1 = str.indexOf('-');
-                    int p2 = str.indexOf(':',p1);
-                    if(p2 < 0)
+                    int p2 = str.indexOf(':', p1);
+                    if (p2 < 0)
                         continue;
                     String dt = str.substring(0, p1);
                     String au = str.substring(p1, p2).replaceAll("-", "");
                     String mg = str.substring(++p2);
-                    if(mg.contains("<Arquivo de mídia"))
+                    if (mg.contains("<Arquivo de mídia"))
                         continue;
                     MensagemUsuario msg = new MensagemUsuario(new UtilidadeData(dt), au, mg);
-                    if(!autores.contains(msg))
+                    if (!autores.contains(msg))
                         autores.add(msg);
                     mensagens.add(msg);
+                } catch (StringIndexOutOfBoundsException in) {
+                    Log.e(TAG, "Fora do index.");
+                    in.printStackTrace();
                 }
             }
-        }catch (Exception e){
+            //}
+        } catch (Exception e) {
             Log.e(TAG, "Ocorreu um erro ao ler as mensagens.\n");
-            Log.e(TAG, "ERRO: " + e.getMessage()+"\n");
-            Log.e(TAG, "toString(): "+e.toString()+"\n");
+            Log.e(TAG, "ERRO: " + e.getMessage() + "\n");
+            Log.e(TAG, "toString(): " + e.toString() + "\n");
         }
         return null;
     }
@@ -96,5 +102,4 @@ public class CarregaMensagensIntentTask  extends AsyncTask<Void, Void, Void> {
         rcMensagens.setVisibility(View.VISIBLE);
         iniciarLexico.setVisibility(View.VISIBLE);
     }
-
 }

@@ -6,26 +6,18 @@ import com.projetos.redes.utilidades.UtilidadeData;
 import java.io.Serializable;
 
 public class ResultadoLexicoProcessado implements Serializable {
-    private String frase, dia;
+    private String frase;
     private Sentimento sentimento;
     private UtilidadeData data;
-    private int hora, minuto;
 
-    public ResultadoLexicoProcessado(String frase, int iSentimento, int hora, int minuto, String dia, UtilidadeData data) {
+    public ResultadoLexicoProcessado(String frase, Sentimento sent, UtilidadeData data) {
         this.frase = frase;
-        this.sentimento = (iSentimento == 2 ? Sentimento.NEGATIVO : Sentimento.POSITIVO);
-        this.hora = hora;
-        this.minuto = minuto;
-        this.dia = dia;
+        this.sentimento = sent;
         this.data = data;
     }
 
     public UtilidadeData getData(){
         return this.data;
-    }
-
-    public String getDia(){
-        return dia;
     }
 
     public String getFrase() {
@@ -36,15 +28,7 @@ public class ResultadoLexicoProcessado implements Serializable {
         return sentimento;
     }
 
-    public int getHora() {
-        return hora;
-    }
-
-    public int getMinuto() {
-        return minuto;
-    }
-
     public String toString(){
-         return String.format("Frase: %s - Sentimento: %s - Hora: %d - Minuto: %d - Dia: %s", frase, sentimento, hora, minuto, dia);
+         return String.format("Frase: %s\nSentimento: %s \nData: %s", frase, sentimento.toString(), data.toString());
     }
 }

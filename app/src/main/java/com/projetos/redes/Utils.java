@@ -72,23 +72,6 @@ public class Utils {
         return s;
     }
 
-    public static Date formataDataParaDate(String data){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy hh:mm a");
-        String[] dates = data.split(" ");
-        String d = dates[0] +" " + dates[1] + " ";
-        if(dates[2].contains("da manha"))
-            d += " AM";
-        else
-            d += "PM";
-        Date d1 = null;
-        try{
-            d1 = sdf.parse(d);
-        }catch (ParseException pe){
-
-        }
-        return d1;
-    }
-
     public static void DesativarPularTutorial(Context con){
         SharedPreferences.Editor edit = con.getSharedPreferences(CONFIG, MODE_PRIVATE).edit();
         edit.putBoolean(JA_VIU_TUTORIAL, false);
