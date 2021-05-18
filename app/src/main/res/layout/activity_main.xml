@@ -14,6 +14,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/btn_net_usage"
         android:textSize="@dimen/bt_tx_size"
+        android:background="@drawable/botao_padrao"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -26,6 +28,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/bt_lexico_result"
         android:textSize="@dimen/bt_tx_size"
+        android:background="@drawable/botao_padrao"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -46,24 +50,14 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <Button
-        android:id="@+id/btIniciaAplicacao"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/bt_service_end"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
-
-    <Button
         android:id="@+id/btResultadoFinalClassificado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/btResultadoClassificador"
         android:textSize="18sp"
+        android:background="@drawable/botao_padrao"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -75,10 +69,11 @@
         android:layout_height="@dimen/bt_help_size"
         android:layout_marginStart="16dp"
         android:contentDescription="@string/btHelpUsoInternetDescription"
+        android:background="@drawable/circle_enabled"
         app:layout_constraintBottom_toBottomOf="@+id/btn_VerDadosRedes"
         app:layout_constraintStart_toEndOf="@+id/btn_VerDadosRedes"
         app:layout_constraintTop_toTopOf="@+id/btn_VerDadosRedes"
-        app:srcCompat="@android:drawable/ic_menu_help" />
+        app:srcCompat="@drawable/ic_help" />
 
     <ImageButton
         android:id="@+id/btHelpResultadoLexico"
@@ -86,10 +81,11 @@
         android:layout_height="@dimen/bt_help_size"
         android:layout_marginStart="16dp"
         android:contentDescription="@string/btHelpResultadoLexicoDescription"
+        android:background="@drawable/circle_enabled"
         app:layout_constraintBottom_toBottomOf="@+id/btResultadoProcessamentoLexico"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/btResultadoProcessamentoLexico"
-        app:srcCompat="@android:drawable/ic_menu_help" />
+        app:srcCompat="@drawable/ic_help" />
 
     <ImageButton
         android:id="@+id/btHelpResultadoFinal"
@@ -97,21 +93,10 @@
         android:layout_height="@dimen/bt_help_size"
         android:layout_marginStart="16dp"
         android:contentDescription="@string/btHelpResultadoFinalDescription"
+        android:background="@drawable/circle_enabled"
         app:layout_constraintBottom_toBottomOf="@+id/btResultadoFinalClassificado"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/btResultadoFinalClassificado"
-        app:srcCompat="@android:drawable/ic_menu_help" />
-
-    <ImageButton
-        android:id="@+id/btHelpInicioParadaAplicacao"
-        android:layout_width="@dimen/bt_help_size"
-        android:layout_height="@dimen/bt_help_size"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/btHelpIniciaPararAplicacaoDescription"
-        app:layout_constraintBottom_toBottomOf="@+id/btIniciaAplicacao"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/btIniciaAplicacao"
-        app:srcCompat="@android:drawable/ic_menu_help" />
-
+        app:srcCompat="@drawable/ic_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

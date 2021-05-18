@@ -11,6 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/bt_reload"
+        android:background="@drawable/botao_padrao"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/large_margin"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +38,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Enviar Dados e-mail"
+        android:background="@drawable/botao_padrao"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/large_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,5 +56,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.45" />
 </androidx.constraintlayout.widget.ConstraintLayout>

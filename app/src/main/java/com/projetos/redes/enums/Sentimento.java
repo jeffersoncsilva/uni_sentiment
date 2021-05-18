@@ -4,10 +4,10 @@ public enum Sentimento {
     POSITIVO(1, "Positivo"),
     NEGATIVO(2, "Negativo");
 
-    private int id;
-    private String desc;
+    private final int id;
+    private final String desc;
 
-    private Sentimento(int id, String s){
+    Sentimento(int id, String s){
         this.id = id;
         this.desc= s;
     }
@@ -23,5 +23,12 @@ public enum Sentimento {
     @Override
     public String toString(){
         return this.desc;
+    }
+
+    public static Sentimento factory(int i){
+        if(i == 1)
+            return POSITIVO;
+        else
+            return NEGATIVO;
     }
 }

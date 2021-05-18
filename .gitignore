@@ -83,4 +83,4 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-app/src/main/assets/
+app/src/main/assets/DbLexico.db
