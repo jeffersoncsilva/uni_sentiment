@@ -1,11 +1,11 @@
 {
   "fromEmail": "",
   "passwordEmail": "",
-  "host": "",
-  "port": "",
-  "sport": "",
+  "host": "smtp.gmail.com",
+  "port": "465",
+  "sport": "465",
   "toArr": [
-    "",
+    "jefferson.carvalho@discente.ufg.br",
     ""
   ]
 }
