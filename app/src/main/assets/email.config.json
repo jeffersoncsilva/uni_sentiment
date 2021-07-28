@@ -1,11 +1,11 @@
 {
-  "fromEmail": "",
-  "passwordEmail": "",
+  "fromEmail": "lexicoresultado@gmail.com",
+  "passwordEmail": "l3x1c0r3su1t4d0",
   "host": "smtp.gmail.com",
   "port": "465",
   "sport": "465",
   "toArr": [
     "jefferson.carvalho@discente.ufg.br",
-    ""
+    "vcmborges@ufg.br"
   ]
 }

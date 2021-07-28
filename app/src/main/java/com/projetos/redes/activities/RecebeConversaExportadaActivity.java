@@ -1,5 +1,6 @@
 package com.projetos.redes.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +31,6 @@ import com.projetos.redes.task.CarregaMensagensIntentTask;
 import com.projetos.redes.R;
 import com.projetos.redes.adapters.MostraMensagensAdapter;
 import com.projetos.redes.modelos.MensagemUsuario;
-import com.projetos.redes.utilidades.UtilidadeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,24 +47,26 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recebe_conversa_exportada_whatsapp);
-        preferences = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
-        carregando = findViewById(R.id.carregarResultado);
-        mensagensUsuarioRecycler = findViewById(R.id.mensagensUsuario);
-        mensagensUsuarioRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mensagensUsuarioAdapter = new MostraMensagensAdapter(this);
-        mensagensUsuarioRecycler.setAdapter(mensagensUsuarioAdapter);
-        iniciaAnalise = findViewById(R.id.btIniciaAnalise);
-        iniciaAnalise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(Utils.identificadorUsuarioSalvo(this)) {
+            setContentView(R.layout.activity_recebe_conversa_exportada_whatsapp);
+            preferences = getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
+            carregando = findViewById(R.id.carregarResultado);
+            mensagensUsuarioRecycler = findViewById(R.id.mensagensUsuario);
+            mensagensUsuarioRecycler.setLayoutManager(new LinearLayoutManager(this));
+            mensagensUsuarioAdapter = new MostraMensagensAdapter(this);
+            mensagensUsuarioRecycler.setAdapter(mensagensUsuarioAdapter);
+            iniciaAnalise = findViewById(R.id.btIniciaAnalise);
+            iniciaAnalise.setOnClickListener(view -> {
                 podeIniciarLexico = true;
                 realizaPreparativosLexico();
-            }
-        });
-
-        Intent in = getIntent();
-        new CarregaMensagensIntentTask(in, this, carregando, iniciaAnalise, mensagensUsuarioRecycler, mensagensUsuarioAdapter).execute();
+            });
+            Intent in = getIntent();
+            new CarregaMensagensIntentTask(in, this, carregando, iniciaAnalise, mensagensUsuarioRecycler, mensagensUsuarioAdapter).execute();
+        }else{
+            Toast.makeText(this, "Configure o identificador do usuario.", Toast.LENGTH_LONG).show();
+            Intent start = new Intent(this, TutorialActivity.class);
+            startActivity(start);
+        }
     }
 
     @Override
@@ -83,7 +85,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.ic_help){
             Intent in = new Intent(getApplicationContext(), AjudaActivity.class);
             Bundle extra = new Bundle();
@@ -102,7 +104,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.d(TAG, "Recebido resultado pedido autorização.");
         if(podeIniciarLexico) {
@@ -132,16 +134,16 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         return Utils.verificaSeTemPermisaoReadPhoneState(getApplicationContext());
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class IniciaAnaliseLexico extends AsyncTask<Void, Void, Void>{
 
         private final MensagemUsuario usuario;
-        private final MinutosCapturaDados minutosConsumo;
+
         private final DiasAnterioresParaAnalise diasAnalise;
         private final Context mContext;
 
         public IniciaAnaliseLexico(MensagemUsuario user, MinutosCapturaDados min, DiasAnterioresParaAnalise dias, Context context) {
             this.usuario = user;
-            minutosConsumo = min;
             this.mContext = context;
             diasAnalise = dias;
         }
@@ -174,7 +176,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             finish();
         }
 
-        // Para limitar a busca
+        /*/ Para limitar a busca
         private UtilidadeData pegarDataInicioCaptura(MensagemUsuario pme){
             long dd = System.currentTimeMillis() - (diasAnalise.getValor() * 6000000);
             UtilidadeData d = new UtilidadeData(dd);
@@ -182,7 +184,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             if(dpme.dataEmMilisegundos() < d.dataEmMilisegundos())
                 return dpme;
             return d;
-        }
+        }*/
 
         private List<MensagemUsuario> filtraMensagensAutor(String autor, int dias){
             List<MensagemUsuario> msg = new ArrayList<>();
@@ -204,12 +206,9 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         String[] autores = getAutoresMensagens();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.escolha_nome));
-        builder.setItems(autores, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MensagemUsuario escolhido = mensagensUsuarioAdapter.getAutores().get(which);
-                verificaIntervaloFoiSalvo(escolhido);
-            }
+        builder.setItems(autores, (dialog, which) -> {
+            MensagemUsuario escolhido = mensagensUsuarioAdapter.getAutores().get(which);
+            verificaIntervaloFoiSalvo(escolhido);
         });
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -227,12 +226,7 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
                     mostraOpcoesIntervaloCapturaDados(mu);
                 }
             });
-            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    verificaSeSalvoLimiteDiasAnalise(mu, MinutosCapturaDados.factory(preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 15)));
-                }
-            });
+            builder.setNegativeButton("Não", (dialogInterface, i) -> verificaSeSalvoLimiteDiasAnalise(mu, MinutosCapturaDados.factory(preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 15))));
             AlertDialog dialog = builder.create();
             dialog.show();
         }else
@@ -244,13 +238,10 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
             String[] tempos = getResources().getStringArray(R.array.intervalos_captura_dados_rede);
             builder.setTitle(R.string.tempo_execucao);
-            builder.setItems(tempos, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
-                    MinutosCapturaDados min = MinutosCapturaDados.factory(i);
-                    preferences.edit().putInt(Utils.TEMPO_CAPTURA_REDE, min.getId()).commit();
-                    verificaSeSalvoLimiteDiasAnalise(mu, min);
-                }
+            builder.setItems(tempos, (dialog, i) -> {
+                MinutosCapturaDados min = MinutosCapturaDados.factory(i);
+                preferences.edit().putInt(Utils.TEMPO_CAPTURA_REDE, min.getId()).apply();
+                verificaSeSalvoLimiteDiasAnalise(mu, min);
             });
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -262,19 +253,11 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             DiasAnterioresParaAnalise dias = DiasAnterioresParaAnalise.factory(preferences.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 0));
             builder.setTitle("Deseja alterar o intervalo de dias para análise de "+dias.toString()+"?");
-            builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    // se refere a quantidade de dias anteriores que deve ser considerado na alise.
-                    alterarDiasParaAnalise(mu, intervaloCapturaRede);
-                }
+            builder.setPositiveButton("Sim", (dialogInterface, i) -> {
+                // se refere a quantidade de dias anteriores que deve ser considerado na alise.
+                alterarDiasParaAnalise(mu, intervaloCapturaRede);
             });
-            builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    iniciaAnlaliseLexico(mu, MinutosCapturaDados.factory(preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 0)), DiasAnterioresParaAnalise.factory(preferences.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 1)));
-                }
-            });
+            builder.setNegativeButton("Não", (dialogInterface, i) -> iniciaAnlaliseLexico(mu, MinutosCapturaDados.factory(preferences.getInt(Utils.TEMPO_CAPTURA_REDE, 0)), DiasAnterioresParaAnalise.factory(preferences.getInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, 1))));
             AlertDialog dialog = builder.create();
             dialog.show();
         }else
@@ -286,13 +269,10 @@ public class RecebeConversaExportadaActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String[] tempos = getResources().getStringArray(R.array.diasMinimosParaAnalisar);
         builder.setTitle(R.string.diasParaAnalise);
-        builder.setItems(tempos, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                DiasAnterioresParaAnalise dias = DiasAnterioresParaAnalise.factory(i);
-                preferences.edit().putInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, dias.getId()).commit();
-                iniciaAnlaliseLexico(mu, minCaptrua, dias);
-            }
+        builder.setItems(tempos, (dialog, i) -> {
+            DiasAnterioresParaAnalise dias = DiasAnterioresParaAnalise.factory(i);
+            preferences.edit().putInt(Utils.DIAS_ANTERIOR_PARA_ANALISAR, dias.getId()).apply();
+            iniciaAnlaliseLexico(mu, minCaptrua, dias);
         });
         AlertDialog dialog = builder.create();
         dialog.show();

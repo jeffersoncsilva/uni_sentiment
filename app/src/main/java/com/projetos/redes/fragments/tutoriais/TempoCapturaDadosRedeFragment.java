@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import com.projetos.redes.R;
 import com.projetos.redes.Utils;
 import com.projetos.redes.enums.MinutosCapturaDados;
+import com.projetos.redes.utilidades.UtilidadeData;
 
 public class TempoCapturaDadosRedeFragment extends Fragment {
 
@@ -25,7 +26,14 @@ public class TempoCapturaDadosRedeFragment extends Fragment {
         opcoesTempoExecucao = v.findViewById(R.id.tempoExecucao);
         preencheOpcoesRadios();
         configuraSelecaoItemOpcoes();
+        setaOpcaoDefault();
         return v;
+    }
+
+    private void setaOpcaoDefault(){
+        MinutosCapturaDados m = carregaTempoEscolhido();
+        if(m != null)
+            ((RadioButton)opcoesTempoExecucao.getChildAt(m.getId())).setChecked(true);
     }
 
     private void preencheOpcoesRadios(){
@@ -56,4 +64,21 @@ public class TempoCapturaDadosRedeFragment extends Fragment {
         edit.putInt(Utils.TEMPO_CAPTURA_REDE, min.getId());
         edit.commit();
     }
+
+    private MinutosCapturaDados carregaTempoEscolhido(){
+        MinutosCapturaDados m = null;
+        try{
+            SharedPreferences p = getContext().getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
+            m = MinutosCapturaDados.factory(p.getInt(Utils.TEMPO_CAPTURA_REDE, 4));
+            if(p.contains(Utils.TEMPO_CAPTURA_REDE)){
+                SharedPreferences.Editor e = p.edit();
+                e.putInt(Utils.TEMPO_CAPTURA_REDE, m.getId());
+                e.apply();
+            }
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+        return m;
+    }
+
 }

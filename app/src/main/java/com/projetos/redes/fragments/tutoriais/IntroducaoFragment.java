@@ -16,31 +16,17 @@ import com.projetos.redes.R;
 
 public class IntroducaoFragment extends Fragment {
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_introducao, container, false);
-        v.findViewById(R.id.bt_entrar_em_contato).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enviarEmail();
-            }
-        });
-
+        v.findViewById(R.id.bt_entrar_em_contato).setOnClickListener(v1 -> enviarEmail());
         return v;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
     }
 
     private void enviarEmail(){
         Intent in = new Intent(Intent.ACTION_SENDTO);
         in.setData(Uri.parse("mailto:"));
-        in.putExtra(Intent.EXTRA_EMAIL, getString(R.string.email_padrao));
+        in.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.email_padrao)});
         in.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.contato_participar));
         if(in.resolveActivity(getContext().getPackageManager()) != null)
             startActivity(in);

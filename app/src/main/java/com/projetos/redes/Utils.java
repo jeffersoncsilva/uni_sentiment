@@ -25,6 +25,7 @@ public class Utils {
     public static final String CONFIG = "config";
     public static final String JA_VIU_TUTORIAL = "tutorial_cumprido";
     public static final String DIAS_ANTERIOR_PARA_ANALISAR = "DAPA  ";
+    public static final String MOSTRA_TUTO = "mostrat_tutorial";
 
     /**
      * Checa se foi dada autorização do usuario para o app acessar dados do dispositivo (tempo ligado, consumo de redes, e outros)
@@ -45,6 +46,11 @@ public class Utils {
      */
     public static boolean verificaSeTemPermisaoReadPhoneState(Context c){
         return ContextCompat.checkSelfPermission(c, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean identificadorUsuarioSalvo(Context c){
+        SharedPreferences prefs = c.getSharedPreferences(Utils.CONFIG, Context.MODE_PRIVATE);
+        return prefs.contains(Utils.ID_USUARIO);
     }
 
     public static DateFormat pegarFormatadorDatasPadrao(){

@@ -2,16 +2,11 @@ package com.projetos.redes.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
 import com.google.android.material.tabs.TabLayout;
 import com.projetos.redes.R;
-import com.projetos.redes.Utils;
 import com.projetos.redes.adapters.TutorialPagerAdapter;
 
 import static com.projetos.redes.Utils.CONFIG;
@@ -21,15 +16,32 @@ public class TutorialActivity extends AppCompatActivity {
     private ViewPager pager;
     private TabLayout tab;
     private TutorialPagerAdapter adapter = new TutorialPagerAdapter(getSupportFragmentManager());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tutorial);
-        SharedPreferences sp = getSharedPreferences(CONFIG, MODE_PRIVATE);
-        if(sp.getBoolean(JA_VIU_TUTORIAL, false)){
+
+        if(!mostrarTutorial()){
+            setContentView(R.layout.activity_tutorial);
+            setarFragmentsTutoriais();
+        }else{
             Intent mainAct = new Intent(this, MainActivity.class);
             startActivity(mainAct);
         }
+    }
+
+    private boolean mostrarTutorial(){
+        boolean mostrar = false;
+        try{
+            SharedPreferences p = getSharedPreferences(CONFIG, MODE_PRIVATE);
+            mostrar = p.getBoolean(JA_VIU_TUTORIAL, false);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return mostrar;
+    }
+
+    private void setarFragmentsTutoriais(){
         pager = findViewById(R.id.page_fragments);
         pager.setAdapter(adapter);
         tab = findViewById(R.id.menu_pager);
@@ -74,6 +86,5 @@ public class TutorialActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

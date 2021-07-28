@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultadoFinalActivity extends AppCompatActivity {
-    private RecyclerView rc;
     private ResultadoFinalAdapter adapter;
     private Button bt_reload;
 
@@ -36,24 +36,14 @@ public class ResultadoFinalActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado_final);
-        rc = findViewById(R.id.rc_resultado_final);
+        final RecyclerView rc = findViewById(R.id.rc_resultado_final);
         rc.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ResultadoFinalAdapter(this);
         rc.setAdapter(adapter);
         bt_reload = findViewById(R.id.bt_reload_);
-        bt_reload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PegarDadosBanco(getBaseContext()).execute();
-            }
-        });
+        bt_reload.setOnClickListener(v -> new PegarDadosBanco(getBaseContext()).execute());
 
-        findViewById(R.id.btSendEmail).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                iniciarActivityEnviarEmail();
-            }
-        });
+        findViewById(R.id.btSendEmail).setOnClickListener(view -> iniciarActivityEnviarEmail());
         setTitle("UniSentiment - Resultado final");
     }
 
@@ -89,20 +79,24 @@ public class ResultadoFinalActivity extends AppCompatActivity {
     }
 
     private void iniciarActivityEnviarEmail(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("<html> <body>");
-        for(ResultadoFinalLexico rf : adapter.getItems()){
-            sb.append(rf.toString());
-            sb.append("<br>");
+        if(adapter.getItemCount() > 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html> <body>");
+            for (ResultadoFinalLexico rf : adapter.getItems()) {
+                sb.append(rf.toString());
+                sb.append("<br>");
+            }
+            sb.append("</body></html>");
+            Log.d("HTMLEMAIL", sb.toString());
+            SendMailTask task = new SendMailTask(this, sb.toString());
+            task.execute();
+        }else{
+            Toast.makeText(this, "Não tem dados para exportar.", Toast.LENGTH_SHORT).show();
         }
-        sb.append("</body></html>");
-        Log.d("HTMLEMAIL", sb.toString());
-        SendMailTask task = new SendMailTask(this, sb.toString());
-        task.execute();
     }
 
-    protected class PegarDadosBanco extends AsyncTask<Void, Void, Void>{
-        private List<ResultadoFinalLexico> lst = new ArrayList<>();
+    private class PegarDadosBanco extends AsyncTask<Void, Void, Void>{
+        private final List<ResultadoFinalLexico> lst = new ArrayList<>();
         private final Context context;
 
         public PegarDadosBanco(Context con){

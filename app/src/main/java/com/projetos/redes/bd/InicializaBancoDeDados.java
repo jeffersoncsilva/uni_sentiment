@@ -43,7 +43,7 @@ public class InicializaBancoDeDados {
             }
             outputStream.flush();
             outputStream.close();
-            Toast.makeText(mContext,"Banco copiado com sucesso!",Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext,"Banco copiado com sucesso!",Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             Toast.makeText(mContext, "Arquivo de dados não encontrado. Verifique o código fonte.", Toast.LENGTH_LONG).show();

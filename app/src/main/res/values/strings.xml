@@ -18,7 +18,7 @@
     <string name="btHelpUsoInternetDescription">Uso de internet do celular.</string>
     <string name="btHelpResultadoLexicoDescription">Resultado léxico.</string>
     <string name="btHelpResultadoFinalDescription">Resultado obtido.</string>
-    <!-- <string name="btHelpIniciaPararAplicacaoDescription">Iniciar / Parar aplicação.</string> -->
+
     <string name="btAjudaUsoDeInternet">
         Aqui está o resultado da captura de dados pela internet. Caso não tenha nenhum dado informado, verifique se o serviço de captura está
         ativo e foi dada as autorizações de acesso a serviço de telefone, que e responsável por fornecer acesso os dados móveis usados,
@@ -70,7 +70,7 @@
     <string name="contato_participar">
         Olá, gostaria de participar da pesquisa!
     </string>
-    <string name="email_padrao">email@email.com</string>
+    <string name="email_padrao">vcmborges@ufg.br</string>
     <string name="aplicativoEmailNaoInstalado">
         Por favor, instale um aplicativo de email para poder enviar os dados.
     </string>
@@ -89,17 +89,17 @@
     <string name="bt_voltar">Voltar</string>
 
     <string name="parte_um_frag">
-        Olá, seja bem-vindo ao UniSentiment.
-        Esse aplicativo foi desenvolvido para auxílio
-        a uma pesquisa que visa associar o sentimento
-        do usuário com o seu consumo de “internet”.
-        Isso e feito analisando as mensagens que é
-        enviado pelo WhatsApp e capturando dados
-        de uso de “internet” no dispositivo.
-        Para poder participar da pesquisa, basta enviar
-        um e-mail para vcmborges@ufg.br dizendo que
-        deseja participar, e seguir as demais instruções.
-        Para ajudar, clique no botão abaixo que será aberto o aplicativo de e-mail padrão do celular com os dados preenchidos.
+        Seja bem-vindo ao UniSentiment. Esse aplicativo foi desenvolvido para auxílio a uma pesquisa que visa associar o sentimento do
+        usuário com seu consumo de dados na Internet Móvel e Sem Fio. Isso é feito analisando as mensagens de WhatsApp que são enviadas
+        pelo usuário e contabilizando os seus dados consumidos (download+upload) nas redes móveis e sem fio nas quais o dispositivo
+        esteve conectado.
+        Para  participar da pesquisa é obrigatório enviar um e-mail ao pesquisador responsável (vcmborges@ufg.br), dizendo que deseja
+        participar da pesquisa de perfil de usuários móveis, em seguida o pesquisador responsável irá enviar de volta o duas cópias do
+        Termo de Consentimento Livre e Esclarecido (TCLE) assinado e rubricado para a sua anuência.    Assine e rubrique todas as folhas
+        do TCLE e envie uma cópia para o e-mail do pesquisador responsável.  Informamos ser possível, a qualquer momento e sem nenhum
+        prejuízo, a retirada do consentimento de utilização dos dados do participante da pesquisa, basta o participante enviar um
+        e-mail requisitando a retirada do consentimento. Enfatizamos a importância do participante de pesquisa guardar em seus arquivos
+        uma cópia do TCLE. Clique no botão abaixo para enviar o e-mail de um aplicativo do seu smartphone.
     </string>
 
     <!-- Tutorial tela como usar o aplicativo -->
@@ -164,6 +164,7 @@
         de internet, pelo Wi-Fi e dados móveis. Caso ainda não tenha essa identificação, poderá ser dada ao realizar
         a análise das mensagens.
     </string>
+    <string name="CodigoHint">Insira o código de participação</string>
     <string name="nao_pode_gravar_configuracoes">
         Não pode finalizar sem inserir um identificador de usuário.
     </string>

@@ -22,10 +22,8 @@ public class BancoDeDados {
     private static final String tag = "LexicoDb";
     private final SQLiteDatabase select;
     private final SQLiteDatabase insert;
-    private final Context mContext;
 
     public BancoDeDados(Context c) {
-        this.mContext = c;
         DbHelper db = new DbHelper(c);
         select = db.getReadableDatabase();
         insert = db.getWritableDatabase();
@@ -53,14 +51,11 @@ public class BancoDeDados {
     }
 
     public Cursor getTableSaldoSentenca(String msg) {
-        Cursor c = select.query(TABELA_FRASES, new String[] { "peso"}, "frase = ?", new String[] { msg }, null, null,null );
-        //return select.rawQuery(String.format("SELECT peso FROM %s AS tb WHERE '%s' = tb.frase", TABELA_FRASES, msg), null);
-        return c;
+        return select.query(TABELA_FRASES, new String[] { "peso"}, "frase = ?", new String[] { msg }, null, null,null );
     }
 
     public Cursor getSaldoPalavra(String p) {
-        Cursor c = select.query(TABELA_PALAVRAS, new String[] { "peso"}, "sentenca = ?", new String[] { p }, null, null, null);
-        return c;
+        return select.query(TABELA_PALAVRAS, new String[] { "peso"}, "sentenca = ?", new String[] { p }, null, null, null);
     }
 
     public boolean insereResultadoLexicoProcessado(ResultadoLexicoProcessado r) {
@@ -79,11 +74,18 @@ public class BancoDeDados {
     }
 
     public void limparTabelaLexicoProcessado() {
-        insert.rawQuery("delete from "+TB_LEXICO_PROCESSADO,null);
+        //insert.rawQuery("delete from "+TB_LEXICO_PROCESSADO,null);
+        insert.execSQL("delete from " + TB_LEXICO_PROCESSADO);
     }
 
     public void limparDadosDeConsumo(){
-        insert.rawQuery("delete from uso_de_internet",null);
+        //insert.rawQuery("delete from uso_de_internet",null);
+        insert.execSQL("delete from uso_de_internet");
+    }
+
+    public void limparDadosUsuario(){
+        limparDadosDeConsumo();
+        limparTabelaLexicoProcessado();
     }
 
     public int[] pegaResultadoSentimento(String sql){

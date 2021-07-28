@@ -33,4 +33,10 @@ public class AjudaActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

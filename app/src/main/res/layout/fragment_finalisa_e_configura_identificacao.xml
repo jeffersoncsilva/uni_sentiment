@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:theme="@style/Theme.MaterialComponents"
     android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
-
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
@@ -24,19 +24,26 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        style="@style/inputstyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/botao_padrao"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/CodigoHint"
+        android:theme="@style/InputTextCodigoIdentificacao"
+        android:textColorHint="@color/colorPrimary"
+        app:boxStrokeColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tituloPagina">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/identificacao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:layout_margin="4dp"
+            android:textColor="@color/colorPrimary"
             tools:layout_editor_absoluteX="-1dp"
             tools:layout_editor_absoluteY="336dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,8 +52,9 @@
         android:id="@+id/btFinaliza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="@drawable/botao_padrao"
-        android:padding="@dimen/medium_margin"
+        android:padding="@dimen/large_margin"
         android:text="@string/btFinalizarConfiguracao"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

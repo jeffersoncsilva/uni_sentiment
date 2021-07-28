@@ -36,7 +36,7 @@ public class ContatoActivity extends AppCompatActivity {
     private void enviarEmail(){
         Intent in = new Intent(Intent.ACTION_SENDTO);
         in.setData(Uri.parse("mailto:"));
-        in.putExtra(Intent.EXTRA_EMAIL, getString(R.string.email_padrao));
+        in.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.email_padrao)});
         in.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.contato_participar));
         if(in.resolveActivity(getPackageManager()) != null)
             startActivity(in);

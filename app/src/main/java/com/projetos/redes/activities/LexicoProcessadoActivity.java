@@ -71,6 +71,12 @@ public class LexicoProcessadoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
     protected class LexicoResultTask extends AsyncTask<Void, Void, Void>{
         Context c;
         List<ResultadoLexicoProcessado>  results;
