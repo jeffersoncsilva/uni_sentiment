@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.projetos.redes">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -22,7 +21,8 @@
         android:roundIcon="@drawable/icone_low"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.TutorialActivity">
+        <activity android:name=".activities.TutorialActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,7 +32,8 @@
         <activity android:name=".activities.AjudaActivity" />
         <activity
             android:name=".activities.RecebeConversaExportadaActivity"
-            android:label="@string/title_activity_recebe_conversa_exportada_whatsapp">
+            android:label="@string/title_activity_recebe_conversa_exportada_whatsapp"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
                 <category android:name="android.intent.category.DEFAULT" />
