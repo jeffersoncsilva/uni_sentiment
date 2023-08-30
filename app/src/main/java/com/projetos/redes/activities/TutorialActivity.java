@@ -17,6 +17,9 @@ import com.projetos.redes.adapters.TutorialPagerAdapter;
 import static com.projetos.redes.Utils.CONFIG;
 import static com.projetos.redes.Utils.JA_VIU_TUTORIAL;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class TutorialActivity extends AppCompatActivity {
     private ViewPager pager;
     private TabLayout tab;

@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.datastore.preferences.core.edit
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import com.projetos.redes.R
 import com.projetos.redes.databinding.FragmentTempoMinimoExecucaoBinding
-import com.projetos.redes.enums.DiasAnterioresParaAnalise
-import com.projetos.redes.extension.dataStore
-import kotlinx.coroutines.launch
+import com.projetos.redes.ui.viewmodels.ConfiguraDiasParaAnaliseViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ConfiguraDiasParaAnaliseFragment : Fragment() {
         private lateinit var binding: FragmentTempoMinimoExecucaoBinding
+        private val viewModel: ConfiguraDiasParaAnaliseViewModel by viewModels()
 
         override fun onCreateView(inflater: LayoutInflater,  container: ViewGroup?, savedInstanceState: Bundle?): View?{
                 binding = FragmentTempoMinimoExecucaoBinding.inflate(layoutInflater, container, false)
@@ -45,16 +45,7 @@ class ConfiguraDiasParaAnaliseFragment : Fragment() {
 
         private fun setaChangeListenerOpcoesDias(){
                 binding.diasExecucao.setOnCheckedChangeListener{ rg, id ->
-                        salvaOpcaoEscolhida(id)
-                }
-        }
-
-        private fun salvaOpcaoEscolhida(id: Int){
-                lifecycleScope.launch {
-                        context?.dataStore?.edit { settings ->
-                                val dias = DiasAnterioresParaAnalise.factory(id)
-                                settings[DIAS_PARA_ANALISAR] = "${dias.id}"
-                        }
+                        viewModel.salvaOpcaoEscolhida(context, id)
                 }
         }
 }

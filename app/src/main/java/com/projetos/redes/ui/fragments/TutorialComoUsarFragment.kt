@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.projetos.redes.databinding.FragmentComoUsarBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TutorialComoUsarFragment : Fragment(){
         private lateinit var binding: FragmentComoUsarBinding
 
