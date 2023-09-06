@@ -1,4 +1,4 @@
-package com.projetos.redes.ui.viewmodels
+package com.projetos.redes.ui.viewmodels.fragments
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

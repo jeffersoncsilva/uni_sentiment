@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.RadioGroup.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.projetos.redes.R
 import com.projetos.redes.databinding.FragmentTempoCapturaDadosRedeBinding
-import com.projetos.redes.ui.viewmodels.SalvaTempoCapturaDadosViewModel
+import com.projetos.redes.ui.viewmodels.fragments.SalvaTempoCapturaDadosViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

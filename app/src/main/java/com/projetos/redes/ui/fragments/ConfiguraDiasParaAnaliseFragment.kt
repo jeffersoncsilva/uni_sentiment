@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.projetos.redes.R
 import com.projetos.redes.databinding.FragmentTempoMinimoExecucaoBinding
-import com.projetos.redes.ui.viewmodels.ConfiguraDiasParaAnaliseViewModel
+import com.projetos.redes.ui.viewmodels.fragments.ConfiguraDiasParaAnaliseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

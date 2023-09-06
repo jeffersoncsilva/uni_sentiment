@@ -38,4 +38,5 @@
     <dimen name="tamanhoPadraoTitulo">26sp</dimen>
     <dimen name="tamanhoTextoTutorial">16sp</dimen>
     <dimen name="tamanhoTituloTutorial">20sp</dimen>
+    <dimen name="default_height_text_input_layout">64dp</dimen>
 </resources>
