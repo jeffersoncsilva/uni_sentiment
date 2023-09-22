@@ -1,4 +1,4 @@
-package com.projetos.redes.ui.fragments
+package com.projetos.redes.ui.fragments.tutoriais
 
 import android.os.Bundle
 import android.view.LayoutInflater

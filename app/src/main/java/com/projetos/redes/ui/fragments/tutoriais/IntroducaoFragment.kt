@@ -1,4 +1,4 @@
-package com.projetos.redes.ui.fragments
+package com.projetos.redes.ui.fragments.tutoriais
 
 import android.content.Intent
 import android.net.Uri

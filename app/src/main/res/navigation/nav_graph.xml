@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/introducaoFragment">
+
+    <fragment
+        android:id="@+id/introducaoFragment"
+        android:name="com.projetos.redes.ui.fragments.tutoriais.IntroducaoFragment"
+        android:label="IntroducaoFragment"
+        tools:layout="@layout/fragment_introducao">
+        <action
+            android:id="@+id/action_introducaoFragment_to_tutorialComoUsarFragment"
+            app:destination="@id/tutorialComoUsarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tutorialComoUsarFragment"
+        android:name="com.projetos.redes.ui.fragments.tutoriais.TutorialComoUsarFragment"
+        android:label="TutorialComoUsarFragment"
+        tools:layout="@layout/fragment_como_usar">
+        <action
+            android:id="@+id/action_tutorialComoUsarFragment_to_explicaAutorizacoesFragment"
+            app:destination="@id/explicaAutorizacoesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/explicaAutorizacoesFragment"
+        android:name="com.projetos.redes.ui.fragments.tutoriais.ExplicaAutorizacoesFragment"
+        android:label="ExplicaAutorizacoesFragment"
+        tools:layout="@layout/fragment_autorizacoes">
+        <action
+            android:id="@+id/action_explicaAutorizacoesFragment_to_salvaTempoCapturaDadosRedeFragment"
+            app:destination="@id/salvaTempoCapturaDadosRedeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/salvaTempoCapturaDadosRedeFragment"
+        android:name="com.projetos.redes.ui.fragments.tutoriais.SalvaTempoCapturaDadosRedeFragment"
+        android:label="SalvaTempoCapturaDadosRedeFragment"
+        tools:layout="@layout/fragment_tempo_captura_dados_rede">
+        <action
+            android:id="@+id/action_salvaTempoCapturaDadosRedeFragment_to_configuraDiasParaAnaliseFragment"
+            app:destination="@id/configuraDiasParaAnaliseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/configuraDiasParaAnaliseFragment"
+        android:name="com.projetos.redes.ui.fragments.tutoriais.ConfiguraDiasParaAnaliseFragment"
+        android:label="ConfiguraDiasParaAnaliseFragment"
+        tools:layout="@layout/fragment_tempo_minimo_execucao">
+        <action
+            android:id="@+id/action_configuraDiasParaAnaliseFragment_to_finalizaTutorialFragment"
+            app:destination="@id/finalizaTutorialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finalizaTutorialFragment"
+        android:name="com.projetos.redes.ui.fragments.tutoriais.FinalizaTutorialFragment"
+        android:label="FinalizaTutorialFragment"
+        tools:layout="@layout/fragment_finalisa_e_configura_identificacao"/>
+</navigation>

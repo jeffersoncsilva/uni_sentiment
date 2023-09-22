@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.projetos.redes.ui.fragments.ConfiguraDiasParaAnaliseFragment;
-import com.projetos.redes.ui.fragments.ExplicaAutorizacoesFragment;
-import com.projetos.redes.ui.fragments.FinalizaTutorialFragment;
-import com.projetos.redes.ui.fragments.IntroducaoFragment;
-import com.projetos.redes.ui.fragments.SalvaTempoCapturaDadosRedeFragment;
-import com.projetos.redes.ui.fragments.TutorialComoUsarFragment;
+import com.projetos.redes.ui.fragments.tutoriais.ConfiguraDiasParaAnaliseFragment;
+import com.projetos.redes.ui.fragments.tutoriais.ExplicaAutorizacoesFragment;
+import com.projetos.redes.ui.fragments.tutoriais.FinalizaTutorialFragment;
+import com.projetos.redes.ui.fragments.tutoriais.IntroducaoFragment;
+import com.projetos.redes.ui.fragments.tutoriais.SalvaTempoCapturaDadosRedeFragment;
+import com.projetos.redes.ui.fragments.tutoriais.TutorialComoUsarFragment;
 
 public class TutorialPagerAdapter extends FragmentPagerAdapter {
 

@@ -1,4 +1,4 @@
-package com.projetos.redes.ui.fragments
+package com.projetos.redes.ui.fragments.tutoriais
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,6 @@ import com.projetos.redes.activities.MainActivity
 import com.projetos.redes.databinding.FragmentFinalisaEConfiguraIdentificacaoBinding
 import com.projetos.redes.ui.viewmodels.fragments.FinalizaTutorialFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
