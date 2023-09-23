@@ -15,12 +15,12 @@ interface ConsumoInternetDao {
     @Query("SELECT * FROM consumo_internet")
      fun recuperaTodosOsConsumos() : List<ConsumoInternet>
 
-    @Query("SELECT * FROM consumo_internet WHERE dataInicio > :dataInicial AND dataFim < :dataFinal")
+    @Query("SELECT * FROM consumo_internet WHERE dataInicio >= :dataInicial AND dataFim <= :dataFinal")
      fun recuperaConsumoEntre(dataInicial: Long, dataFinal: Long): List<ConsumoInternet>
 
-    @Query("SELECT SUM(wifi) FROM consumo_internet WHERE dataInicio > :dataInicial AND dataFim < :dataFinal")
+    @Query("SELECT SUM(wifi) FROM consumo_internet WHERE dataInicio >= :dataInicial AND dataFim <= :dataFinal")
      fun recuperaConsumoTotalDeWifiEntre(dataInicial: Long, dataFinal: Long): Long
 
-    @Query("SELECT sum(mobile) FROM consumo_internet WHERE dataInicio > :dataInicial AND dataFim < :dataFinal")
+    @Query("SELECT sum(mobile) FROM consumo_internet WHERE dataInicio >= :dataInicial AND dataFim <= :dataFinal")
      fun recuperaConsumoTotalDeMobileEntre(dataInicial: Long, dataFinal: Long): Long
 }

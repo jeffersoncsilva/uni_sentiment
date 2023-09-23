@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "consumo_internet")
 data class ConsumoInternet(
-            @PrimaryKey(autoGenerate = true) val id: Int,
+            @PrimaryKey(autoGenerate = true) val id: Int? = null,
             val wifi: Long ,
             val mobile: Long,
             val dataInicio: LocalDateTime? = LocalDateTime.now(),

@@ -13,6 +13,7 @@ android {
     defaultConfig {
         minSdk 26
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -35,6 +36,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
     kapt("com.google.dagger:hilt-compiler:2.48")
     // Activity and Fragment KTX for viewModels()
     implementation "androidx.activity:activity-ktx:1.7.2"
@@ -46,11 +48,15 @@ dependencies {
     implementation("androidx.room:room-runtime:2.5.2")
     annotationProcessor("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
     // Teste
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
     testImplementation("io.mockk:mockk:1.13.7")
+    androidTestImplementation("com.google.truth:truth:1.1.5")
+
 
 }
